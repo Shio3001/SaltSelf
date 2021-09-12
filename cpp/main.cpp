@@ -37,7 +37,15 @@ public:
             cout << vertex_xyz[i][0] << vertex_xyz[i][1] << vertex_xyz[i][2] << endl;
         }
 
-        int *in_data_address = vertex_xyz.back().begin();
+        int *in_data_address0 = &vertex_xyz.back()[0];
+
+        cout << *in_data_address0 << endl;
+
+        int *in_data_address1 = in_data_address0 + 1;
+
+        cout << *in_data_address1 << endl;
+
+        cout << "end" << endl;
 
         //int *add_xyz = vertex_xyz.back();
         //int &add_x = add_xyz.begin();
