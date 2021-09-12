@@ -35,21 +35,24 @@ public:
         for (int i = 0; i < vertex_xyz.size(); i++)
         {
             cout << vertex_xyz[i][0] << vertex_xyz[i][1] << vertex_xyz[i][2] << endl;
+            cout << &vertex_xyz[i][0] << &vertex_xyz[i][1] << &vertex_xyz[i][2] << endl;
         }
 
-        int *in_data_address0 = &vertex_xyz.back()[0];
-
-        cout << *in_data_address0 << endl;
-
-        int *in_data_address1 = in_data_address0 + 1;
-
-        cout << *in_data_address1 << endl;
-
-        cout << "end" << endl;
+        int *in_data_address = &vertex_xyz.back()[0];
 
         //int *add_xyz = vertex_xyz.back();
         //int &add_x = add_xyz.begin();
-        //ertex_key_pointer[key] = *add_xyz;
+        vertex_key_pointer[key] = in_data_address;
+
+        int *test_p = vertex_key_pointer[key];
+
+        for (int i = 0; i < 3; i++)
+        {
+            cout << test_p << endl;
+            cout << *test_p << endl;
+            test_p++;
+        }
+        cout << "end" << endl;
         //cout << vertex_key_pointer[key] << endl;
     }
 
