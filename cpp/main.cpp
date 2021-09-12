@@ -32,11 +32,17 @@ public:
 
         vertex_xyz.push_back(in_data);
 
-        int &add_xyz = vertex_xyz.back()[0];
-        //int &add_x = add_xyz.begin();
-        vertex_key_pointer[key] = &add_xyz;
+        for (int i = 0; i < vertex_xyz.size(); i++)
+        {
+            cout << vertex_xyz[i][0] << vertex_xyz[i][1] << vertex_xyz[i][2] << endl;
+        }
 
-        cout << vertex_key_pointer[key] << endl;
+        int *in_data_address = vertex_xyz.back().begin();
+
+        //int *add_xyz = vertex_xyz.back();
+        //int &add_x = add_xyz.begin();
+        //ertex_key_pointer[key] = *add_xyz;
+        //cout << vertex_key_pointer[key] << endl;
     }
 
     std::vector<int> get_vertex_xyz(int num)
@@ -63,3 +69,5 @@ int main()
 
     vertex_control->add_vertex_xyz(key, x, y, z);
 }
+
+// g++ -o main main.cpp -std=c++14
