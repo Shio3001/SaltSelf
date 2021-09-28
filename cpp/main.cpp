@@ -12,54 +12,93 @@ using namespace std;
 //namespace py = boost::python;
 //namespace np = boost::python::numpy;
 
+class VertexXyzData
+{
+private:
+    int xyz[3] = {0, 0, 0};
+
+public:
+    VertexXyzData()
+    {
+        cout << "VertexXyzData コンストラクタ" << endl;
+    }
+    ~VertexXyzData()
+    {
+        cout << "VertexXyzData デストラクタ" << endl;
+    }
+
+    void Xyz(int x, int y, int z)
+    {
+        xyz[0] = x;
+        xyz[1] = y;
+        xyz[2] = z;
+    }
+    void Xy(int x, int y)
+    {
+        xyz[0] = x;
+        xyz[1] = y;
+    }
+
+    void X(int x)
+    {
+        xyz[0] = x;
+    }
+    void Y(int y)
+    {
+        xyz[1] = y;
+    }
+    void Z(int z)
+    {
+        xyz[2] = z;
+    }
+    int *Get_xyz() //これはアドレスが返却されます
+    {
+        return &xyz[0];
+    }
+};
+
 class VertexControl
 {
 private:
-    std::vector<std::vector<int>> vertex_xyz;
-    std::map<std::string, int *> vertex_key_pointer;
+    std::map<std::string, VertexXyzData *> vertex_data;
 
 public:
     VertexControl()
     {
+        cout << "VertexControl コンストラクタ" << endl;
     }
-
-    void add_vertex_xyz(std::string key, int x, int y, int z)
+    ~VertexControl()
     {
-        std::vector<int> in_data;
-        in_data.push_back(x);
-        in_data.push_back(y);
-        in_data.push_back(z);
+        cout << "VertexControl デストラクタ" << endl;
+    }
+    void AddVertexXyz(std::string key, int x, int y, int z)
+    {
+        VertexXyzData *vertex_xyz_data = new VertexXyzData;
+        vertex_xyz_data->Xyz(x, y, z);
+        cout << vertex_xyz_data << endl;
+        vertex_data[key] = vertex_xyz_data;
 
-        vertex_xyz.push_back(in_data);
-
-        for (int i = 0; i < vertex_xyz.size(); i++)
-        {
-            cout << vertex_xyz[i][0] << vertex_xyz[i][1] << vertex_xyz[i][2] << endl;
-            cout << &vertex_xyz[i][0] << &vertex_xyz[i][1] << &vertex_xyz[i][2] << endl;
-        }
-
-        int *in_data_address = &vertex_xyz.back()[0];
-
-        //int *add_xyz = vertex_xyz.back();
-        //int &add_x = add_xyz.begin();
-        vertex_key_pointer[key] = in_data_address;
-
-        int *test_p = vertex_key_pointer[key];
-
-        for (int i = 0; i < 3; i++)
-        {
-            cout << test_p << endl;
-            cout << *test_p << endl;
-            test_p++;
-        }
-        cout << "end" << endl;
+        cout << "AddVertexXyz" << endl;
         //cout << vertex_key_pointer[key] << endl;
     }
 
-    std::vector<int> get_vertex_xyz(int num)
+    void DeleteVertexXyz(std::string key)
     {
-        std::vector<int> re_vector = vertex_xyz[num];
-        return re_vector;
+        VertexXyzData *vertex_xyz_data = vertex_data[key];
+        delete vertex_xyz_data;
+        vertex_data.erase(key);
+    }
+
+    std::vector<std::string> GetVertexXyzDataKey()
+    {
+        std::vector<std::string> vertex_xyz_data_key;
+        auto begin = vertex_data.begin(), end = vertex_data.end();
+        for (auto iter = begin; iter != end; iter++)
+        {
+            std::string key = iter->first;
+            vertex_xyz_data_key.push_back(key);
+        }
+        return vertex_xyz_data_key;
     }
 
 private:
@@ -78,7 +117,24 @@ int main()
     cin >> y;
     cin >> z;
 
-    vertex_control->add_vertex_xyz(key, x, y, z);
+    vertex_control->AddVertexXyz(key, x, y, z);
+
+    std::vector<std::string> test_get_xyz_key = vertex_control->GetVertexXyzDataKey();
+    for (int i = 0; i < test_get_xyz_key.size(); i++)
+    {
+        cout << test_get_xyz_key[i] << endl;
+    }
+
+    vertex_control->DeleteVertexXyz(key);
+
+    std::vector<std::string> test_get_xyz_key2 = vertex_control->GetVertexXyzDataKey();
+    for (int i = 0; i < test_get_xyz_key2.size(); i++)
+    {
+        cout << test_get_xyz_key2[i] << endl;
+    }
 }
 
 // g++ -o main main.cpp -std=c++14
+
+//https://ttsuki.github.io/styleguide/cppguide.ja.html#File_Names
+//グーグル命名規則
