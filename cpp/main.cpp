@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 #include <math.h>
 #include <stdio.h>
-
+#include <sys/time.h>
 //#include <boost/python.hpp>
 //#include <boost/python/numpy.hpp>
 #include <iomanip>
@@ -69,6 +69,7 @@ class SurfaceData
 private:
     std::string m_surface_data_key;
     std::map<int, VertexXyzData *> m_edge_data;
+    int color[4]];
 
 public:
     SurfaceData(std::string send_surface_data_key)
@@ -80,8 +81,18 @@ public:
     {
         cout << "SurfaceData デストラクタ" << endl;
     }
+
+    VertexXyzData *GetVertex(int vertex_number)
+    {
+        return &m_edge_data[vertex_number]
+    }
+
     void AddVertex(VertexXyzData &vertex)
     {
+
+        cout << "SurfaceData    AddVertex" << endl;
+        cout << &vertex << endl;
+        cout << " " << endl;
         int vertex_size = GetVertexSize();
         m_edge_data[vertex_size] = &vertex;
     }
@@ -124,11 +135,45 @@ public:
     }
 };
 
+class PlaneCalculationControl
+{
+    SurfaceData surface_data;
+
+    PlaneCalculationControl()
+    {
+        cout << "PlaneCalculationControl コンストラクタ" << endl;
+    }
+    ~PlaneCalculationControl()
+    {
+        cout << "PlaneCalculationControl デストラクタ" << endl;
+    }
+    void AcceptanceSurface(SurfaceData &send_surface_data)
+    {
+        surface_data = &send_surface_data;
+    }
+    void Slope()
+    {
+        int vertex_size = surface_data->GetVertexSize();
+
+        int *edge = new int[vertex_size];
+
+        for (int i = 0; i < vertex_size - 1; i++)
+        {
+            VertexXyzData *vertex1 = surface_data->GetVertex(i);
+            VertexXyzData *vertex2 = surface_data->GetVertex(i + 1);
+        }
+    }
+};
+class SpatialCalculationControl
+{
+};
 class VertexControl
 {
 private:
     std::map<std::string, VertexXyzData *> m_vertex_data;
     std::map<std::string, SurfaceData *> m_surface_data;
+
+    PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl;
     //std::map<std::string, EdgeData *> m_edge_data;
 
 public:
@@ -145,14 +190,44 @@ public:
         AddVertexForSurface("S", "A");
         AddVertexForSurface("S", "B");
         AddVertexForSurface("S", "C");
+
+        VertexXyzData *vertex_xyz_dataA = m_vertex_data["A"];
+        cout << "m_vertex_dataA" << &vertex_xyz_dataA << endl;
+        cout << vertex_xyz_dataA->VertexKey() << endl;
+
+        VertexXyzData *vertex_xyz_dataB = m_vertex_data["B"];
+        cout << "m_vertex_dataB" << &vertex_xyz_dataB << endl;
+        cout << vertex_xyz_dataB->VertexKey() << endl;
+
+        VertexXyzData *vertex_xyz_dataC = m_vertex_data["C"];
+        cout << "m_vertex_dataC" << &vertex_xyz_dataC << endl;
+        cout << vertex_xyz_dataC->VertexKey() << endl;
     }
     ~VertexControl()
     {
         cout << "VertexControl デストラクタ" << endl;
     }
+    //ここら辺に出力への関数を記入する
+    //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)
+
+    void SurfacePlaneCalculation(std::string surface_key) //平面計算
+    {
+        VertexXyzData *vertex_xyz_data = m_vertex_data[surface_key];
+        plane_calculation_control->AcceptanceSurface(*vertex_xyz_data);
+    }
+
+    void SurfaceSpatialCalculation() //空間計算
+    {
+    }
+
     void AddSurface(std::string key)
     {
         SurfaceData *surface_data = new SurfaceData(key);
+
+        cout << "AddSurface    surface_data" << endl;
+        cout << &surface_data << endl;
+        cout << " " << endl;
+
         m_surface_data[key] = surface_data;
     }
 
@@ -160,16 +235,28 @@ public:
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
         VertexXyzData *vertex_xyz_data = m_vertex_data[vertex_key];
+
+        cout << "AddVertexForSurface    surface_data" << endl;
+        cout << &surface_data << endl;
+        cout << "AddVertexForSurface    vertex_xyz_data" << endl;
+        cout << &vertex_xyz_data << endl;
+        cout << " " << endl;
+
         surface_data->AddVertex(*vertex_xyz_data);
     }
 
     void AddVertexXyz(std::string key, int x, int y, int z)
     {
+
         VertexXyzData *vertex_xyz_data = new VertexXyzData(key);
         vertex_xyz_data->Xyz(x, y, z);
+
         m_vertex_data[key] = vertex_xyz_data;
 
-        cout << "AddVertexXyz" << endl;
+        cout << "AddVertexXyz   vertex_xyz_data " << key << endl;
+        cout << &vertex_xyz_data << endl;
+        cout << " " << endl;
+
         //cout << vertex_key_pointer[key] << endl;
     }
 
