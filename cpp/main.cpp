@@ -69,7 +69,7 @@ class SurfaceData
 private:
     std::string m_surface_data_key;
     std::map<int, VertexXyzData *> m_edge_data;
-    int color[4]];
+    int color[4];
 
 public:
     SurfaceData(std::string send_surface_data_key)
@@ -84,7 +84,9 @@ public:
 
     VertexXyzData *GetVertex(int vertex_number)
     {
-        return &m_edge_data[vertex_number]
+        VertexXyzData *vertex;
+        vertex = m_edge_data[vertex_number];
+        return vertex;
     }
 
     void AddVertex(VertexXyzData &vertex)
@@ -135,32 +137,175 @@ public:
     }
 };
 
+class LinearFunction
+{
+private:
+    int mode;
+    int inequalities;
+
+    double a;
+    int b;
+    int x1;
+    int x2;
+
+    int tan90_x;
+    int y1;
+    int y2;
+
+public:
+    LinearFunction()
+    {
+        cout << "LinearFunction コンストラクタ" << endl;
+    }
+    ~LinearFunction()
+    {
+        cout << "LinearFunction デストラクタ" << endl;
+    }
+    void SetModeDiagonal(int send_inequalities, double send_a, int send_b, int send_x1, int send_x2) //mode0
+    {
+        inequalities = send_inequalities;
+        a = send_a;
+        b = send_b;
+        x1 = send_x1;
+        x2 = send_x2;
+        mode = 0;
+    }
+    void SetModeTan90(int send_inequalities, int send_x, int send_y1, int send_y2) //mode1
+    {
+        inequalities = send_inequalities;
+        y1 = send_y1;
+        y2 = send_y2;
+        mode = 1;
+    }
+    int GetMode()
+    {
+        return mode;
+    }
+
+    bool SurfaceTreatment(int x, int y)
+    {
+    }
+    int LineTreatment(int x)
+    {
+    }
+};
+
 class PlaneCalculationControl
 {
-    SurfaceData surface_data;
+private:
+    SurfaceData *surface_data;
 
-    PlaneCalculationControl()
+public:
+    PlaneCalculationControl(SurfaceData &send_surface_data)
     {
+        surface_data = &send_surface_data;
         cout << "PlaneCalculationControl コンストラクタ" << endl;
     }
     ~PlaneCalculationControl()
     {
         cout << "PlaneCalculationControl デストラクタ" << endl;
     }
-    void AcceptanceSurface(SurfaceData &send_surface_data)
-    {
-        surface_data = &send_surface_data;
-    }
+
     void Slope()
     {
         int vertex_size = surface_data->GetVertexSize();
 
-        int *edge = new int[vertex_size];
-
-        for (int i = 0; i < vertex_size - 1; i++)
+        if (vertex_size <= 1)
         {
-            VertexXyzData *vertex1 = surface_data->GetVertex(i);
-            VertexXyzData *vertex2 = surface_data->GetVertex(i + 1);
+            cout << "1次元破棄" << endl;
+            return;
+        }
+
+        for (int i = 0; i < vertex_size; i++)
+        {
+            int now = i;
+            cout << "now " << now << endl;
+            //<条件式> ? <数値１> : <数値２>
+            VertexXyzData *vertex1 = surface_data->GetVertex(now);
+            cout << "vertex1 class 取得済み" << endl;
+            int *xyz1 = vertex1->Get_xyz();
+            cout << "vertex1 座標値 取得済み" << endl;
+            int x1 = xyz1[0];
+            int y1 = xyz1[1];
+            cout << "x1 y1 " << x1 << " " << y1 << endl;
+
+            cout << " " << endl;
+
+            int x2 = 0;
+            int y2 = 0;
+            int x2_add = 0;
+            int y2_add = 0;
+
+            int add = 1;
+
+            int dimension = 2;
+            int inequalities = 0;
+
+            do
+            {
+                int next = (i + add) % (vertex_size);
+
+                cout << "next " << next << endl;
+                cout << "add " << add << endl;
+
+                if (now == next)
+                {
+                    cout << "一次元終了" << endl;
+                    dimension = 1;
+                    break;
+                }
+
+                VertexXyzData *vertex2 = surface_data->GetVertex(next);
+                cout << "vertex2 class 取得済み" << endl;
+                int *xyz2 = vertex2->Get_xyz();
+
+                if (add == 1)
+                {
+                    x2 = xyz2[0];
+                    y2 = xyz2[1];
+                }
+
+                x2_add = xyz2[0];
+                y2_add = xyz2[1];
+                cout << "vertex2 座標値 取得済み" << endl;
+                cout << "x2 y2 " << x2 << " " << y2 << endl;
+                add++;
+
+            } while (x1 == x2_add);
+
+            if (dimension != 1)
+            {
+                if (x1 < x2_add)
+                {
+                    inequalities = 1;
+                }
+                if (x1 > x2_add)
+                {
+                    inequalities = -1;
+                }
+            }
+            else
+            {
+                inequalities = 0;
+            }
+
+            int x_distance = x2 - x1;
+            int y_distance = y2 - y1;
+
+            if (x_distance == 0)
+            {
+                int evaluation_x = x1;
+            }
+            else
+            {
+                double slope = 0;
+                slope = y_distance / x_distance;
+                int b = y1 - slope * x1;
+                cout << "slope " << slope << " b " << b << endl;
+            }
+
+            cout << " " << endl;
+            cout << " " << endl;
         }
     }
 };
@@ -173,7 +318,6 @@ private:
     std::map<std::string, VertexXyzData *> m_vertex_data;
     std::map<std::string, SurfaceData *> m_surface_data;
 
-    PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl;
     //std::map<std::string, EdgeData *> m_edge_data;
 
 public:
@@ -190,6 +334,8 @@ public:
         AddVertexForSurface("S", "A");
         AddVertexForSurface("S", "B");
         AddVertexForSurface("S", "C");
+
+        SurfacePlaneCalculation("S");
 
         VertexXyzData *vertex_xyz_dataA = m_vertex_data["A"];
         cout << "m_vertex_dataA" << &vertex_xyz_dataA << endl;
@@ -212,8 +358,10 @@ public:
 
     void SurfacePlaneCalculation(std::string surface_key) //平面計算
     {
-        VertexXyzData *vertex_xyz_data = m_vertex_data[surface_key];
-        plane_calculation_control->AcceptanceSurface(*vertex_xyz_data);
+        SurfaceData *surface_data = m_surface_data[surface_key];
+        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data);
+        plane_calculation_control->Slope();
+        delete plane_calculation_control;
     }
 
     void SurfaceSpatialCalculation() //空間計算
