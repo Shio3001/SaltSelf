@@ -11,6 +11,8 @@
 using namespace std;
 //namespace py = boost::python;
 //namespace np = boost::python::numpy;
+#include <chrono>
+#include <ctime>
 
 class VertexXyzData
 {
@@ -182,10 +184,21 @@ public:
         return mode;
     }
 
-    bool SurfaceTreatment(int x, int y)
+    int SurfaceTreatment(int x, int y)
     {
+        //int region = y > a * x + b ? 1 : -1; //領域が上か否か
+        //bool inside_range = region == inequalities;
+
+        int fy = a * x + b;
+
+        bool left = y > fy && inequalities == -1;
+        bool right = y < fy && inequalities == 1;
+
+        int inside_range = left || right ? 1 : 0;
+
+        return inside_range;
     }
-    int LineTreatment(int x)
+    void LineTreatment(int x)
     {
     }
 };
@@ -194,6 +207,12 @@ class PlaneCalculationControl
 {
 private:
     SurfaceData *surface_data;
+    std::vector<LinearFunction *> m_linear_function_data;
+
+    int x_width = 1280;
+    int y_width = 720;
+
+    int *draw = new int[y_width * x_width];
 
 public:
     PlaneCalculationControl(SurfaceData &send_surface_data)
@@ -292,9 +311,12 @@ public:
             int x_distance = x2 - x1;
             int y_distance = y2 - y1;
 
+            LinearFunction *linear_function = new LinearFunction();
+
             if (x_distance == 0)
             {
                 int evaluation_x = x1;
+                linear_function->SetModeTan90(inequalities, evaluation_x, y1, y2);
             }
             else
             {
@@ -302,11 +324,49 @@ public:
                 slope = y_distance / x_distance;
                 int b = y1 - slope * x1;
                 cout << "slope " << slope << " b " << b << endl;
+
+                linear_function->SetModeDiagonal(inequalities, slope, b, x1, x2);
             }
+
+            m_linear_function_data.push_back(linear_function);
+
+            //ここにDeleteを書いてはならない(消えちゃうので)
 
             cout << " " << endl;
             cout << " " << endl;
         }
+    }
+
+    void SurfaceCalculation()
+    {
+        cout << "SurfaceCalculation sta" << endl;
+
+        auto sec_since_epoch1 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+        cout << sec_since_epoch1 << endl;
+
+        for (int y = 0; y < y_width; y++)
+        {
+            for (int x = 0; x < x_width; x++)
+            {
+                int ipx = x_width * y + x;
+                int linear_size = m_linear_function_data.size();
+
+                for (int fi = 0; fi < linear_size; fi++)
+                {
+                    LinearFunction *now_linear_function = m_linear_function_data[fi];
+                    draw[ipx] = now_linear_function->SurfaceTreatment(x, y) * 255;
+                    //cout << draw[ipx] << endl;
+                }
+            }
+        }
+        auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+        cout << sec_since_epoch2 << endl;
+
+        cout << "SurfaceCalculation end" << endl;
+    }
+    void FunctionCalculation()
+    {
     }
 };
 class SpatialCalculationControl
@@ -361,6 +421,7 @@ public:
         SurfaceData *surface_data = m_surface_data[surface_key];
         PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data);
         plane_calculation_control->Slope();
+        plane_calculation_control->SurfaceCalculation();
         delete plane_calculation_control;
     }
 
