@@ -13,6 +13,36 @@ using namespace std;
 //namespace np = boost::python::numpy;
 #include <chrono>
 #include <ctime>
+#include <opencv2/opencv.hpp>
+
+void OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
+{
+    int channel = 3;
+    cv::Mat output_mat = cv::Mat::zeros(y_hight, x_width, channel, CV_8U);
+
+    for (int y = 0; y < y_hight; y++)
+    {
+        for (int x = 0; x < x_width; x++)
+        {
+            int ipx = x_width * y + x;
+
+            for (int c = 0; c < channel; c++)
+            {
+                output_mat.at<Vec3b>(y, x, 3) = draw_pointer[ipx];
+                output_mat.at<Vec3b>(y, x, 3) = draw_pointer[ipx];
+                output_mat.at<Vec3b>(y, x, 3) = draw_pointer[ipx];
+            }
+        }
+    }
+
+    cv::imshow("output_mat", output_mat);
+}
+void DimensionsTwoOne(int *draw_pointer, int x_width, int y_hight)
+{
+}
+void DimensionsOneTwo(int *draw_pointer, int x_width, int y_hight)
+{
+}
 
 class VertexXyzData
 {
@@ -210,9 +240,9 @@ private:
     std::vector<LinearFunction *> m_linear_function_data;
 
     int x_width = 1280;
-    int y_width = 720;
+    int y_hight = 720;
 
-    int *draw = new int[y_width * x_width];
+    int *draw = new int[y_hight * x_width];
 
 public:
     PlaneCalculationControl(SurfaceData &send_surface_data)
@@ -342,9 +372,8 @@ public:
         cout << "SurfaceCalculation sta" << endl;
 
         auto sec_since_epoch1 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-        cout << sec_since_epoch1 << endl;
 
-        for (int y = 0; y < y_width; y++)
+        for (int y = 0; y < y_hight; y++)
         {
             for (int x = 0; x < x_width; x++)
             {
@@ -361,11 +390,16 @@ public:
         }
         auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
+        cout << sec_since_epoch1 << endl;
         cout << sec_since_epoch2 << endl;
 
         cout << "SurfaceCalculation end" << endl;
     }
     void FunctionCalculation()
+    {
+    }
+
+    void image_output()
     {
     }
 };
