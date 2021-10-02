@@ -1,7 +1,7 @@
 //3D処理用
 
 // 16ビット モノラル
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <math.h>
 #include <stdio.h>
 #include <sys/time.h>
@@ -18,7 +18,7 @@ using namespace std;
 void OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
 {
     int channel = 3;
-    cv::Mat output_mat = cv::Mat::zeros(y_hight, x_width, channel, CV_8U);
+    cv::Mat output_mat = cv::Mat::zeros(cv::Size(y_hight, x_width, channel), CV_8U);
 
     for (int y = 0; y < y_hight; y++)
     {
@@ -28,9 +28,9 @@ void OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
 
             for (int c = 0; c < channel; c++)
             {
-                output_mat.at<Vec3b>(y, x, 3) = draw_pointer[ipx];
-                output_mat.at<Vec3b>(y, x, 3) = draw_pointer[ipx];
-                output_mat.at<Vec3b>(y, x, 3) = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
             }
         }
     }
