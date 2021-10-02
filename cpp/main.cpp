@@ -18,7 +18,9 @@ using namespace std;
 void OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
 {
     int channel = 3;
-    cv::Mat output_mat = cv::Mat::zeros(cv::Size(y_hight, x_width, channel), CV_8U);
+    const int size[3] = {y_hight, x_width, channel};
+    cv::Mat output_mat = cv::Mat::zeros(3, size, CV_8U);
+    //https://tech-blog.s-yoshiki.com/entry/76
 
     for (int y = 0; y < y_hight; y++)
     {
@@ -28,14 +30,14 @@ void OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
 
             for (int c = 0; c < channel; c++)
             {
-                output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
-                output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
-                output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
+                //output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
+                //output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
+                //output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
             }
         }
     }
 
-    cv::imshow("output_mat", output_mat);
+    //cv::imshow("output_mat", output_mat);
 }
 void DimensionsTwoOne(int *draw_pointer, int x_width, int y_hight)
 {
