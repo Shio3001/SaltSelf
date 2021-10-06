@@ -1,7 +1,7 @@
 //3D処理用
 
 // 16ビット モノラル
-//#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <math.h>
 #include <stdio.h>
 #include <sys/time.h>
@@ -15,11 +15,17 @@ using namespace std;
 #include <ctime>
 #include <opencv2/opencv.hpp>
 
-void OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
+void OpenCvOutput(int draw_pointer[], int x_width, int y_hight)
 {
+
     int channel = 3;
-    const int size[3] = {y_hight, x_width, channel};
-    cv::Mat output_mat = cv::Mat::zeros(3, size, CV_8U);
+
+    //y_hight, x_width, channel
+
+    //cv::Mat output_mat = cv::Mat::zeros(500, 500, CV_8UC3);
+
+    cv::Mat output_mat(cv::Size(y_hight, x_width), CV_8UC3, cv::Scalar(0, 0, 0));
+    //cv::Mat output_mat(cv::Size(320, 240), CV_8UC3, cv::Scalar(0, 0, 0));
     //https://tech-blog.s-yoshiki.com/entry/76
 
     for (int y = 0; y < y_hight; y++)
@@ -28,16 +34,19 @@ void OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
         {
             int ipx = x_width * y + x;
 
+            //cout << ipx << endl;
+            //cout << draw_pointer[ipx] << endl;
+
             for (int c = 0; c < channel; c++)
             {
-                //output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
-                //output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
-                //output_mat.at<cv::Vec3b>(y, x, 3) = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(y, x)[0] = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(y, x)[1] = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(y, x)[2] = draw_pointer[ipx];
             }
         }
     }
 
-    //cv::imshow("output_mat", output_mat);
+    cv::imwrite("/Users/maruyama/Programs/MV55project/salt3DCG/cpp/output_mat.png", output_mat);
 }
 void DimensionsTwoOne(int *draw_pointer, int x_width, int y_hight)
 {
@@ -185,6 +194,7 @@ private:
     int tan90_x;
     int y1;
     int y2;
+    int fx;
 
 public:
     LinearFunction()
@@ -197,19 +207,24 @@ public:
     }
     void SetModeDiagonal(int send_inequalities, double send_a, int send_b, int send_x1, int send_x2) //mode0
     {
-        inequalities = send_inequalities;
-        a = send_a;
-        b = send_b;
-        x1 = send_x1;
+        inequalities = send_inequalities; //どちらか、数2の不等式から、xがマイナス側だとyが上
+        a = send_a;                       //傾き
+        b = send_b;                       //定数 １次関数のあれ
+        x1 = send_x1;                     // x1 << x << x2って数学でやりますよね？
         x2 = send_x2;
         mode = 0;
+
+        cout << "SetModeDiagonal " << inequalities << " " << a << " " << b << " " << x1 << " " << x2 << " " << mode << endl;
     }
     void SetModeTan90(int send_inequalities, int send_x, int send_y1, int send_y2) //mode1
     {
-        inequalities = send_inequalities;
-        y1 = send_y1;
-        y2 = send_y2;
+        inequalities = send_inequalities; //左側化右側かどちらか
+        fx = send_x;                      //基準値(左右確認)
+        y1 = send_y1;                     //下限値
+        y2 = send_y2;                     //上限値
         mode = 1;
+
+        cout << "SetModeTan90 " << inequalities << " " << fx << " " << y1 << " " << y2 << " " << mode << endl;
     }
     int GetMode()
     {
@@ -221,13 +236,54 @@ public:
         //int region = y > a * x + b ? 1 : -1; //領域が上か否か
         //bool inside_range = region == inequalities;
 
-        int fy = a * x + b;
+        int inside_range = 1;
 
-        bool left = y > fy && inequalities == -1;
-        bool right = y < fy && inequalities == 1;
+        if (mode == 0) //傾きが垂直ではない場合
+        {
 
-        int inside_range = left || right ? 1 : 0;
+            bool x1x2 = x1 <= x && x < x2;
+            bool x2x1 = x2 <= x && x < x1;
 
+            int x_within_range = x1x2 || x2x1 ? 1 : 0;
+
+            //cout << "x_within_range" << x_within_range << endl;
+
+            int fy = a * x + b;
+            bool left = y > fy && inequalities == -1;
+            bool right = y < fy && inequalities == 1;
+            int inequality_range = left || right ? 1 : 0;
+
+            inside_range = inequality_range * x_within_range;
+
+            // cout << "mode 0 " << endl;
+            // cout << "inequalities " << inequalities << endl;
+            // cout << "a " << a << endl;
+            // cout << "b " << b << endl;
+            // cout << "x1 " << x1 << endl;
+            // cout << "x2 " << x2 << endl;
+            // cout << "x " << x << endl;
+            // cout << "y " << y << endl;
+            // cout << "fy " << fy << endl;
+            // cout << "left " << left << endl;
+            // cout << "right " << right << endl;
+            // cout << "x_within_range" << x_within_range << endl;
+            // cout << "inequality_range" << inequality_range << endl;
+            // cout << "inside_range " << inside_range << endl;
+            // cout << " " << endl;
+        }
+        if (mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
+        {
+
+            //int y_within_range = y1y2 || y2y1 ? 1 : 0;
+
+            bool left = x < fx && inequalities == -1;
+            bool right = fx < x && inequalities == 1;
+            inside_range = left || right ? 1 : 0;
+
+            //inside_range *= y_within_range;
+
+            //cout << "mode 1 " << left << right << y_within_range << endl;
+        }
         return inside_range;
     }
     void LineTreatment(int x)
@@ -328,11 +384,11 @@ public:
             {
                 if (x1 < x2_add)
                 {
-                    inequalities = 1;
+                    inequalities = -1;
                 }
                 if (x1 > x2_add)
                 {
-                    inequalities = -1;
+                    inequalities = 1;
                 }
             }
             else
@@ -340,8 +396,10 @@ public:
                 inequalities = 0;
             }
 
-            int x_distance = x2 - x1;
-            int y_distance = y2 - y1;
+            double x_distance = x2 - x1;
+            double y_distance = y2 - y1;
+
+            cout << "x_distance " << x_distance << " y_distance " << y_distance << endl;
 
             LinearFunction *linear_function = new LinearFunction();
 
@@ -352,8 +410,7 @@ public:
             }
             else
             {
-                double slope = 0;
-                slope = y_distance / x_distance;
+                double slope = y_distance / x_distance;
                 int b = y1 - slope * x1;
                 cout << "slope " << slope << " b " << b << endl;
 
@@ -373,6 +430,8 @@ public:
     {
         cout << "SurfaceCalculation sta" << endl;
 
+        int sum = 0;
+
         auto sec_since_epoch1 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
         for (int y = 0; y < y_hight; y++)
@@ -382,12 +441,21 @@ public:
                 int ipx = x_width * y + x;
                 int linear_size = m_linear_function_data.size();
 
+                int result = 1;
+
                 for (int fi = 0; fi < linear_size; fi++)
                 {
                     LinearFunction *now_linear_function = m_linear_function_data[fi];
-                    draw[ipx] = now_linear_function->SurfaceTreatment(x, y) * 255;
+
+                    result *= now_linear_function->SurfaceTreatment(x, y);
+
+                    //cout << result << endl;
+
+                    //cout << draw[ipx] << endl;
                     //cout << draw[ipx] << endl;
                 }
+                sum += result;
+                draw[ipx] = result * 255;
             }
         }
         auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
@@ -395,7 +463,11 @@ public:
         cout << sec_since_epoch1 << endl;
         cout << sec_since_epoch2 << endl;
 
+        cout << sum << endl;
+
         cout << "SurfaceCalculation end" << endl;
+
+        OpenCvOutput(draw, x_width, y_hight);
     }
     void FunctionCalculation()
     {
@@ -422,9 +494,9 @@ public:
         cout << "VertexControl コンストラクタ" << endl;
 
         //ここからテスト
-        AddVertexXyz("A", 0, 0, 0);
-        AddVertexXyz("B", 100, 0, 0);
-        AddVertexXyz("C", 0, 100, 0);
+        AddVertexXyz("A", 20, 0, 0);
+        AddVertexXyz("B", 100, 20, 0);
+        AddVertexXyz("C", 80, 100, 0);
 
         AddSurface("S");
         AddVertexForSurface("S", "A");
@@ -432,18 +504,6 @@ public:
         AddVertexForSurface("S", "C");
 
         SurfacePlaneCalculation("S");
-
-        VertexXyzData *vertex_xyz_dataA = m_vertex_data["A"];
-        cout << "m_vertex_dataA" << &vertex_xyz_dataA << endl;
-        cout << vertex_xyz_dataA->VertexKey() << endl;
-
-        VertexXyzData *vertex_xyz_dataB = m_vertex_data["B"];
-        cout << "m_vertex_dataB" << &vertex_xyz_dataB << endl;
-        cout << vertex_xyz_dataB->VertexKey() << endl;
-
-        VertexXyzData *vertex_xyz_dataC = m_vertex_data["C"];
-        cout << "m_vertex_dataC" << &vertex_xyz_dataC << endl;
-        cout << vertex_xyz_dataC->VertexKey() << endl;
     }
     ~VertexControl()
     {
