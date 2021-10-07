@@ -24,9 +24,11 @@ void OpenCvOutput(int draw_pointer[], int x_width, int y_hight)
 
     //cv::Mat output_mat = cv::Mat::zeros(500, 500, CV_8UC3);
 
-    cv::Mat output_mat(cv::Size(y_hight, x_width), CV_8UC3, cv::Scalar(0, 0, 0));
+    cv::Mat output_mat(cv::Size(x_width, y_hight), CV_8UC3, cv::Scalar(0, 0, 0));
     //cv::Mat output_mat(cv::Size(320, 240), CV_8UC3, cv::Scalar(0, 0, 0));
     //https://tech-blog.s-yoshiki.com/entry/76
+
+    cout << "x y" << x_width << " " << y_hight << endl;
 
     for (int y = 0; y < y_hight; y++)
     {
@@ -37,13 +39,21 @@ void OpenCvOutput(int draw_pointer[], int x_width, int y_hight)
             //cout << ipx << endl;
             //cout << draw_pointer[ipx] << endl;
 
-            int cvy = y_hight - y;
+            //int cvy = y_hight - y;
 
             for (int c = 0; c < channel; c++)
             {
-                output_mat.at<cv::Vec3b>(cvy, x)[0] = draw_pointer[ipx];
-                output_mat.at<cv::Vec3b>(cvy, x)[1] = draw_pointer[ipx];
-                output_mat.at<cv::Vec3b>(cvy, x)[2] = draw_pointer[ipx];
+                if (draw_pointer[ipx] == 255)
+                {
+                    output_mat.at<cv::Vec3b>(y, x)[0] = draw_pointer[ipx];
+                    output_mat.at<cv::Vec3b>(y, x)[1] = draw_pointer[ipx];
+                    output_mat.at<cv::Vec3b>(y, x)[2] = draw_pointer[ipx];
+                    continue;
+                }
+
+                output_mat.at<cv::Vec3b>(y, x)[0] = draw_pointer[ipx] & (83 * 3);
+                output_mat.at<cv::Vec3b>(y, x)[1] = draw_pointer[ipx] & (83 * 2);
+                output_mat.at<cv::Vec3b>(y, x)[2] = draw_pointer[ipx] & (83 * 1);
             }
         }
     }
@@ -184,17 +194,17 @@ public:
 class LinearFunction
 {
 private:
-    int mode;
+    int m_mode;
 
-    double a;
-    int b;
-    int x1;
-    int x2;
+    double m0_a;
+    int m0_b;
+    int m0_x1;
+    int m0_x2;
 
-    int tan90_x;
-    int y1;
-    int y2;
-    int fx;
+    int m1_tan90_x;
+    int m1_y1;
+    int m1_y2;
+    int m1_fx;
 
 public:
     LinearFunction()
@@ -207,46 +217,50 @@ public:
     }
     void SetModeDiagonal(double send_a, int send_b, int send_x1, int send_x2) //mode0
     {
-        a = send_a;   //傾き
-        b = send_b;   //定数 １次関数のあれ
-        x1 = send_x1; // x1 << x << x2って数学でやりますよね？
-        x2 = send_x2;
-        mode = 0;
+        m0_a = send_a;   //傾き
+        m0_b = send_b;   //定数 １次関数のあれ
+        m0_x1 = send_x1; // x1 << x << x2って数学でやりますよね？
+        m0_x2 = send_x2;
+        m_mode = 0;
 
-        cout << "SetModeDiagonal " << a << " " << b << " " << x1 << " " << x2 << " " << mode << endl;
+        cout << "SetModeDiagonal " << m0_a << " " << m0_b << " " << m0_x1 << " " << m0_x2 << " " << m_mode << endl;
     }
     void SetModeTan90(int send_x, int send_y1, int send_y2) //mode1
     {
-        fx = send_x;  //基準値(左右確認)
-        y1 = send_y1; //下限値
-        y2 = send_y2; //上限値
-        mode = 1;
+        m1_fx = send_x;  //基準値(左右確認)
+        m1_y1 = send_y1; //下限値
+        m1_y2 = send_y2; //上限値
+        m_mode = 1;
 
-        cout << "SetModeTan90 " << fx << " " << y1 << " " << y2 << " " << mode << endl;
+        cout << "SetModeTan90 " << m1_fx << " " << m1_y1 << " " << m1_y2 << " " << m_mode << endl;
     }
     int GetMode()
     {
-        return mode;
+        return m_mode;
     }
 
-    bool RangeQuery(int y)
+    int RangeQuery(int y)
     {
-        bool result;
-        if (mode == 0) //傾きが垂直ではない場合
+        int result;
+        if (m_mode == 0) //傾きが垂直ではない場合
         {
-            int x = (y - b) / a;
+            double x = (y - m0_b) / m0_a;
 
-            bool x1x2 = x1 << x && x << x2;
-            bool x2x1 = x2 << x && x << x1;
+            bool x1x2 = m0_x1 <= x && x < m0_x2;
+            bool x2x1 = m0_x2 <= x && x < m0_x1;
+            int resultX = x1x2 || x2x1 ? 1 : 0;
 
-            result = x1x2 || x2x1 ? 1 : 0;
+            result = resultX;
+
+            //cout << "result x1x2 " << x1x2 << " x2x1 " << x2x1 << " x " << x << " y " << y << " x1 " << x1 << " x2 " << x2 << endl;
         }
-        if (mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
+        if (m_mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
         {
-            bool y1y2 = y1 << y && y << y2;
-            bool y2y1 = y2 << y && y << y1;
+            bool y1y2 = m1_y1 <= y && y <= m1_y2;
+            bool y2y1 = m1_y2 <= y && y <= m1_y1;
+            int resultY = y1y2 || y2y1 ? 1 : 0;
 
-            result = y1y2 || y2y1 ? 1 : 0;
+            result = resultY;
         }
         return result;
     }
@@ -255,20 +269,22 @@ public:
     {
         //int region = y > a * x + b ? 1 : -1; //領域が上か否か
 
-        int returnX = 1;
+        double returnX = 1;
 
-        if (mode == 0) //傾きが垂直ではない場合
+        if (m_mode == 0) //傾きが垂直ではない場合
         {
-            returnX = (y - b) / a;
+            returnX = (y - m0_b) / m0_a;
         }
-        if (mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
+        if (m_mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
         {
-            returnX = fx;
+            returnX = m1_fx;
         }
         return returnX;
     }
-    void LineTreatment(int x)
+    int XtoY(int x)
     {
+        double y = m0_a * x + m0_b;
+        return y;
     }
 };
 
@@ -378,47 +394,82 @@ public:
 
         auto sec_since_epoch1 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
+        int linear_size = m_linear_function_data.size();
+
         for (int y = 0; y < y_hight; y++)
         {
             for (int x = 0; x < x_width; x++)
             {
                 int ipx = x_width * y + x;
-                int linear_size = m_linear_function_data.size();
 
                 int *fx = new int[linear_size];
+
+                int left = 0;
+
+                int range_query = 1;
 
                 for (int fi_add = 0; fi_add < linear_size; fi_add++)
                 {
                     LinearFunction *now_linear_function = m_linear_function_data[fi_add];
-
                     int returnX = now_linear_function->YtoX(y);
 
-                    fx[fi_add] = returnX;
+                    int now_range_query = now_linear_function->RangeQuery(y);
+
+                    if (now_range_query != 0)
+                    {
+                        fx[fi_add - left] = returnX;
+                    }
+                    else
+                    {
+                        left += 1;
+                    }
+
+                    range_query += now_range_query;
                     //ソート https://codezine.jp/article/detail/6020
-
-                    int linear_search_from_before = -1;
-
-                    for (int fi_search = 0; fi_search < linear_size; fi_search++)
-                    {
-                        if (fx[fi_search] <= x)
-                        {
-                            linear_search_from_before += 1;
-                        }
-                    }
-
-                    int mod2 = linear_search_from_before & 2;
-
-                    if (mod2 == 0)
-                    {
-                        int result = 1;
-                        sum += result;
-                        draw[ipx] = result * 255;
-                    }
-
-                    delete[] fx;
                 }
+
+                int linear_search_from_before = -1;
+
+                for (int fi_search = 0; fi_search < linear_size - left; fi_search++)
+                {
+                    if (fx[fi_search] <= x)
+                    {
+                        linear_search_from_before += 1;
+                        //cout << fi_add << " " << fx[fi_search] << " " << x << endl;
+                    }
+                }
+
+                int mod2 = linear_search_from_before & 2;
+
+                if (mod2 == 0 && range_query != 0)
+                {
+                    int result = range_query;
+                    sum += result;
+                    draw[ipx] = result * 83;
+                }
+                delete[] fx;
             }
         }
+        cout << "み" << endl;
+        for (int x = 0; x < x_width; x++)
+        {
+            for (int fi_add = 0; fi_add < linear_size; fi_add++)
+            {
+                LinearFunction *now_linear_function = m_linear_function_data[fi_add];
+                int returnY = now_linear_function->XtoY(x);
+                int ipx = x_width * returnY + x;
+
+                if (ipx + 2 >= x_width * y_hight)
+                {
+                    break;
+                }
+                draw[ipx] = 255;
+                draw[ipx + 1] = 255;
+                draw[ipx + 2] = 255;
+            }
+        }
+        cout << "出" << endl;
+
         auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
         cout << sec_since_epoch1 << endl;
@@ -455,14 +506,18 @@ public:
         cout << "VertexControl コンストラクタ" << endl;
 
         //ここからテスト
-        AddVertexXyz("A", 20, 0, 0);
-        AddVertexXyz("B", 100, 20, 0);
-        AddVertexXyz("C", 80, 100, 0);
+        AddVertexXyz("A", 0, 0, 0);
+        AddVertexXyz("B", 360, 360, 0);
+        AddVertexXyz("C", 600, 400, 0);
+        AddVertexXyz("D", 700, 100, 0);
+        AddVertexXyz("E", 500, 300, 0);
 
         AddSurface("S");
         AddVertexForSurface("S", "A");
         AddVertexForSurface("S", "B");
         AddVertexForSurface("S", "C");
+        AddVertexForSurface("S", "D");
+        AddVertexForSurface("S", "E");
 
         SurfacePlaneCalculation("S");
     }
