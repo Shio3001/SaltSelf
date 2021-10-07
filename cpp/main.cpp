@@ -392,10 +392,9 @@ public:
                     LinearFunction *now_linear_function = m_linear_function_data[fi_add];
 
                     int returnX = now_linear_function->YtoX(y);
-                    {
-                        fx[fi_add] = returnX;
-                        //ソート https://codezine.jp/article/detail/6020
-                    }
+
+                    fx[fi_add] = returnX;
+                    //ソート https://codezine.jp/article/detail/6020
 
                     int linear_search_from_before = -1;
 
