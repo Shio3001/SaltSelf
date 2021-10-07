@@ -37,11 +37,13 @@ void OpenCvOutput(int draw_pointer[], int x_width, int y_hight)
             //cout << ipx << endl;
             //cout << draw_pointer[ipx] << endl;
 
+            int cvy = y_hight - y;
+
             for (int c = 0; c < channel; c++)
             {
-                output_mat.at<cv::Vec3b>(y, x)[0] = draw_pointer[ipx];
-                output_mat.at<cv::Vec3b>(y, x)[1] = draw_pointer[ipx];
-                output_mat.at<cv::Vec3b>(y, x)[2] = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(cvy, x)[0] = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(cvy, x)[1] = draw_pointer[ipx];
+                output_mat.at<cv::Vec3b>(cvy, x)[2] = draw_pointer[ipx];
             }
         }
     }
@@ -385,188 +387,179 @@ public:
 
                 int *fx = new int[linear_size];
 
-                int left_justified = 0;
-
                 for (int fi_add = 0; fi_add < linear_size; fi_add++)
                 {
                     LinearFunction *now_linear_function = m_linear_function_data[fi_add];
 
-                    bool range_query = now_linear_function->RangeQuery(y);
                     int returnX = now_linear_function->YtoX(y);
-                    if (range_query)
                     {
-                        fx[fi_add - left_justified] = returnX;
+                        fx[fi_add] = returnX;
+                        //ソート https://codezine.jp/article/detail/6020
                     }
-                    else
+
+                    int linear_search_from_before = -1;
+
+                    for (int fi_search = 0; fi_search < linear_size; fi_search++)
                     {
-                        left_justified += 1;
+                        if (fx[fi_search] <= x)
+                        {
+                            linear_search_from_before += 1;
+                        }
                     }
-                    //ソート https://codezine.jp/article/detail/6020
-                }
 
-                int linear_search_from_before = -1;
+                    int mod2 = linear_search_from_before & 2;
 
-                for (int fi_search = 0; fi_search < linear_size - left_justified; fi_search++)
-                {
-                    if (fx[fi_search] <= x)
+                    if (mod2 == 0)
                     {
-                        linear_search_from_before += 1;
+                        int result = 1;
+                        sum += result;
+                        draw[ipx] = result * 255;
                     }
+
+                    delete[] fx;
                 }
-
-                int mod2 = linear_search_from_before & 2;
-
-                if (mod2 == 0)
-                {
-                    int result = 1;
-                    sum += result;
-                    draw[ipx] = result * 255;
-                }
-
-                delete[] fx;
             }
+            auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+            cout << sec_since_epoch1 << endl;
+            cout << sec_since_epoch2 << endl;
+
+            cout << sum << endl;
+
+            cout << "SurfaceCalculation end" << endl;
+
+            OpenCvOutput(draw, x_width, y_hight);
         }
-        auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-
-        cout << sec_since_epoch1 << endl;
-        cout << sec_since_epoch2 << endl;
-
-        cout << sum << endl;
-
-        cout << "SurfaceCalculation end" << endl;
-
-        OpenCvOutput(draw, x_width, y_hight);
-    }
-    void FunctionCalculation()
-    {
-    }
-
-    void image_output()
-    {
-    }
-};
-class SpatialCalculationControl
-{
-};
-class VertexControl
-{
-private:
-    std::map<std::string, VertexXyzData *> m_vertex_data;
-    std::map<std::string, SurfaceData *> m_surface_data;
-
-    //std::map<std::string, EdgeData *> m_edge_data;
-
-public:
-    VertexControl()
-    {
-        cout << "VertexControl コンストラクタ" << endl;
-
-        //ここからテスト
-        AddVertexXyz("A", 20, 0, 0);
-        AddVertexXyz("B", 100, 20, 0);
-        AddVertexXyz("C", 80, 100, 0);
-
-        AddSurface("S");
-        AddVertexForSurface("S", "A");
-        AddVertexForSurface("S", "B");
-        AddVertexForSurface("S", "C");
-
-        SurfacePlaneCalculation("S");
-    }
-    ~VertexControl()
-    {
-        cout << "VertexControl デストラクタ" << endl;
-    }
-    //ここら辺に出力への関数を記入する
-    //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)
-
-    void SurfacePlaneCalculation(std::string surface_key) //平面計算
-    {
-        SurfaceData *surface_data = m_surface_data[surface_key];
-        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data);
-        plane_calculation_control->Slope();
-        plane_calculation_control->SurfaceCalculation();
-        delete plane_calculation_control;
-    }
-
-    void SurfaceSpatialCalculation() //空間計算
-    {
-    }
-
-    void AddSurface(std::string key)
-    {
-        SurfaceData *surface_data = new SurfaceData(key);
-
-        cout << "AddSurface    surface_data" << endl;
-        cout << &surface_data << endl;
-        cout << " " << endl;
-
-        m_surface_data[key] = surface_data;
-    }
-
-    void AddVertexForSurface(std::string surface_key, std::string vertex_key)
-    {
-        SurfaceData *surface_data = m_surface_data[surface_key];
-        VertexXyzData *vertex_xyz_data = m_vertex_data[vertex_key];
-
-        cout << "AddVertexForSurface    surface_data" << endl;
-        cout << &surface_data << endl;
-        cout << "AddVertexForSurface    vertex_xyz_data" << endl;
-        cout << &vertex_xyz_data << endl;
-        cout << " " << endl;
-
-        surface_data->AddVertex(*vertex_xyz_data);
-    }
-
-    void AddVertexXyz(std::string key, int x, int y, int z)
-    {
-
-        VertexXyzData *vertex_xyz_data = new VertexXyzData(key);
-        vertex_xyz_data->Xyz(x, y, z);
-
-        m_vertex_data[key] = vertex_xyz_data;
-
-        cout << "AddVertexXyz   vertex_xyz_data " << key << endl;
-        cout << &vertex_xyz_data << endl;
-        cout << " " << endl;
-
-        //cout << vertex_key_pointer[key] << endl;
-    }
-
-    void DeleteVertexXyz(std::string key)
-    {
-        VertexXyzData *vertex_xyz_data = m_vertex_data[key];
-        delete vertex_xyz_data;
-        m_vertex_data.erase(key);
-    }
-
-    std::vector<std::string> GetVertexXyzDataKey()
-    {
-        std::vector<std::string> vertex_xyz_data_key;
-        auto begin = m_vertex_data.begin(), end = m_vertex_data.end();
-        for (auto iter = begin; iter != end; iter++)
+        void FunctionCalculation()
         {
-            std::string key = iter->first;
-            vertex_xyz_data_key.push_back(key);
         }
-        return vertex_xyz_data_key;
-    }
-};
 
-int main()
-{
-    VertexControl *vertex_control = new VertexControl;
-
-    std::vector<std::string> test_get_xyz_key = vertex_control->GetVertexXyzDataKey();
-    for (int i = 0; i < test_get_xyz_key.size(); i++) //テスト用コード
+        void image_output()
+        {
+        }
+    };
+    class SpatialCalculationControl
     {
-        cout << test_get_xyz_key[i] << endl;
+    };
+    class VertexControl
+    {
+    private:
+        std::map<std::string, VertexXyzData *> m_vertex_data;
+        std::map<std::string, SurfaceData *> m_surface_data;
+
+        //std::map<std::string, EdgeData *> m_edge_data;
+
+    public:
+        VertexControl()
+        {
+            cout << "VertexControl コンストラクタ" << endl;
+
+            //ここからテスト
+            AddVertexXyz("A", 20, 0, 0);
+            AddVertexXyz("B", 100, 20, 0);
+            AddVertexXyz("C", 80, 100, 0);
+
+            AddSurface("S");
+            AddVertexForSurface("S", "A");
+            AddVertexForSurface("S", "B");
+            AddVertexForSurface("S", "C");
+
+            SurfacePlaneCalculation("S");
+        }
+        ~VertexControl()
+        {
+            cout << "VertexControl デストラクタ" << endl;
+        }
+        //ここら辺に出力への関数を記入する
+        //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)
+
+        void SurfacePlaneCalculation(std::string surface_key) //平面計算
+        {
+            SurfaceData *surface_data = m_surface_data[surface_key];
+            PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data);
+            plane_calculation_control->Slope();
+            plane_calculation_control->SurfaceCalculation();
+            delete plane_calculation_control;
+        }
+
+        void SurfaceSpatialCalculation() //空間計算
+        {
+        }
+
+        void AddSurface(std::string key)
+        {
+            SurfaceData *surface_data = new SurfaceData(key);
+
+            cout << "AddSurface    surface_data" << endl;
+            cout << &surface_data << endl;
+            cout << " " << endl;
+
+            m_surface_data[key] = surface_data;
+        }
+
+        void AddVertexForSurface(std::string surface_key, std::string vertex_key)
+        {
+            SurfaceData *surface_data = m_surface_data[surface_key];
+            VertexXyzData *vertex_xyz_data = m_vertex_data[vertex_key];
+
+            cout << "AddVertexForSurface    surface_data" << endl;
+            cout << &surface_data << endl;
+            cout << "AddVertexForSurface    vertex_xyz_data" << endl;
+            cout << &vertex_xyz_data << endl;
+            cout << " " << endl;
+
+            surface_data->AddVertex(*vertex_xyz_data);
+        }
+
+        void AddVertexXyz(std::string key, int x, int y, int z)
+        {
+
+            VertexXyzData *vertex_xyz_data = new VertexXyzData(key);
+            vertex_xyz_data->Xyz(x, y, z);
+
+            m_vertex_data[key] = vertex_xyz_data;
+
+            cout << "AddVertexXyz   vertex_xyz_data " << key << endl;
+            cout << &vertex_xyz_data << endl;
+            cout << " " << endl;
+
+            //cout << vertex_key_pointer[key] << endl;
+        }
+
+        void DeleteVertexXyz(std::string key)
+        {
+            VertexXyzData *vertex_xyz_data = m_vertex_data[key];
+            delete vertex_xyz_data;
+            m_vertex_data.erase(key);
+        }
+
+        std::vector<std::string> GetVertexXyzDataKey()
+        {
+            std::vector<std::string> vertex_xyz_data_key;
+            auto begin = m_vertex_data.begin(), end = m_vertex_data.end();
+            for (auto iter = begin; iter != end; iter++)
+            {
+                std::string key = iter->first;
+                vertex_xyz_data_key.push_back(key);
+            }
+            return vertex_xyz_data_key;
+        }
+    };
+
+    int main()
+    {
+        VertexControl *vertex_control = new VertexControl;
+
+        std::vector<std::string> test_get_xyz_key = vertex_control->GetVertexXyzDataKey();
+        for (int i = 0; i < test_get_xyz_key.size(); i++) //テスト用コード
+        {
+            cout << test_get_xyz_key[i] << endl;
+        }
+
+        //vertex_control->DeleteVertexXyz(key); //テスト用コード
     }
 
-    //vertex_control->DeleteVertexXyz(key); //テスト用コード
-}
+    // g++ -o main main.cpp -std=c++14
 
-// g++ -o main main.cpp -std=c++14
-
-//https://ttsuki.github.io/styleguide/cppguide.ja.html#File_Names
-//グーグル命名規則
+    //https://ttsuki.github.io/styleguide/cppguide.ja.html#File_Names
+    //グーグル命名規則
