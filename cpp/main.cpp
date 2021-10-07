@@ -112,7 +112,6 @@ class SurfaceData
 private:
     std::string m_surface_data_key;
     std::map<int, VertexXyzData *> m_edge_data;
-    int color[4];
 
 public:
     SurfaceData(std::string send_surface_data_key)
@@ -184,7 +183,6 @@ class LinearFunction
 {
 private:
     int mode;
-    int inequalities;
 
     double a;
     int b;
@@ -205,86 +203,67 @@ public:
     {
         cout << "LinearFunction デストラクタ" << endl;
     }
-    void SetModeDiagonal(int send_inequalities, double send_a, int send_b, int send_x1, int send_x2) //mode0
+    void SetModeDiagonal(double send_a, int send_b, int send_x1, int send_x2) //mode0
     {
-        inequalities = send_inequalities; //どちらか、数2の不等式から、xがマイナス側だとyが上
-        a = send_a;                       //傾き
-        b = send_b;                       //定数 １次関数のあれ
-        x1 = send_x1;                     // x1 << x << x2って数学でやりますよね？
+        a = send_a;   //傾き
+        b = send_b;   //定数 １次関数のあれ
+        x1 = send_x1; // x1 << x << x2って数学でやりますよね？
         x2 = send_x2;
         mode = 0;
 
-        cout << "SetModeDiagonal " << inequalities << " " << a << " " << b << " " << x1 << " " << x2 << " " << mode << endl;
+        cout << "SetModeDiagonal " << a << " " << b << " " << x1 << " " << x2 << " " << mode << endl;
     }
-    void SetModeTan90(int send_inequalities, int send_x, int send_y1, int send_y2) //mode1
+    void SetModeTan90(int send_x, int send_y1, int send_y2) //mode1
     {
-        inequalities = send_inequalities; //左側化右側かどちらか
-        fx = send_x;                      //基準値(左右確認)
-        y1 = send_y1;                     //下限値
-        y2 = send_y2;                     //上限値
+        fx = send_x;  //基準値(左右確認)
+        y1 = send_y1; //下限値
+        y2 = send_y2; //上限値
         mode = 1;
 
-        cout << "SetModeTan90 " << inequalities << " " << fx << " " << y1 << " " << y2 << " " << mode << endl;
+        cout << "SetModeTan90 " << fx << " " << y1 << " " << y2 << " " << mode << endl;
     }
     int GetMode()
     {
         return mode;
     }
 
-    int SurfaceTreatment(int x, int y)
+    bool RangeQuery(int y)
     {
-        //int region = y > a * x + b ? 1 : -1; //領域が上か否か
-        //bool inside_range = region == inequalities;
-
-        int inside_range = 1;
-
+        bool result;
         if (mode == 0) //傾きが垂直ではない場合
         {
+            int x = (y - b) / a;
 
-            bool x1x2 = x1 <= x && x < x2;
-            bool x2x1 = x2 <= x && x < x1;
+            bool x1x2 = x1 << x && x << x2;
+            bool x2x1 = x2 << x && x << x1;
 
-            int x_within_range = x1x2 || x2x1 ? 1 : 0;
-
-            //cout << "x_within_range" << x_within_range << endl;
-
-            int fy = a * x + b;
-            bool left = y > fy && inequalities == -1;
-            bool right = y < fy && inequalities == 1;
-            int inequality_range = left || right ? 1 : 0;
-
-            inside_range = inequality_range * x_within_range;
-
-            // cout << "mode 0 " << endl;
-            // cout << "inequalities " << inequalities << endl;
-            // cout << "a " << a << endl;
-            // cout << "b " << b << endl;
-            // cout << "x1 " << x1 << endl;
-            // cout << "x2 " << x2 << endl;
-            // cout << "x " << x << endl;
-            // cout << "y " << y << endl;
-            // cout << "fy " << fy << endl;
-            // cout << "left " << left << endl;
-            // cout << "right " << right << endl;
-            // cout << "x_within_range" << x_within_range << endl;
-            // cout << "inequality_range" << inequality_range << endl;
-            // cout << "inside_range " << inside_range << endl;
-            // cout << " " << endl;
+            result = x1x2 || x2x1 ? 1 : 0;
         }
         if (mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
         {
+            bool y1y2 = y1 << y && y << y2;
+            bool y2y1 = y2 << y && y << y1;
 
-            //int y_within_range = y1y2 || y2y1 ? 1 : 0;
-
-            bool left = x < fx && inequalities == -1;
-            bool right = fx < x && inequalities == 1;
-            inside_range = left || right ? 1 : 0;
-
-            //inside_range *= y_within_range;
-
-            //cout << "mode 1 " << left << right << y_within_range << endl;
+            result = y1y2 || y2y1 ? 1 : 0;
         }
-        return inside_range;
+        return result;
+    }
+
+    int YtoX(int y)
+    {
+        //int region = y > a * x + b ? 1 : -1; //領域が上か否か
+
+        int returnX = 1;
+
+        if (mode == 0) //傾きが垂直ではない場合
+        {
+            returnX = (y - b) / a;
+        }
+        if (mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
+        {
+            returnX = fx;
+        }
+        return returnX;
     }
     void LineTreatment(int x)
     {
@@ -323,9 +302,9 @@ public:
             return;
         }
 
-        for (int i = 0; i < vertex_size; i++)
+        for (int vs = 0; vs < vertex_size; vs++)
         {
-            int now = i;
+            int now = vs;
             cout << "now " << now << endl;
             //<条件式> ? <数値１> : <数値２>
             VertexXyzData *vertex1 = surface_data->GetVertex(now);
@@ -340,61 +319,24 @@ public:
 
             int x2 = 0;
             int y2 = 0;
-            int x2_add = 0;
-            int y2_add = 0;
 
-            int add = 1;
+            int vertex_point_add = 1;
+            int next;
 
-            int dimension = 2;
-            int inequalities = 0;
+            next = (vs + vertex_point_add) % vertex_size;
 
-            do
-            {
-                int next = (i + add) % (vertex_size);
+            cout << "next " << next << endl;
+            cout << "vertex_point_add " << vertex_point_add << endl;
 
-                cout << "next " << next << endl;
-                cout << "add " << add << endl;
+            VertexXyzData *vertex2 = surface_data->GetVertex(next);
+            cout << "vertex2 class 取得済み" << endl;
+            int *xyz2 = vertex2->Get_xyz();
 
-                if (now == next)
-                {
-                    cout << "一次元終了" << endl;
-                    dimension = 1;
-                    break;
-                }
+            x2 = xyz2[0];
+            y2 = xyz2[1];
 
-                VertexXyzData *vertex2 = surface_data->GetVertex(next);
-                cout << "vertex2 class 取得済み" << endl;
-                int *xyz2 = vertex2->Get_xyz();
-
-                if (add == 1)
-                {
-                    x2 = xyz2[0];
-                    y2 = xyz2[1];
-                }
-
-                x2_add = xyz2[0];
-                y2_add = xyz2[1];
-                cout << "vertex2 座標値 取得済み" << endl;
-                cout << "x2 y2 " << x2 << " " << y2 << endl;
-                add++;
-
-            } while (x1 == x2_add);
-
-            if (dimension != 1)
-            {
-                if (x1 < x2_add)
-                {
-                    inequalities = -1;
-                }
-                if (x1 > x2_add)
-                {
-                    inequalities = 1;
-                }
-            }
-            else
-            {
-                inequalities = 0;
-            }
+            cout << "vertex2 座標値 取得済み" << endl;
+            cout << "x2 y2 " << x2 << " " << y2 << endl;
 
             double x_distance = x2 - x1;
             double y_distance = y2 - y1;
@@ -406,7 +348,7 @@ public:
             if (x_distance == 0)
             {
                 int evaluation_x = x1;
-                linear_function->SetModeTan90(inequalities, evaluation_x, y1, y2);
+                linear_function->SetModeTan90(evaluation_x, y1, y2);
             }
             else
             {
@@ -414,7 +356,7 @@ public:
                 int b = y1 - slope * x1;
                 cout << "slope " << slope << " b " << b << endl;
 
-                linear_function->SetModeDiagonal(inequalities, slope, b, x1, x2);
+                linear_function->SetModeDiagonal(slope, b, x1, x2);
             }
 
             m_linear_function_data.push_back(linear_function);
@@ -441,21 +383,47 @@ public:
                 int ipx = x_width * y + x;
                 int linear_size = m_linear_function_data.size();
 
-                int result = 1;
+                int *fx = new int[linear_size];
 
-                for (int fi = 0; fi < linear_size; fi++)
+                int left_justified = 0;
+
+                for (int fi_add = 0; fi_add < linear_size; fi_add++)
                 {
-                    LinearFunction *now_linear_function = m_linear_function_data[fi];
+                    LinearFunction *now_linear_function = m_linear_function_data[fi_add];
 
-                    result *= now_linear_function->SurfaceTreatment(x, y);
-
-                    //cout << result << endl;
-
-                    //cout << draw[ipx] << endl;
-                    //cout << draw[ipx] << endl;
+                    bool range_query = now_linear_function->RangeQuery(y);
+                    int returnX = now_linear_function->YtoX(y);
+                    if (range_query)
+                    {
+                        fx[fi_add - left_justified] = returnX;
+                    }
+                    else
+                    {
+                        left_justified += 1;
+                    }
+                    //ソート https://codezine.jp/article/detail/6020
                 }
-                sum += result;
-                draw[ipx] = result * 255;
+
+                int linear_search_from_before = -1;
+
+                for (int fi_search = 0; fi_search < linear_size - left_justified; fi_search++)
+                {
+                    if (fx[fi_search] <= x)
+                    {
+                        linear_search_from_before += 1;
+                    }
+                }
+
+                int mod2 = linear_search_from_before & 2;
+
+                if (mod2 == 0)
+                {
+                    int result = 1;
+                    sum += result;
+                    draw[ipx] = result * 255;
+                }
+
+                delete[] fx;
             }
         }
         auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
