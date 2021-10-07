@@ -459,13 +459,16 @@ public:
                 int returnY = now_linear_function->XtoY(x);
                 int ipx = x_width * returnY + x;
 
-                if (ipx + 2 >= x_width * y_hight)
+                if (ipx + 1 < x_width * y_hight)
                 {
-                    break;
+                    draw[ipx + 1] = 255;
                 }
+                if (ipx - 1 > 0)
+                {
+                    draw[ipx - 1] = 255;
+                }
+
                 draw[ipx] = 255;
-                draw[ipx + 1] = 255;
-                draw[ipx + 2] = 255;
             }
         }
         cout << "出" << endl;
