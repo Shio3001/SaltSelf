@@ -246,8 +246,8 @@ public:
         {
             double x = (y - m0_b) / m0_a;
 
-            bool x1x2 = m0_x1 <= x && x < m0_x2;
-            bool x2x1 = m0_x2 <= x && x < m0_x1;
+            bool x1x2 = m0_x1 < x && x < m0_x2;
+            bool x2x1 = m0_x2 < x && x < m0_x1;
             int resultX = x1x2 || x2x1 ? 1 : 0;
 
             result = resultX;
@@ -387,7 +387,6 @@ public:
     }
 
     void lineDraw(int ipx, int line_color)
-
     {
 
         if (ipx < x_width * y_hight && ipx >= 0)
@@ -430,8 +429,23 @@ public:
         }
         cout << "出" << endl;
 
+        for (int x = 0; x < x_width; x++)
+        {
+            for (int fi_add = 0; fi_add < linear_size; fi_add++)
+            {
+                LinearFunction *now_linear_function = m_linear_function_data[fi_add];
+                int returnY = now_linear_function->XtoY(x);
+                int returnX_px = x_width * returnY + x;
+                lineDraw(returnX_px, 200);
+            }
+        }
+
+        int debug_x = 190;
+        int debug_y = 72;
+
         for (int y = 0; y < y_hight; y++)
         {
+
             for (int x = 0; x < x_width; x++)
             {
                 int ipx = x_width * y + x;
@@ -446,20 +460,19 @@ public:
 
                     LinearFunction *now_linear_function = m_linear_function_data[fi_add];
                     int returnX = now_linear_function->YtoX(y);
-
                     int now_range_query = now_linear_function->RangeQuery(y);
 
-                    if (x == 190 && y == 72)
+                    if (x == debug_x && y == debug_y)
                     {
                         cout << "特定箇所(A0)" << now_range_query << endl;
                     }
 
+                    int returnX_px = x_width * y + returnX;
+
                     if (now_range_query != 0)
                     {
-                        fx[fi_add - left] = returnX;
-
-                        int returnX_px = x_width * y + returnX;
                         lineDraw(returnX_px, 255);
+                        fx[fi_add - left] = returnX;
                     }
                     else
                     {
@@ -472,7 +485,6 @@ public:
                 }
 
                 int linear_search_from_before = -1;
-                int linear_search_from_after = 0;
 
                 for (int fi_search = 0; fi_search < linear_size - left; fi_search++)
                 {
@@ -480,22 +492,31 @@ public:
                     {
                         linear_search_from_before += 1;
                     }
-                    else
+
+                    if (x == debug_x && y == debug_y)
                     {
-                        linear_search_from_after += 1;
-                    }
-                    if (x == 190 && y == 72)
-                    {
-                        cout << "特定箇所(A1)" << linear_search_from_before << " " << linear_search_from_after << endl;
+                        cout << "特定箇所(A1)" << linear_search_from_before << endl;
                     }
                 }
 
-                int mod2 = linear_search_from_before & 2;
+                int linear_search_from_after = linear_size - left - linear_search_from_before;
+
+                if (x == debug_x && y == debug_y)
+                {
+                    cout << "特定箇所(A2)" << linear_search_from_before << endl;
+                }
+
+                int mod2 = linear_search_from_before % 2;
 
                 //cout << "linear_size " << linear_size << " left " << left << endl;
-
-                if (mod2 == 0 && range_query != 0 && linear_search_from_after > 0) //
+                if (x == debug_x && y == debug_y)
                 {
+                    cout << "特定箇所(A3)" << mod2 << " " << range_query << endl;
+                }
+
+                if (mod2 == 0 && range_query != 0) //
+                {
+
                     int result = range_query;
                     sum += result;
                     draw[ipx] = result * 83;
@@ -542,17 +563,13 @@ public:
 
         //ここからテスト
         AddVertexXyz("A", 50, 50, 0);
-        AddVertexXyz("B", 360, 360, 0);
-        AddVertexXyz("C", 600, 400, 0);
-        AddVertexXyz("D", 1000, 0, 0);
-        AddVertexXyz("E", 200, 100, 0);
+        AddVertexXyz("B", 1000, 700, 0);
+        AddVertexXyz("C", 50, 700, 0);
 
         AddSurface("S");
         AddVertexForSurface("S", "A");
         AddVertexForSurface("S", "B");
         AddVertexForSurface("S", "C");
-        AddVertexForSurface("S", "D");
-        AddVertexForSurface("S", "E");
 
         SurfacePlaneCalculation("S");
     }
