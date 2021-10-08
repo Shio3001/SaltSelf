@@ -413,21 +413,21 @@ public:
 
         int linear_size = m_linear_function_data.size();
 
-        cout << "み" << endl;
+        //cout << "み" << endl;
         for (int x = 0; x < x_width; x++)
         {
             for (int fi_add = 0; fi_add < linear_size; fi_add++)
             {
-                cout << "now_linear_function" << endl;
+                //cout << "now_linear_function" << endl;
                 LinearFunction *now_linear_function = m_linear_function_data[fi_add];
-                cout << "now_linear_function2" << endl;
+                //cout << "now_linear_function2" << endl;
                 int returnY = now_linear_function->XtoY(x);
                 int ipx = x_width * returnY + x;
 
-                cout << ipx << endl;
+                //cout << ipx << endl;
             }
         }
-        cout << "出" << endl;
+        //cout << "出" << endl;
 
         for (int x = 0; x < x_width; x++)
         {
@@ -440,8 +440,8 @@ public:
             }
         }
 
-        int debug_x = 190;
-        int debug_y = 72;
+        int debug_x = 100;
+        int debug_y = 50;
 
         for (int y = 0; y < y_hight; y++)
         {
@@ -455,6 +455,8 @@ public:
                 int left = 0;
                 int range_query = 0;
 
+                int corner = 0;
+
                 for (int fi_add = 0; fi_add < linear_size; fi_add++)
                 {
 
@@ -465,6 +467,11 @@ public:
                     if (x == debug_x && y == debug_y)
                     {
                         cout << "特定箇所(A0)" << now_range_query << endl;
+                    }
+
+                    if (returnX == x)
+                    {
+                        corner++;
                     }
 
                     int returnX_px = x_width * y + returnX;
@@ -484,11 +491,16 @@ public:
                     //ソート https://codezine.jp/article/detail/6020
                 }
 
+                if (corner > 1)
+                {
+                    cout << "corner" << corner << " x " << x << " y " << y << endl;
+                }
+
                 int linear_search_from_before = -1;
 
                 for (int fi_search = 0; fi_search < linear_size - left; fi_search++)
                 {
-                    if (fx[fi_search] <= x)
+                    if (fx[fi_search] <= x && corner <= 1)
                     {
                         linear_search_from_before += 1;
                     }
@@ -564,7 +576,7 @@ public:
         //ここからテスト
         AddVertexXyz("A", 50, 50, 0);
         AddVertexXyz("B", 1000, 700, 0);
-        AddVertexXyz("C", 50, 700, 0);
+        AddVertexXyz("C", 70, 600, 0);
 
         AddSurface("S");
         AddVertexForSurface("S", "A");
