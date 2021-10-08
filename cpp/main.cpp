@@ -269,7 +269,7 @@ public:
     {
         //int region = y > a * x + b ? 1 : -1; //領域が上か否か
 
-        double returnX = 1;
+        int returnX = 1;
 
         if (m_mode == 0) //傾きが垂直ではない場合
         {
@@ -283,7 +283,7 @@ public:
     }
     int XtoY(int x)
     {
-        double y = m0_a * x + m0_b;
+        int y = m0_a * x + m0_b;
         return y;
     }
 };
@@ -428,7 +428,10 @@ public:
                     //ソート https://codezine.jp/article/detail/6020
                 }
 
+                //cout << "linear_size " << linear_size << " left " << left << endl;
+
                 int linear_search_from_before = -1;
+                int linear_search_from_after = 0;
 
                 for (int fi_search = 0; fi_search < linear_size - left; fi_search++)
                 {
@@ -437,11 +440,15 @@ public:
                         linear_search_from_before += 1;
                         //cout << fi_add << " " << fx[fi_search] << " " << x << endl;
                     }
+                    else
+                    {
+                        linear_search_from_after += 1;
+                    }
                 }
 
                 int mod2 = linear_search_from_before & 2;
 
-                if (mod2 == 0 && range_query != 0)
+                if (mod2 == 0 && range_query != 0 && linear_search_from_after != 0)
                 {
                     int result = range_query;
                     sum += result;
@@ -459,16 +466,23 @@ public:
                 int returnY = now_linear_function->XtoY(x);
                 int ipx = x_width * returnY + x;
 
+                if (ipx >= x_width * y_hight)
+                {
+                    continue;
+                }
+
                 if (ipx + 1 < x_width * y_hight)
                 {
                     draw[ipx + 1] = 255;
                 }
-                if (ipx - 1 > 0)
+                if (ipx - 1 >= 0)
                 {
                     draw[ipx - 1] = 255;
                 }
 
                 draw[ipx] = 255;
+
+                cout << ipx << endl;
             }
         }
         cout << "出" << endl;
@@ -509,11 +523,11 @@ public:
         cout << "VertexControl コンストラクタ" << endl;
 
         //ここからテスト
-        AddVertexXyz("A", 0, 0, 0);
+        AddVertexXyz("A", 50, 50, 0);
         AddVertexXyz("B", 360, 360, 0);
         AddVertexXyz("C", 600, 400, 0);
-        AddVertexXyz("D", 700, 100, 0);
-        AddVertexXyz("E", 500, 300, 0);
+        AddVertexXyz("D", 1000, 150, 0);
+        AddVertexXyz("E", 200, 100, 0);
 
         AddSurface("S");
         AddVertexForSurface("S", "A");
