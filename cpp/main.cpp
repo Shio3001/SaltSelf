@@ -43,7 +43,7 @@ void OpenCvOutput(int draw_pointer[], int x_width, int y_hight)
 
             for (int c = 0; c < channel; c++)
             {
-                if (draw_pointer[ipx] == 255)
+                if (draw_pointer[ipx] == 255 || draw_pointer[ipx] == 100)
                 {
                     output_mat.at<cv::Vec3b>(y, x)[0] = draw_pointer[ipx];
                     output_mat.at<cv::Vec3b>(y, x)[1] = draw_pointer[ipx];
@@ -386,6 +386,24 @@ public:
         }
     }
 
+    void lineDraw(int ipx, int line_color)
+
+    {
+
+        if (ipx < x_width * y_hight && ipx >= 0)
+        {
+            draw[ipx] = line_color;
+        }
+        if (ipx + 1 < x_width * y_hight && ipx >= 0)
+        {
+            draw[ipx + 1] = line_color;
+        }
+        if (ipx < x_width * y_hight && ipx - 1 >= 0)
+        {
+            draw[ipx - 1] = line_color;
+        }
+    }
+
     void SurfaceCalculation()
     {
         cout << "SurfaceCalculation sta" << endl;
@@ -396,6 +414,22 @@ public:
 
         int linear_size = m_linear_function_data.size();
 
+        cout << "み" << endl;
+        for (int x = 0; x < x_width; x++)
+        {
+            for (int fi_add = 0; fi_add < linear_size; fi_add++)
+            {
+                cout << "now_linear_function" << endl;
+                LinearFunction *now_linear_function = m_linear_function_data[fi_add];
+                cout << "now_linear_function2" << endl;
+                int returnY = now_linear_function->XtoY(x);
+                int ipx = x_width * returnY + x;
+
+                cout << ipx << endl;
+            }
+        }
+        cout << "出" << endl;
+
         for (int y = 0; y < y_hight; y++)
         {
             for (int x = 0; x < x_width; x++)
@@ -405,19 +439,27 @@ public:
                 int *fx = new int[linear_size];
 
                 int left = 0;
-
-                int range_query = 1;
+                int range_query = 0;
 
                 for (int fi_add = 0; fi_add < linear_size; fi_add++)
                 {
+
                     LinearFunction *now_linear_function = m_linear_function_data[fi_add];
                     int returnX = now_linear_function->YtoX(y);
 
                     int now_range_query = now_linear_function->RangeQuery(y);
 
+                    if (x == 190 && y == 72)
+                    {
+                        cout << "特定箇所(A0)" << now_range_query << endl;
+                    }
+
                     if (now_range_query != 0)
                     {
                         fx[fi_add - left] = returnX;
+
+                        int returnX_px = x_width * y + returnX;
+                        lineDraw(returnX_px, 255);
                     }
                     else
                     {
@@ -425,10 +467,9 @@ public:
                     }
 
                     range_query += now_range_query;
+
                     //ソート https://codezine.jp/article/detail/6020
                 }
-
-                //cout << "linear_size " << linear_size << " left " << left << endl;
 
                 int linear_search_from_before = -1;
                 int linear_search_from_after = 0;
@@ -438,17 +479,22 @@ public:
                     if (fx[fi_search] <= x)
                     {
                         linear_search_from_before += 1;
-                        //cout << fi_add << " " << fx[fi_search] << " " << x << endl;
                     }
                     else
                     {
                         linear_search_from_after += 1;
                     }
+                    if (x == 190 && y == 72)
+                    {
+                        cout << "特定箇所(A1)" << linear_search_from_before << " " << linear_search_from_after << endl;
+                    }
                 }
 
                 int mod2 = linear_search_from_before & 2;
 
-                if (mod2 == 0 && range_query != 0 && linear_search_from_after != 0)
+                //cout << "linear_size " << linear_size << " left " << left << endl;
+
+                if (mod2 == 0 && range_query != 0 && linear_search_from_after > 0) //
                 {
                     int result = range_query;
                     sum += result;
@@ -457,35 +503,6 @@ public:
                 delete[] fx;
             }
         }
-        cout << "み" << endl;
-        for (int x = 0; x < x_width; x++)
-        {
-            for (int fi_add = 0; fi_add < linear_size; fi_add++)
-            {
-                LinearFunction *now_linear_function = m_linear_function_data[fi_add];
-                int returnY = now_linear_function->XtoY(x);
-                int ipx = x_width * returnY + x;
-
-                if (ipx >= x_width * y_hight)
-                {
-                    continue;
-                }
-
-                if (ipx + 1 < x_width * y_hight)
-                {
-                    draw[ipx + 1] = 255;
-                }
-                if (ipx - 1 >= 0)
-                {
-                    draw[ipx - 1] = 255;
-                }
-
-                draw[ipx] = 255;
-
-                cout << ipx << endl;
-            }
-        }
-        cout << "出" << endl;
 
         auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
@@ -497,6 +514,7 @@ public:
         cout << "SurfaceCalculation end" << endl;
 
         OpenCvOutput(draw, x_width, y_hight);
+        delete[] draw;
     }
     void FunctionCalculation()
     {
@@ -526,7 +544,7 @@ public:
         AddVertexXyz("A", 50, 50, 0);
         AddVertexXyz("B", 360, 360, 0);
         AddVertexXyz("C", 600, 400, 0);
-        AddVertexXyz("D", 1000, 150, 0);
+        AddVertexXyz("D", 1000, 0, 0);
         AddVertexXyz("E", 200, 100, 0);
 
         AddSurface("S");
@@ -621,12 +639,21 @@ public:
 int main()
 {
     VertexControl *vertex_control = new VertexControl;
-
     std::vector<std::string> test_get_xyz_key = vertex_control->GetVertexXyzDataKey();
-    for (int i = 0; i < test_get_xyz_key.size(); i++) //テスト用コード
+
+    cout << "main GetVertexXyzDataKey終了" << endl;
+
+    //int test_get_xyz_key.size();
+
+    int test_get_xyz_key_size = test_get_xyz_key.size();
+
+    for (int i = 0; i < test_get_xyz_key_size; i++) //テスト用コード
     {
-        cout << test_get_xyz_key[i] << endl;
+        cout << test_get_xyz_key[i] << i << endl;
     }
+
+    delete vertex_control;
+    cout << "終了" << endl;
 
     //vertex_control->DeleteVertexXyz(key); //テスト用コード
 }
