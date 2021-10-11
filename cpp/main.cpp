@@ -197,7 +197,7 @@ private:
     int m_mode;
 
     double m0_a;
-    int m0_b;
+    double m0_b;
     int m0_x1;
     int m0_x2;
 
@@ -215,7 +215,7 @@ public:
     {
         cout << "LinearFunction デストラクタ" << endl;
     }
-    void SetModeDiagonal(double send_a, int send_b, int send_x1, int send_x2) //mode0
+    void SetModeDiagonal(double send_a, double send_b, int send_x1, int send_x2) //mode0
     {
         m0_a = send_a;   //傾き
         m0_b = send_b;   //定数 １次関数のあれ
@@ -239,15 +239,42 @@ public:
         return m_mode;
     }
 
-    int RangeQuery(int y)
+    int GetA()
+    {
+        return m0_a;
+    }
+
+    int RangeQueryX(int x)
+    {
+        int result;
+        if (m_mode == 0) //傾きが垂直ではない場合
+        {
+            bool x1x2 = m0_x1 <= x && x <= m0_x2;
+            bool x2x1 = m0_x2 <= x && x <= m0_x1;
+            int resultX = x1x2 || x2x1 ? 1 : 0;
+
+            result = resultX;
+
+            //cout << "result x1x2 " << x1x2 << " x2x1 " << x2x1 << " x " << x << " y " << y << " x1 " << x1 << " x2 " << x2 << endl;
+        }
+        if (m_mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
+        {
+
+            int resultY = x == m1_fx ? 1 : 0;
+
+            result = resultY;
+        }
+        return result;
+    }
+    int RangeQueryY(int y)
     {
         int result;
         if (m_mode == 0) //傾きが垂直ではない場合
         {
             double x = (y - m0_b) / m0_a;
 
-            bool x1x2 = m0_x1 < x && x < m0_x2;
-            bool x2x1 = m0_x2 < x && x < m0_x1;
+            bool x1x2 = m0_x1 <= x && x <= m0_x2;
+            bool x2x1 = m0_x2 <= x && x <= m0_x1;
             int resultX = x1x2 || x2x1 ? 1 : 0;
 
             result = resultX;
@@ -264,8 +291,7 @@ public:
         }
         return result;
     }
-
-    int YtoX(int y)
+    int YtoX(double y)
     {
         //int region = y > a * x + b ? 1 : -1; //領域が上か否か
 
@@ -281,7 +307,7 @@ public:
         }
         return returnX;
     }
-    int XtoY(int x)
+    int XtoY(double x)
     {
         int y = m0_a * x + m0_b;
         return y;
@@ -371,7 +397,7 @@ public:
             else
             {
                 double slope = y_distance / x_distance;
-                int b = y1 - slope * x1;
+                double b = y1 - slope * x1;
                 cout << "slope " << slope << " b " << b << endl;
 
                 linear_function->SetModeDiagonal(slope, b, x1, x2);
@@ -393,14 +419,14 @@ public:
         {
             draw[ipx] = line_color;
         }
-        if (ipx + 1 < x_width * y_hight && ipx >= 0)
-        {
-            draw[ipx + 1] = line_color;
-        }
-        if (ipx < x_width * y_hight && ipx - 1 >= 0)
-        {
-            draw[ipx - 1] = line_color;
-        }
+        // if (ipx + 1 < x_width * y_hight && ipx >= 0)
+        // {
+        //     draw[ipx + 1] = line_color;
+        // }
+        // if (ipx < x_width * y_hight && ipx - 1 >= 0)
+        // {
+        //     draw[ipx - 1] = line_color;
+        // }
     }
 
     void SurfaceCalculation()
@@ -440,46 +466,64 @@ public:
             }
         }
 
-        int debug_x = 100;
-        int debug_y = 50;
+        int debug_x = 501;
+        int debug_y = 200;
 
-        for (int y = 0; y < y_hight; y++)
+        cout << "本処理開始" << endl;
+
+        for (int x = 0; x < x_width; x++)
         {
+            //xがわかっていればできることを書く
 
-            for (int x = 0; x < x_width; x++)
+            int *fy = new int[linear_size];
+            int left = 0;
+            int range_query = 0;
+
+            for (int fi_add = 0; fi_add < linear_size; fi_add++)
             {
-                int ipx = x_width * y + x;
+                //辺データがわかるようにならないとできないことを書く
 
-                int *fx = new int[linear_size];
+                LinearFunction *now_linear_function = m_linear_function_data[fi_add];
 
-                int left = 0;
-                int range_query = 0;
+                int mode = now_linear_function->GetMode();
+                double fa = now_linear_function->GetA();
 
-                int corner = 0;
+                double y_time_double = y_hight;
 
-                for (int fi_add = 0; fi_add < linear_size; fi_add++)
+                if (mode == 0 && fa > 1)
                 {
+                    y_time_double *= fa;
+                }
 
-                    LinearFunction *now_linear_function = m_linear_function_data[fi_add];
-                    int returnX = now_linear_function->YtoX(y);
-                    int now_range_query = now_linear_function->RangeQuery(y);
+                int y_time_int = std::round(y_time_double) - 1;
+
+                for (int yloop = 0; yloop < y_time_int; yloop++)
+                {
+                    //1pxづつすることを書く
+
+                    double y = yloop / y_time_double;
+                    int y_round = std::round(y);
+
+                    int ipx = x_width * y_round + x;
+
+                    int returnY = now_linear_function->XtoY(x);
+                    int now_range_query = now_linear_function->RangeQueryX(x);
 
                     if (x == debug_x && y == debug_y)
                     {
                         cout << "特定箇所(A0)" << now_range_query << endl;
                     }
 
-                    if (returnX == x)
-                    {
-                        corner++;
-                    }
+                    int returnY_px = x_width * returnY + x;
 
-                    int returnX_px = x_width * y + returnX;
+                    bool equal_flag = false;
 
-                    if (now_range_query != 0)
+                    //cout << "江坂この電車は" << endl;
+
+                    if (now_range_query != 0 && !equal_flag)
                     {
-                        lineDraw(returnX_px, 255);
-                        fx[fi_add - left] = returnX;
+                        lineDraw(returnY_px, 255);
+                        fy[fi_add - left] = returnY;
                     }
                     else
                     {
@@ -488,53 +532,37 @@ public:
 
                     range_query += now_range_query;
 
+                    //cout << "この駅までです" << endl;
                     //ソート https://codezine.jp/article/detail/6020
                 }
+            }
 
-                if (corner > 1)
-                {
-                    cout << "corner" << corner << " x " << x << " y " << y << endl;
-                }
-
+            for (int y = 0; y < y_hight; y++)
+            {
                 int linear_search_from_before = -1;
 
-                for (int fi_search = 0; fi_search < linear_size - left; fi_search++)
+                for (int fi_add2 = 0; fi_add2 < linear_size - left; fi_add2++)
                 {
-                    if (fx[fi_search] <= x && corner <= 1)
+                    int this_linear_y = fy[fi_add2 - left];
+
+                    if (y >= this_linear_y)
                     {
                         linear_search_from_before += 1;
                     }
-
-                    if (x == debug_x && y == debug_y)
-                    {
-                        cout << "特定箇所(A1)" << linear_search_from_before << endl;
-                    }
                 }
 
-                int linear_search_from_after = linear_size - left - linear_search_from_before;
-
-                if (x == debug_x && y == debug_y)
-                {
-                    cout << "特定箇所(A2)" << linear_search_from_before << endl;
-                }
-
+                int ipx = x_width * y + x;
                 int mod2 = linear_search_from_before % 2;
 
-                //cout << "linear_size " << linear_size << " left " << left << endl;
-                if (x == debug_x && y == debug_y)
+                if (mod2 == 0 && range_query > 0) //
                 {
-                    cout << "特定箇所(A3)" << mod2 << " " << range_query << endl;
-                }
-
-                if (mod2 == 0 && range_query != 0) //
-                {
-
                     int result = range_query;
                     sum += result;
                     draw[ipx] = result * 83;
                 }
-                delete[] fx;
             }
+
+            delete[] fy;
         }
 
         auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
@@ -545,6 +573,10 @@ public:
         cout << sum << endl;
 
         cout << "SurfaceCalculation end" << endl;
+
+        int debug_ipx = x_width * debug_y + debug_x;
+
+        lineDraw(debug_ipx, 83);
 
         OpenCvOutput(draw, x_width, y_hight);
         delete[] draw;
@@ -575,13 +607,17 @@ public:
 
         //ここからテスト
         AddVertexXyz("A", 50, 50, 0);
-        AddVertexXyz("B", 1000, 700, 0);
-        AddVertexXyz("C", 70, 600, 0);
+        AddVertexXyz("B", 100, 700, 0);
+        AddVertexXyz("C", 500, 200, 0);
+        AddVertexXyz("D", 1200, 400, 0);
+        AddVertexXyz("E", 1000, 20, 0);
 
         AddSurface("S");
         AddVertexForSurface("S", "A");
         AddVertexForSurface("S", "B");
         AddVertexForSurface("S", "C");
+        AddVertexForSurface("S", "D");
+        AddVertexForSurface("S", "E");
 
         SurfacePlaneCalculation("S");
     }
