@@ -5,7 +5,7 @@ OPENCV = /usr/local/Cellar/opencv/4.5.3_2/include/opencv4
 # -I$(OPENCV)
 
 main: main.cpp
-	g++ -o main main.cpp -std=c++14 `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
+	g++ -o main main.cpp -std=c++14 `pkg-config --cflags opencv4` `pkg-config --libs opencv4` -v
 
 # g++ -o main main.cpp -std=c++14 -c -I/Users/maruyama/opt/anaconda3/envs/py39/include/opencv4/
 
