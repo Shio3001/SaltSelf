@@ -283,7 +283,7 @@ public:
     {
         //int region = y > a * x + b ? 1 : -1; //領域が上か否か
 
-        int returnX = 1;
+        double returnX = 1;
 
         if (m_mode == 0) //傾きが垂直ではない場合
         {
@@ -293,11 +293,14 @@ public:
         {
             returnX = m1_fx;
         }
-        return returnX;
+
+        int returnX_int = std::round(returnX);
+        return returnX_int;
     }
     int XtoY(int x)
     {
-        int y = m0_a * x + m0_b;
+        double y = m0_a * x + m0_b;
+        int y_int = std::round(y);
         return y;
     }
 };
@@ -446,48 +449,56 @@ public:
         }
 
         int debug_x = 100;
-        int debug_y = 50;
-
+        int debug_y = 600;
         for (int y = 0; y < y_hight; y++)
         {
-            cout << "y" << endl;
-            for (int x_base = 0; x_base < x_width; x_base++)
+            for (int x = 0; x < x_width; x++)
             {
-                cout << "X一点開始" << endl;
-                vector<int> fx;
-                int *loop_increase = new int[linear_size];
+                int ipx = x_width * y + x;
+
+                int *fx = new int[linear_size];
+
+                int left = 0;
                 int range_query = 0;
-                cout << "交点処理開始" << endl;
+
+                int corner = 0;
+
                 for (int fi_add = 0; fi_add < linear_size; fi_add++)
                 {
+
                     LinearFunction *now_linear_function = m_linear_function_data[fi_add];
-
-                    double a = now_linear_function->GetA(1);
-                    if (a < 1)
-                    {
-                        a = 1;
-                    }
-                    int loop_increase_section = std::floor(a);
-                    loop_increase[fi_add] = loop_increase_section;
-                    for (int addx = 0; addx < loop_increase_section; addx++)
-                    {
-                        double decimal_part = (addx / loop_increase_section);
-                        double x = x_base + decimal_part;
-                        int x_int = std::floor(x);
-                    }
-
                     int returnX = now_linear_function->YtoX(y);
                     int now_range_query = now_linear_function->RangeQuery(y);
 
-                    if (x_base == debug_x && y == debug_y)
+                    if (returnX == x)
                     {
-                        cout << "特定箇所(A0)" << now_range_query << endl;
+                        corner++;
+                        cout << "接点" << x << " " << y << endl;
+                        if (x == debug_x && y == debug_y)
+                        {
+                            cout << "特定箇所(corner) " << corner << endl;
+                        }
+                        if (corner > 1)
+                        {
+                            cout << "[ 交点 ]" << corner << " " << x << " " << y << endl;
+                        }
                     }
 
-                    if (now_range_query != 0)
+                    bool fx_add_bool = now_range_query != 0 && corner <= 1;
+
+                    if (x == debug_x && y == debug_y)
+                    {
+                        cout << "特定箇所(A0)" << now_range_query << " " << fx_add_bool << endl;
+                    }
+
+                    if (fx_add_bool)
                     {
                         PointDraw(returnX, y, 255);
-                        fx.push_back(returnX);
+                        fx[fi_add - left] = returnX;
+                    }
+                    else
+                    {
+                        left += 1;
                     }
 
                     range_query += now_range_query;
@@ -495,62 +506,48 @@ public:
                     //ソート https://codezine.jp/article/detail/6020
                 }
 
-                cout << "出力処理開始" << endl;
-
                 int linear_search_from_before = -1;
 
-                for (int fi_add = 0; fi_add < linear_size; fi_add++)
+                for (int fi_search = 0; fi_search < linear_size - left; fi_search++)
                 {
-                    int loop_increase_section_draw = loop_increase[fi_add];
-                    cout << "loop_increase_section 取得" << loop_increase_section_draw << endl;
-                    for (int addx = 0; addx < loop_increase_section_draw; addx++)
+
+                    if (fx[fi_search] <= x)
                     {
-                        cout << "取得" << endl;
-                        double decimal_part = (addx / loop_increase_section_draw);
-                        double x = x_base + decimal_part;
-                        int x_int = std::floor(x);
+                        linear_search_from_before += 1;
+                    }
 
-                        cout << "交点数処理開始" << endl;
-
-                        for (int fi_search = 0; fi_search < fx.size(); fi_search++)
-                        {
-                            if (fx[fi_search] <= x)
-                            {
-                                linear_search_from_before += 1;
-                            }
-
-                            if (x == debug_x && y == debug_y)
-                            {
-                                cout << "特定箇所(A1)" << linear_search_from_before << endl;
-                            }
-                        }
+                    if (x == debug_x && y == debug_y)
+                    {
+                        cout << "特定箇所(A1)" << linear_search_from_before << endl;
+                        cout << "fx x比較" << fx[fi_search] << " " << x << endl;
                     }
                 }
 
-                cout << "mode計算開始" << endl;
+                int linear_search_from_after = linear_size - left - linear_search_from_before;
+
+                if (x == debug_x && y == debug_y)
+                {
+                    cout << "特定箇所(A2)" << linear_search_from_before << endl;
+                }
+
                 int mod2 = linear_search_from_before % 2;
+
+                //cout << "linear_size " << linear_size << " left " << left << endl;
                 if (x == debug_x && y == debug_y)
                 {
                     cout << "特定箇所(A3)" << mod2 << " " << range_query << endl;
                 }
 
-                cout << "打" << endl;
-
                 if (mod2 == 0 && range_query != 0) //
                 {
+
                     int result = range_query;
                     sum += result;
-                    PointDraw(x, y, result * 83);
+                    draw[ipx] = result * 83;
                 }
-
-                cout << "小数点追加処理終了" << endl;
-                cout << "開放前" << endl;
-                delete[] loop_increase;
-                cout << "一周" << endl;
+                delete[] fx;
             }
-            cout << "X行列終了" << endl;
         }
-
         auto sec_since_epoch2 = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
         cout << sec_since_epoch1 << endl;
