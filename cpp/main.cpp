@@ -260,8 +260,8 @@ public:
         {
             double x = (y - m0_b) / m0_a;
 
-            bool x1x2 = m0_x1 < x && x < m0_x2;
-            bool x2x1 = m0_x2 < x && x < m0_x1;
+            bool x1x2 = m0_x1 <= x && x <= m0_x2;
+            bool x2x1 = m0_x2 <= x && x <= m0_x1;
             int resultX = x1x2 || x2x1 ? 1 : 0;
 
             result = resultX;
@@ -448,7 +448,7 @@ public:
             }
         }
 
-        int debug_x = 100;
+        int debug_x = 70;
         int debug_y = 600;
         for (int y = 0; y < y_hight; y++)
         {
@@ -518,12 +518,11 @@ public:
 
                     if (x == debug_x && y == debug_y)
                     {
+                        cout << "比較辺 " << fi_search << " " << linear_size - left << " " << left << endl;
                         cout << "特定箇所(A1)" << linear_search_from_before << endl;
                         cout << "fx x比較" << fx[fi_search] << " " << x << endl;
                     }
                 }
-
-                int linear_search_from_after = linear_size - left - linear_search_from_before;
 
                 if (x == debug_x && y == debug_y)
                 {
