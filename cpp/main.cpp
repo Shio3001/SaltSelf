@@ -197,7 +197,7 @@ private:
     int m_mode;
 
     double m0_a;
-    int m0_b;
+    double m0_b;
     int m0_x1;
     int m0_x2;
 
@@ -215,7 +215,7 @@ public:
     {
         cout << "LinearFunction デストラクタ" << endl;
     }
-    void SetModeDiagonal(double send_a, int send_b, int send_x1, int send_x2) //mode0
+    void SetModeDiagonal(double send_a, double send_b, int send_x1, int send_x2) //mode0
     {
         m0_a = send_a;   //傾き
         m0_b = send_b;   //定数 １次関数のあれ
@@ -371,7 +371,7 @@ public:
             else
             {
                 double slope = y_distance / x_distance;
-                int b = y1 - slope * x1;
+                double b = y1 - slope * x1;
                 cout << "slope " << slope << " b " << b << endl;
 
                 linear_function->SetModeDiagonal(slope, b, x1, x2);
