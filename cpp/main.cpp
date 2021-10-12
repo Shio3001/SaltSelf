@@ -543,7 +543,7 @@ public:
 
                 for (int fi_add2 = 0; fi_add2 < linear_size - left; fi_add2++)
                 {
-                    int this_linear_y = fy[fi_add2 - left];
+                    int this_linear_y = fy[fi_add2];
 
                     if (y >= this_linear_y)
                     {
