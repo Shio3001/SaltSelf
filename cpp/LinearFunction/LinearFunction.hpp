@@ -1,6 +1,7 @@
-#ifndef C_HPP
-#define C_HPP
-
+#ifndef LinearFunction_include
+#define LinearFunction_include
+#include <bits/stdc++.h>
+using namespace std;
 class LinearFunction
 {
 private:

@@ -1,5 +1,7 @@
-#ifndef C_HPP
-#define C_HPP
+#ifndef VertexControl_include
+#define VertexControl_include
+#include <bits/stdc++.h>
+using namespace std;
 class VertexControl
 {
 private:
@@ -17,11 +19,13 @@ public:
         AddVertexXyz("A", 50, 50, 0);
         AddVertexXyz("B", 1000, 700, 0);
         AddVertexXyz("C", 70, 600, 0);
+        AddVertexXyz("D", 100, 400, 0);
 
         AddSurface("S");
         AddVertexForSurface("S", "A");
         AddVertexForSurface("S", "B");
         AddVertexForSurface("S", "C");
+        AddVertexForSurface("S", "D");
 
         SurfacePlaneCalculation("S");
     }

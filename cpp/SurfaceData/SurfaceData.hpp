@@ -1,5 +1,8 @@
-#ifndef C_HPP
-#define C_HPP
+#ifndef SurfaceData_include
+#define SurfaceData_include
+#include <bits/stdc++.h>
+#include "../VertexXyzData/VertexXyzData.hpp"
+using namespace std;
 class SurfaceData
 {
 private:

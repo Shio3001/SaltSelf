@@ -13,7 +13,6 @@ using namespace std;
 //namespace np = boost::python::numpy;
 #include <chrono>
 #include <ctime>
-#include <opencv2/opencv.hpp>
 
 #include "VertexXyzData/VertexXyzData.hpp"
 #include "SurfaceData/SurfaceData.hpp"

@@ -1,6 +1,7 @@
-#ifndef C_HPP
-#define C_HPP
-
+#ifndef VertexXyzData_include
+#define VertexXyzData_include
+#include <bits/stdc++.h>
+using namespace std;
 class VertexXyzData
 {
 private:

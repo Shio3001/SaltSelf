@@ -1,5 +1,5 @@
 #include "PlaneCalculation.hpp"
-void PlaneCalculation::Slope()
+void PlaneCalculationControl::Slope()
 {
     int vertex_size = surface_data->GetVertexSize();
 

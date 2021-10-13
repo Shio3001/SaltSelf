@@ -1,5 +1,5 @@
 #include "PlaneCalculation.hpp"
-void PlaneCalculation::SurfaceCalculation()
+void PlaneCalculationControl::SurfaceCalculation()
 {
     //cout << "SurfaceCalculation sta" << endl;
 
