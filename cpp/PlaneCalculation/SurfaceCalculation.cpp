@@ -54,10 +54,12 @@ void PlaneCalculationControl::SurfaceCalculation()
             {
 
                 LinearFunction *now_linear_function = m_linear_function_data[fi_add];
-                int returnX = now_linear_function->YtoX(y);
+                double returnX = now_linear_function->YtoX(y);
                 int now_range_query = now_linear_function->RangeQuery(y);
 
-                if (returnX == x)
+                double returnX_floor = std::floor(returnX);
+
+                if (x == returnX_floor)
                 {
                     corner++;
                     //cout << "接点" << x << " " << y << endl;
@@ -65,13 +67,16 @@ void PlaneCalculationControl::SurfaceCalculation()
                     {
                         //cout << "特定箇所(corner) " << corner << endl;
                     }
-                    if (corner > 1)
-                    {
-                        //cout << "[ 交点 ]" << corner << " " << x << " " << y << endl;
-                    }
+
+                    cout << "[ 交点 ]" << corner << " " << x << " " << y << endl;
                 }
 
                 bool fx_add_bool = now_range_query != 0 && corner <= 1;
+
+                if (returnX == x && y == debug_y)
+                {
+                    cout << " fx " << x << " " << y << endl;
+                }
 
                 if (x == debug_x && y == debug_y)
                 {

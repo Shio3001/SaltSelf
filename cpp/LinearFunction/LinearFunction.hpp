@@ -71,8 +71,25 @@ public:
         {
             double x = (y - m0_b) / m0_a;
 
-            bool x1x2 = m0_x1 <= x && x <= m0_x2;
-            bool x2x1 = m0_x2 <= x && x <= m0_x1;
+            bool x1x2;
+            bool x2x1;
+
+            if (m0_a > 0)
+            {
+                x1x2 = m0_x1 <= x && x < m0_x2;
+                x2x1 = m0_x2 <= x && x < m0_x1;
+            }
+            else if (m0_a < 0)
+            {
+                x1x2 = m0_x1 < x && x <= m0_x2;
+                x2x1 = m0_x2 < x && x <= m0_x1;
+            }
+            else
+            {
+                x1x2 = false;
+                x2x1 = false;
+            }
+
             int resultX = x1x2 || x2x1 ? 1 : 0;
 
             result = resultX;
@@ -90,7 +107,7 @@ public:
         return result;
     }
 
-    int YtoX(int y)
+    double YtoX(int y)
     {
         //int region = y > a * x + b ? 1 : -1; //領域が上か否か
 
@@ -105,13 +122,12 @@ public:
             returnX = m1_fx;
         }
 
-        int returnX_int = std::round(returnX);
-        return returnX_int;
+        return returnX;
     }
-    int XtoY(int x)
+    double XtoY(int x)
     {
         double y = m0_a * x + m0_b;
-        int y_int = std::round(y);
+        double y_int = y;
         return y;
     }
 };
