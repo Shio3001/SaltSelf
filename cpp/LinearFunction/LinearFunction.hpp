@@ -74,21 +74,24 @@ public:
             bool x1x2;
             bool x2x1;
 
-            if (m0_a > 0)
-            {
-                x1x2 = m0_x1 <= x && x < m0_x2;
-                x2x1 = m0_x2 <= x && x < m0_x1;
-            }
-            else if (m0_a < 0)
-            {
-                x1x2 = m0_x1 < x && x <= m0_x2;
-                x2x1 = m0_x2 < x && x <= m0_x1;
-            }
-            else
-            {
-                x1x2 = false;
-                x2x1 = false;
-            }
+            // if (m0_a > 0)
+            // {
+            //     x1x2 = m0_x1 <= x && x < m0_x2;
+            //     x2x1 = m0_x2 <= x && x < m0_x1;
+            // }
+            // else if (m0_a < 0)
+            // {
+            //     x1x2 = m0_x1 < x && x <= m0_x2;
+            //     x2x1 = m0_x2 < x && x <= m0_x1;
+            // }
+            // else
+            // {
+            //     x1x2 = false;
+            //     x2x1 = false;
+            // }
+
+            x1x2 = m0_x1 <= x && x <= m0_x2;
+            x2x1 = m0_x2 <= x && x <= m0_x1;
 
             int resultX = x1x2 || x2x1 ? 1 : 0;
 

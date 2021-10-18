@@ -18,8 +18,6 @@ void PlaneCalculationControl::SurfaceCalculation()
             LinearFunction *now_linear_function = m_linear_function_data[fi_add];
             //cout << "now_linear_function2" << endl;
             int returnY = now_linear_function->XtoY(x);
-            int ipx = x_width * returnY + x;
-
             //cout << ipx << endl;
         }
     }
@@ -41,7 +39,6 @@ void PlaneCalculationControl::SurfaceCalculation()
     {
         for (int x = 0; x < x_width; x++)
         {
-            int ipx = x_width * y + x;
 
             int *fx = new int[linear_size];
 
@@ -58,17 +55,31 @@ void PlaneCalculationControl::SurfaceCalculation()
                 int now_range_query = now_linear_function->RangeQuery(y);
 
                 double returnX_floor = std::floor(returnX);
+                double difference = returnX - returnX_floor;
+
+                if (difference != 0)
+                {
+                    returnX_floor++;
+                }
+
+                if (45 < x && x < 55 && y == 50)
+                {
+                    cout << fi_add << " " << x << " " << y << " " << returnX_floor << endl;
+                }
 
                 if (x == returnX_floor)
                 {
-                    corner++;
+                    //corner++;
                     //cout << "接点" << x << " " << y << endl;
                     if (x == debug_x && y == debug_y)
                     {
                         //cout << "特定箇所(corner) " << corner << endl;
                     }
 
-                    cout << "[ 交点 ]" << corner << " " << x << " " << y << endl;
+                    if (corner >= 2)
+                    {
+                        cout << "[ 交点 ]" << corner << " " << x << " " << y << endl;
+                    }
                 }
 
                 bool fx_add_bool = now_range_query != 0 && corner <= 1;
@@ -129,12 +140,17 @@ void PlaneCalculationControl::SurfaceCalculation()
                 //cout << "特定箇所(A3)" << mod2 << " " << range_query << endl;
             }
 
+            // if (mod2 == 1 && range_query != 0)
+            // {
+            //     cout << linear_search_from_before << " " << range_query << " " << x << " " << y << endl;
+            // }
+
             if (mod2 == 0 && range_query != 0) //
             {
 
                 int result = range_query;
                 sum += result;
-                draw[ipx] = result * 83;
+                PointDraw(x, y, result * 83);
             }
             delete[] fx;
         }

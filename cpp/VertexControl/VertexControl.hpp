@@ -17,7 +17,7 @@ public:
 
         //ここからテスト
         AddVertexXyz("A", 50, 50, 0);
-        AddVertexXyz("B", 1000, 700, 0);
+        AddVertexXyz("B", 5000, 700, 0);
         AddVertexXyz("C", 70, 600, 0);
         AddVertexXyz("D", 20, 400, 0);
 

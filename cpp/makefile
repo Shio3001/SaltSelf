@@ -22,12 +22,12 @@ OPENCV = /usr/local/Cellar/opencv/4.5.3_2/include/opencv4
 # 	g++ -c PlaneCalculation/OpenCvOutput.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
 
 main: main.cpp
-	g++ -c PlaneCalculation/PointDraw.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
-	g++ -c PlaneCalculation/Slope.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
-	g++ -c PlaneCalculation/SurfaceCalculation.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
-	g++ -c PlaneCalculation/GetTime.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
-	g++ -c PlaneCalculation/GetTime.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
+	g++ -c PlaneCalculation/PointDraw.cpp -std=c++14
+	g++ -c PlaneCalculation/Slope.cpp -std=c++14
+	g++ -c PlaneCalculation/SurfaceCalculation.cpp
+	g++ -c PlaneCalculation/GetTime.cpp -std=c++14
 	g++ -c PlaneCalculation/OpenCvOutput.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
+	g++ -o main.a main.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -v -std=c++14 `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
 	g++ -o main main.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -v -std=c++14 `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
 
 # g++ -o main main.cpp -std=c++14 -c -I/Users/maruyama/opt/anaconda3/envs/py39/include/opencv4/
