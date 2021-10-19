@@ -3,7 +3,7 @@
 
 using namespace emscripten;
 
-int main()
+int main(char ** argv)
 {
   printf("Hello World\n");
   return 334;
