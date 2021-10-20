@@ -1,17 +1,8 @@
-async function tokushima() {
-    const importObject = { imports: { imported_func: arg => console.log(arg) } };
+var importObject = { wasi_snapshot_preview1: { proc_exit: arg => console.log(arg) } };
 
-    const obj = await WebAssembly.instantiateStreaming(fetch('hello.wasm'), importObject);
-    const arg1 = "引数1";
-    const arg2 = "引数2";
-
-    const result = obj.instance.exports.exported_func(arg1, arg2);
-    // exproted_func関数の戻り値がresult
-
-    console.log(result)
-    return result;
-};
-
-tokushima().then(result => {
-    console.log(result); // => 15
-});
+WebAssembly.instantiateStreaming(fetch('hello.wasm'), importObject)
+  .then(obj => {
+    var re = obj.instance.exports.tokushima()
+    console.log(re)
+    // Do something with the results!
+  });
