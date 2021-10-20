@@ -28,6 +28,10 @@ public:
   }
 };
 
+void GetJs()
+{
+}
+
 EMSCRIPTEN_BINDINGS(hello)
 {
   function("Kagawa", &Kagawa);
@@ -38,4 +42,20 @@ EMSCRIPTEN_BINDINGS(hello)
       .function("station_edit", &Miyoshi::station_edit);
 }
 
-// /https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html
+//参考にした記事
+
+//https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html
+
+//https://qiita.com/advent-calendar/2019/wasm
+
+//https://qiita.com/soramimi_jp/items/1b7ed0ddcefb0f4a7172
+
+//https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html
+
+//https://semiexp.net/blog/2017-05-13-emscripten_bind.html
+
+// WebAssembly
+
+// js c++の相互連携について
+//https://qiita.com/nokotan/items/35bea8b895eb7c9682de
+//https://qiita.com/chikoski/items/9ac019a86095cfcf2c73
