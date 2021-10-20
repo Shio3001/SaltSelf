@@ -1,8 +1,11 @@
-var importObject = { wasi_snapshot_preview1: { proc_exit: arg => console.log(arg) } };
+var Module = {
+  onRuntimeInitialized: function () {
+    console.log('香川に行って : ' + Module.Kagawa());
 
-WebAssembly.instantiateStreaming(fetch('hello.wasm'), importObject)
-  .then(obj => {
-    var re = obj.instance.exports.tokushima()
-    console.log(re)
-    // Do something with the results!
-  });
+    var miyoshistation = new Module.Miyoshi();
+    console.log('三好市の中心駅は : ' + miyoshistation.get_station());
+    miyoshistation.station_edit("窪川");
+    console.log('四万十町の中心駅は : ' + miyoshistation.get_station());
+
+  }
+};
