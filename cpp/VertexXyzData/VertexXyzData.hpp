@@ -1,7 +1,6 @@
 #ifndef VertexXyzData_include
 #define VertexXyzData_include
-#include <bits/stdc++.h>
-using namespace std;
+#include "../stdload/stdload.hpp"
 class VertexXyzData
 {
 private:

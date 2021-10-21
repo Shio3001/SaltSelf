@@ -1,7 +1,7 @@
 #ifndef LinearFunction_include
 #define LinearFunction_include
-#include <bits/stdc++.h>
-using namespace std;
+#include "../stdload/stdload.hpp"
+
 class LinearFunction
 {
 private:

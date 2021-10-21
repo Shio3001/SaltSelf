@@ -25,10 +25,12 @@ user_name = $(shell whoami)
 main: main.cpp
 	g++ -c PlaneCalculation/PointDraw.cpp -std=c++14
 	g++ -c PlaneCalculation/Slope.cpp -std=c++14
-	g++ -c PlaneCalculation/SurfaceCalculation.cpp
+	g++ -c PlaneCalculation/SurfaceCalculation.cpp -std=c++14
 	g++ -c PlaneCalculation/GetTime.cpp -std=c++14
 	g++ -c PlaneCalculation/OpenCvOutput.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
 	g++ -c integration.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -std=c++14
+
+	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc --bind integration.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -s WASM=1 -o forjs/main.js
 
 # ここからmain
 

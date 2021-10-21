@@ -1,5 +1,6 @@
 #ifndef ViewPxData_include
 #define ViewPxData_include
+#include "../stdload/stdload.hpp"
 class ViewPxData
 {
 private:
@@ -33,6 +34,15 @@ public:
             *this_access = color;
         }
     }
+    int Get_x_width()
+    {
+        return x_width;
+    }
+    int Get_y_hight()
+    {
+        return y_hight;
+    }
+
     int *GetDraw()
     {
         return draw;

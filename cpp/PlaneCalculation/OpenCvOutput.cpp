@@ -7,7 +7,7 @@ void PlaneCalculationControl::OpenCvOutput()
 
     cv::Mat output_mat(cv::Size(x_width, y_hight), CV_8UC3, cv::Scalar(0, 0, 0));
 
-    int draw_pointer = view_px_data.GetDraw();
+    int* draw_pointer = view_px_data->GetDraw();
 
     for (int y = 0; y < y_hight; y++)
     {
@@ -19,8 +19,6 @@ void PlaneCalculationControl::OpenCvOutput()
             //cout << draw_pointer[ipx] << endl;
 
             //int cvy = y_hight - y;
-
-
 
             for (int c = 0; c < channel; c++)
             {

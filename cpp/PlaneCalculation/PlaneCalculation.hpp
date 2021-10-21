@@ -1,7 +1,6 @@
 #ifndef PlaneCalculation_include
 #define PlaneCalculation_include
-#include <bits/stdc++.h>
-
+#include "../stdload/stdload.hpp"
 #include "../SurfaceData/SurfaceData.hpp"
 #include "../LinearFunction/LinearFunction.hpp"
 #include "../ViewPxData/ViewPxData.hpp"

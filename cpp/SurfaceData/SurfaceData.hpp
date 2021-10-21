@@ -1,8 +1,6 @@
 #ifndef SurfaceData_include
 #define SurfaceData_include
-#include <bits/stdc++.h>
-#include "../VertexXyzData/VertexXyzData.hpp"
-using namespace std;
+#include "../stdload/stdload.hpp"
 class SurfaceData
 {
 private:

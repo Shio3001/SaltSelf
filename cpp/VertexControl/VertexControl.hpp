@@ -1,6 +1,6 @@
 #ifndef VertexControl_include
 #define VertexControl_include
-#include <bits/stdc++.h>
+#include "../stdload/stdload.hpp"
 #include "../PlaneCalculation/PlaneCalculation.hpp"
 #include "../ViewPxData/ViewPxData.hpp"
 
@@ -43,6 +43,9 @@ public:
     void SurfacePlaneCalculation(std::string surface_key) //平面計算
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
+
+        int x_width = view_px_data->Get_x_width();
+        int y_hight = view_px_data->Get_y_hight();
 
         PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(x_width, y_hight, *surface_data, *view_px_data);
         plane_calculation_control->Slope();

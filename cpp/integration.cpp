@@ -1,18 +1,3 @@
-//3D処理用
-
-// 16ビット モノラル
-#include <bits/stdc++.h>
-#include <math.h>
-#include <stdio.h>
-#include <sys/time.h>
-//#include <boost/python.hpp>
-//#include <boost/python/numpy.hpp>
-#include <iomanip>
-using namespace std;
-//namespace py = boost::python;
-//namespace np = boost::python::numpy;
-#include <chrono>
-#include <ctime>
 
 #include "ViewPxData/ViewPxData.hpp"
 #include "VertexXyzData/VertexXyzData.hpp"
@@ -30,13 +15,14 @@ class Integration
 public:
     Integration()
     {
-        VertexControl *vertex_control = new VertexControl(&view_px_data);
+        VertexControl *vertex_control = new VertexControl(view_px_data);
         delete vertex_control;
     }
     ~Integration()
     {
+        delete view_px_data;
     }
-    ViewPxData GetViewPxDataHaveIntegration()
+    ViewPxData *GetViewPxData()
     {
         return view_px_data;
     }
