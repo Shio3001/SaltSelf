@@ -1,11 +1,13 @@
 #include <opencv2/opencv.hpp>
 #include "PlaneCalculation.hpp"
 
-void PlaneCalculationControl::OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
+void PlaneCalculationControl::OpenCvOutput()
 {
     int channel = 3;
 
     cv::Mat output_mat(cv::Size(x_width, y_hight), CV_8UC3, cv::Scalar(0, 0, 0));
+
+    int draw_pointer = view_px_data.GetDraw();
 
     for (int y = 0; y < y_hight; y++)
     {
@@ -17,6 +19,8 @@ void PlaneCalculationControl::OpenCvOutput(int *draw_pointer, int x_width, int y
             //cout << draw_pointer[ipx] << endl;
 
             //int cvy = y_hight - y;
+
+
 
             for (int c = 0; c < channel; c++)
             {

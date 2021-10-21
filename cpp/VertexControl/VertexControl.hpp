@@ -2,6 +2,7 @@
 #define VertexControl_include
 #include <bits/stdc++.h>
 #include "../PlaneCalculation/PlaneCalculation.hpp"
+#include "../ViewPxData/ViewPxData.hpp"
 
 using namespace std;
 class VertexControl
@@ -10,9 +11,10 @@ private:
     std::map<std::string, VertexXyzData *> m_vertex_data;
     std::map<std::string, SurfaceData *> m_surface_data;
 
-    ViewPxData *view_px_data_have_vertex_control;
-
     //std::map<std::string, EdgeData *> m_edge_data;
+
+    int x_width = 1280;
+    int y_hight = 720;
 
 public:
     VertexControl()
@@ -43,16 +45,12 @@ public:
     void SurfacePlaneCalculation(std::string surface_key) //平面計算
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
-        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data);
+        ViewPxData *view_px_data = ViewPxData(x_width, y_hight);
+
+        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(x_width, y_hight, *surface_data, *view_px_data);
         plane_calculation_control->Slope();
         plane_calculation_control->SurfaceCalculation();
-        view_px_data_have_vertex_control = plane_calculation_control->GetViewPxData();
         delete plane_calculation_control;
-    }
-
-    ViewPxData* GetViewPxDataHaveVertexControl()
-    {
-        return *view_px_data_have_vertex_control;
     }
 
     void SurfaceSpatialCalculation() //空間計算

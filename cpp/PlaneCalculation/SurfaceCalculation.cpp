@@ -161,9 +161,9 @@ void PlaneCalculationControl::SurfaceCalculation()
 
     //cout << "SurfaceCalculation end" << endl;
 
-    int *draw_pointer = view_px_data.GetDraw();
+    //int *draw_pointer = view_px_data.GetDraw();
 
-    OpenCvOutput(draw_pointer, x_width, y_hight);
+    OpenCvOutput();
 
     int sec_since_epoch3 = GetTime();
 

@@ -14,6 +14,7 @@ using namespace std;
 #include <chrono>
 #include <ctime>
 
+#include "ViewPxData/ViewPxData.hpp"
 #include "VertexXyzData/VertexXyzData.hpp"
 #include "SurfaceData/SurfaceData.hpp"
 #include "LinearFunction/LinearFunction.hpp"
