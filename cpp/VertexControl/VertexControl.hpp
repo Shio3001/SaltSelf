@@ -1,12 +1,16 @@
 #ifndef VertexControl_include
 #define VertexControl_include
 #include <bits/stdc++.h>
+#include "../PlaneCalculation/PlaneCalculation.hpp"
+
 using namespace std;
 class VertexControl
 {
 private:
     std::map<std::string, VertexXyzData *> m_vertex_data;
     std::map<std::string, SurfaceData *> m_surface_data;
+
+    ViewPxData *view_px_data_have_vertex_control;
 
     //std::map<std::string, EdgeData *> m_edge_data;
 
@@ -42,7 +46,13 @@ public:
         PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data);
         plane_calculation_control->Slope();
         plane_calculation_control->SurfaceCalculation();
+        view_px_data_have_vertex_control = plane_calculation_control->GetViewPxData();
         delete plane_calculation_control;
+    }
+
+    ViewPxData* GetViewPxDataHaveVertexControl()
+    {
+        return *view_px_data_have_vertex_control;
     }
 
     void SurfaceSpatialCalculation() //空間計算

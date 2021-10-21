@@ -20,17 +20,23 @@ using namespace std;
 #include "PlaneCalculation/PlaneCalculation.hpp"
 #include "VertexControl/VertexControl.hpp"
 
-int main()
+class Integration
 {
-    VertexControl *vertex_control = new VertexControl;
-    //ViewPxData GetViewPxDataHaveVertexControl = vertex_control->GetViewPxDataHaveVertexControl();
+    ViewPxData *ViewPxDataHaveIntegration;
 
-    //cout << "終了" << endl;
+public:
+    Integration()
+    {
+        VertexControl *vertex_control = new VertexControl;
+        ViewPxDataHaveIntegration = vertex_control->GetViewPxDataHaveVertexControl();
 
-    //vertex_control->DeleteVertexXyz(key); //テスト用コード
-}
-
-// g++ -o main main.cpp -std=c++14
-
-//https://ttsuki.github.io/styleguide/cppguide.ja.html#File_Names
-//グーグル命名規則
+        delete vertex_control;
+    }
+    ~Integration()
+    {
+    }
+    ViewPxData GetViewPxDataHaveIntegration()
+    {
+        return ViewPxDataHaveIntegration;
+    }
+};

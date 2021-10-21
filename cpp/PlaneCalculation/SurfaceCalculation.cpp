@@ -29,7 +29,7 @@ void PlaneCalculationControl::SurfaceCalculation()
         {
             LinearFunction *now_linear_function = m_linear_function_data[fi_add];
             int returnY = now_linear_function->XtoY(x);
-            PointDraw(x, returnY, 200);
+            view_px_data.PointDraw(x, returnY, 200);
         }
     }
 
@@ -96,7 +96,7 @@ void PlaneCalculationControl::SurfaceCalculation()
 
                 if (fx_add_bool)
                 {
-                    PointDraw(returnX, y, 255);
+                    view_px_data.PointDraw(returnX, y, 255);
                     fx[fi_add - left] = returnX;
                 }
                 else
@@ -150,7 +150,7 @@ void PlaneCalculationControl::SurfaceCalculation()
 
                 int result = range_query;
                 sum += result;
-                PointDraw(x, y, result * 83);
+                view_px_data.PointDraw(x, y, result * 83);
             }
             delete[] fx;
         }
@@ -161,9 +161,9 @@ void PlaneCalculationControl::SurfaceCalculation()
 
     //cout << "SurfaceCalculation end" << endl;
 
-    OpenCvOutput(draw, x_width, y_hight);
+    int *draw_pointer = view_px_data.GetDraw();
 
-    delete[] draw;
+    OpenCvOutput(draw_pointer, x_width, y_hight);
 
     int sec_since_epoch3 = GetTime();
 

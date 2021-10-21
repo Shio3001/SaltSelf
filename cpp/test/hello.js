@@ -11,7 +11,13 @@ function view() {
   var BP = get_time();
   // キャンバス全体のピクセル情報を取得
   var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+  var GP = get_time();
+
   var width = imageData.width, height = imageData.height;
+
+  var FP = get_time();
+
   var pixels = imageData.data;  // ピクセル配列：RGBA4要素で1ピクセル
 
   var CP = get_time();
@@ -23,7 +29,7 @@ function view() {
       // なんかピクセルに書き込む
       pixels[base + 0] = x;  // Red
       pixels[base + 1] = y;  // Green
-      pixels[base + 2] = x * y / 255;  // Blue
+      pixels[base + 2] = (x + y) / 2;  // Blue
       pixels[base + 3] = 255;  // Alpha
     }
   }
@@ -36,9 +42,14 @@ function view() {
   var EP = get_time();
 
   console.log((BP - AP) / 1000);
-  console.log((CP - BP) / 1000);
+  console.log((GP - BP) / 1000);
+  console.log((FP - GP) / 1000);
+  console.log((CP - FP) / 1000);
   console.log((DP - CP) / 1000);
   console.log((EP - DP) / 1000);
+
+  console.log("60fps参考数値 : " + 1 / 60)
+  console.log("30fps参考数値 : " + 1 / 30)
 
 }
 

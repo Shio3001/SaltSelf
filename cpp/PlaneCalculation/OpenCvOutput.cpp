@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include "PlaneCalculation.hpp"
 
-void PlaneCalculationControl::OpenCvOutput(int draw_pointer[], int x_width, int y_hight)
+void PlaneCalculationControl::OpenCvOutput(int *draw_pointer, int x_width, int y_hight)
 {
     int channel = 3;
 
