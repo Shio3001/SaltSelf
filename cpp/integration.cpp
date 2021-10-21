@@ -23,14 +23,14 @@ using namespace std;
 
 class Integration
 {
-    ViewPxData *ViewPxDataHaveIntegration;
+    int x_width = 1280;
+    int y_hight = 720;
+    ViewPxData *view_px_data = new ViewPxData(x_width, y_hight);
 
 public:
     Integration()
     {
-        VertexControl *vertex_control = new VertexControl;
-        ViewPxDataHaveIntegration = vertex_control->GetViewPxDataHaveVertexControl();
-
+        VertexControl *vertex_control = new VertexControl(&view_px_data);
         delete vertex_control;
     }
     ~Integration()
@@ -38,6 +38,6 @@ public:
     }
     ViewPxData GetViewPxDataHaveIntegration()
     {
-        return ViewPxDataHaveIntegration;
+        return view_px_data;
     }
 };

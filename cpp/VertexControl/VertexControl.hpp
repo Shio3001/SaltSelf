@@ -13,14 +13,12 @@ private:
 
     //std::map<std::string, EdgeData *> m_edge_data;
 
-    int x_width = 1280;
-    int y_hight = 720;
+    ViewPxData *view_px_data;
 
 public:
-    VertexControl()
+    VertexControl(ViewPxData *send_view_px_data)
     {
-        //cout << "VertexControl コンストラクタ" << endl;
-
+        view_px_data = send_view_px_data;
         //ここからテスト
         AddVertexXyz("A", 50, 50, 0);
         AddVertexXyz("B", 5000, 700, 0);
@@ -45,7 +43,6 @@ public:
     void SurfacePlaneCalculation(std::string surface_key) //平面計算
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
-        ViewPxData *view_px_data = ViewPxData(x_width, y_hight);
 
         PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(x_width, y_hight, *surface_data, *view_px_data);
         plane_calculation_control->Slope();
