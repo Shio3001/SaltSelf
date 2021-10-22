@@ -74,8 +74,8 @@ main: main.cpp
 
 # ここからmain
 
-	g++ -o main.a main.cpp $(cpp_a).o $(cpp_b).o $(cpp_c).o $(cpp_d).o $(cpp_e).o -std=c++14 $(opencvI) $(opencvL) 
-	g++ -o main main.cpp $(cpp_a).o $(cpp_b).o $(cpp_c).o $(cpp_d).o $(cpp_e).o -std=c++14 $(opencvI) $(opencvL) 
+	g++ -o main.a main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d)  -std=c++14 $(opencvI) $(opencvL) 
+	g++ -o main main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d) -std=c++14 $(opencvI) $(opencvL) 
 
 #ここからforjs
 

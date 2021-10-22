@@ -37,5 +37,5 @@ void PlaneCalculationControl::OpenCvOutput()
         }
     }
 
-    cv::imwrite("/Users/maruyama/Programs/MV55project/salt3DCG/cpp/output_mat.png", output_mat);
+    cv::imwrite("output_mat.png", output_mat);
 }
