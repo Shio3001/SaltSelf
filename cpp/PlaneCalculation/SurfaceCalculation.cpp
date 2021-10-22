@@ -54,7 +54,7 @@ void PlaneCalculationControl::SurfaceCalculation()
                 double returnX = now_linear_function->YtoX(y);
                 int now_range_query = now_linear_function->RangeQuery(y);
 
-                double returnX_floor = std::floor(returnX);
+                double returnX_floor = floor(returnX);
                 double difference = returnX - returnX_floor;
 
                 if (difference != 0)

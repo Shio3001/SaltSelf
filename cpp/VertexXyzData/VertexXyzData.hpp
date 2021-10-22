@@ -5,10 +5,10 @@ class VertexXyzData
 {
 private:
     int m_xyz[3] = {0, 0, 0};
-    std::string m_vertex_xyz_data_key;
+    string m_vertex_xyz_data_key;
 
 public:
-    VertexXyzData(std::string send_vertex_xyz_data_key)
+    VertexXyzData(string send_vertex_xyz_data_key)
     {
         m_vertex_xyz_data_key = send_vertex_xyz_data_key;
         //cout << "VertexXyzData コンストラクタ" << endl;
@@ -18,7 +18,7 @@ public:
         //cout << "VertexXyzData デストラクタ" << endl;
     }
 
-    std::string VertexKey()
+    string VertexKey()
     {
         return m_vertex_xyz_data_key;
     }

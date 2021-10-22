@@ -28,18 +28,22 @@ main: main.cpp
 	g++ -c PlaneCalculation/SurfaceCalculation.cpp -std=c++14
 	g++ -c PlaneCalculation/GetTime.cpp -std=c++14
 	g++ -c PlaneCalculation/OpenCvOutput.cpp -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
-	g++ -c integration.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -std=c++14
+#g++ -c integration.cpp -std=c++14
 
-	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc --bind integration.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -s WASM=1 -o forjs/main.js
+#g++ -c integration.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o
 
 # ここからmain
 
-	g++ -o main.a main.cpp integration.o -v -std=c++14
-	g++ -o main main.cpp integration.o -v -std=c++14
+	g++ -o main.a main.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -v -std=c++14 `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
+	g++ -o main main.cpp GetTime.o PointDraw.o Slope.o SurfaceCalculation.o OpenCvOutput.o -v -std=c++14 `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
 
 #ここからforjs
-
-	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc --bind forjs.cpp integration.o -s WASM=1 -o forjs/main.js
+	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc -c PlaneCalculation/PointDraw.cpp -o js_PointDraw.o -std=c++14
+	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc -c PlaneCalculation/Slope.cpp  -o js_Slope.o -std=c++14
+	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc -c PlaneCalculation/SurfaceCalculation.cpp  -o js_SurfaceCalculation.o -std=c++14
+	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc -c PlaneCalculation/GetTime.cpp  -o js_GetTime.o -std=c++14
+	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc -c PlaneCalculation/OpenCvOutput.cpp  -o js_OpenCvOutput.o -std=c++14  `pkg-config --cflags opencv4` `pkg-config --libs opencv4`
+	/Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc --bind forjs.cpp -s WASM=1 -o wasm_forweb.js `pkg-config --cflags opencv4` `pkg-config --libs opencv4` js_GetTime.o js_PointDraw.o js_Slope.o js_SurfaceCalculation.o js_OpenCvOutput.o
 
 # g++ -o main main.cpp -std=c++14 -c -I/Users/maruyama/opt/anaconda3/envs/py39/include/opencv4/
 
