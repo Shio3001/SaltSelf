@@ -1,7 +1,7 @@
 #include "PlaneCalculation.hpp"
 void PlaneCalculationControl::SurfaceCalculation()
 {
-    //cout << "SurfaceCalculation sta" << endl;
+    //std::cout << "SurfaceCalculation sta" << std::endl;
 
     int sum = 0;
 
@@ -9,19 +9,19 @@ void PlaneCalculationControl::SurfaceCalculation()
 
     int linear_size = m_linear_function_data.size();
 
-    //cout << "み" << endl;
+    //std::cout << "み" << std::endl;
     for (int x = 0; x < x_width; x++)
     {
         for (int fi_add = 0; fi_add < linear_size; fi_add++)
         {
-            //cout << "now_linear_function" << endl;
+            //std::cout << "now_linear_function" << std::endl;
             LinearFunction *now_linear_function = m_linear_function_data[fi_add];
-            //cout << "now_linear_function2" << endl;
+            //std::cout << "now_linear_function2" << std::endl;
             int returnY = now_linear_function->XtoY(x);
-            //cout << ipx << endl;
+            //std::cout << ipx << std::endl;
         }
     }
-    //cout << "出" << endl;
+    //std::cout << "出" << std::endl;
 
     for (int x = 0; x < x_width; x++)
     {
@@ -64,21 +64,21 @@ void PlaneCalculationControl::SurfaceCalculation()
 
                 if (45 < x && x < 55 && y == 50)
                 {
-                    cout << fi_add << " " << x << " " << y << " " << returnX_floor << endl;
+                    std::cout << fi_add << " " << x << " " << y << " " << returnX_floor << std::endl;
                 }
 
                 if (x == returnX_floor)
                 {
                     //corner++;
-                    //cout << "接点" << x << " " << y << endl;
+                    //std::cout << "接点" << x << " " << y << std::endl;
                     if (x == debug_x && y == debug_y)
                     {
-                        //cout << "特定箇所(corner) " << corner << endl;
+                        //std::cout << "特定箇所(corner) " << corner << std::endl;
                     }
 
                     if (corner >= 2)
                     {
-                        cout << "[ 交点 ]" << corner << " " << x << " " << y << endl;
+                        std::cout << "[ 交点 ]" << corner << " " << x << " " << y << std::endl;
                     }
                 }
 
@@ -86,12 +86,12 @@ void PlaneCalculationControl::SurfaceCalculation()
 
                 if (returnX == x && y == debug_y)
                 {
-                    cout << " fx " << x << " " << y << endl;
+                    std::cout << " fx " << x << " " << y << std::endl;
                 }
 
                 if (x == debug_x && y == debug_y)
                 {
-                    //cout << "特定箇所(A0)" << now_range_query << " " << fx_add_bool << endl;
+                    //std::cout << "特定箇所(A0)" << now_range_query << " " << fx_add_bool << std::endl;
                 }
 
                 if (fx_add_bool)
@@ -121,28 +121,28 @@ void PlaneCalculationControl::SurfaceCalculation()
 
                 if (x == debug_x && y == debug_y)
                 {
-                    //cout << "比較辺 " << fi_search << " " << linear_size - left << " " << left << endl;
-                    //cout << "特定箇所(A1)" << linear_search_from_before << endl;
-                    //cout << "fx x比較" << fx[fi_search] << " " << x << endl;
+                    //std::cout << "比較辺 " << fi_search << " " << linear_size - left << " " << left << std::endl;
+                    //std::cout << "特定箇所(A1)" << linear_search_from_before << std::endl;
+                    //std::cout << "fx x比較" << fx[fi_search] << " " << x << std::endl;
                 }
             }
 
             if (x == debug_x && y == debug_y)
             {
-                //cout << "特定箇所(A2)" << linear_search_from_before << endl;
+                //std::cout << "特定箇所(A2)" << linear_search_from_before << std::endl;
             }
 
             int mod2 = linear_search_from_before % 2;
 
-            //cout << "linear_size " << linear_size << " left " << left << endl;
+            //std::cout << "linear_size " << linear_size << " left " << left << std::endl;
             if (x == debug_x && y == debug_y)
             {
-                //cout << "特定箇所(A3)" << mod2 << " " << range_query << endl;
+                //std::cout << "特定箇所(A3)" << mod2 << " " << range_query << std::endl;
             }
 
             // if (mod2 == 1 && range_query != 0)
             // {
-            //     cout << linear_search_from_before << " " << range_query << " " << x << " " << y << endl;
+            //     std::cout << linear_search_from_before << " " << range_query << " " << x << " " << y << std::endl;
             // }
 
             if (mod2 == 0 && range_query != 0) //
@@ -157,19 +157,19 @@ void PlaneCalculationControl::SurfaceCalculation()
     }
     int sec_since_epoch2 = GetTime();
 
-    //cout << sum << endl;
+    //std::cout << sum << std::endl;
 
-    //cout << "SurfaceCalculation end" << endl;
+    //std::cout << "SurfaceCalculation end" << std::endl;
 
     //int *draw_pointer = view_px_data->GetDraw();
 
-    OpenCvOutput();
+    //OpenCvOutput();
 
     int sec_since_epoch3 = GetTime();
 
-    cout << sec_since_epoch1 << endl;
-    cout << sec_since_epoch2 << endl;
-    cout << sec_since_epoch3 << endl;
+    std::cout << sec_since_epoch1 << std::endl;
+    std::cout << sec_since_epoch2 << std::endl;
+    std::cout << sec_since_epoch3 << std::endl;
 
-    cout << "終了" << endl;
+    std::cout << "終了" << std::endl;
 }

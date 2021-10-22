@@ -7,10 +7,10 @@
 class VertexControl
 {
 private:
-    map<string, VertexXyzData *> m_vertex_data;
-    map<string, SurfaceData *> m_surface_data;
+    std::map<std::string, VertexXyzData *> m_vertex_data;
+    std::map<std::string, SurfaceData *> m_surface_data;
 
-    //map<string, EdgeData *> m_edge_data;
+    //std::map<std::string, EdgeData *> m_edge_data;
 
     ViewPxData *view_px_data;
 
@@ -34,12 +34,12 @@ public:
     }
     ~VertexControl()
     {
-        //cout << "VertexControl デストラクタ" << endl;
+        //std::cout << "VertexControl デストラクタ" << std::endl;
     }
     //ここら辺に出力への関数を記入する
     //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)
 
-    void SurfacePlaneCalculation(string surface_key) //平面計算
+    void SurfacePlaneCalculation(std::string surface_key) //平面計算
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
 
@@ -56,32 +56,32 @@ public:
     {
     }
 
-    void AddSurface(string key)
+    void AddSurface(std::string key)
     {
         SurfaceData *surface_data = new SurfaceData(key);
 
-        //cout << "AddSurface    surface_data" << endl;
-        //cout << &surface_data << endl;
-        //cout << " " << endl;
+        //std::cout << "AddSurface    surface_data" << std::endl;
+        //std::cout << &surface_data << std::endl;
+        //std::cout << " " << std::endl;
 
         m_surface_data[key] = surface_data;
     }
 
-    void AddVertexForSurface(string surface_key, string vertex_key)
+    void AddVertexForSurface(std::string surface_key, std::string vertex_key)
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
         VertexXyzData *vertex_xyz_data = m_vertex_data[vertex_key];
 
-        //cout << "AddVertexForSurface    surface_data" << endl;
-        //cout << &surface_data << endl;
-        //cout << "AddVertexForSurface    vertex_xyz_data" << endl;
-        //cout << &vertex_xyz_data << endl;
-        //cout << " " << endl;
+        //std::cout << "AddVertexForSurface    surface_data" << std::endl;
+        //std::cout << &surface_data << std::endl;
+        //std::cout << "AddVertexForSurface    vertex_xyz_data" << std::endl;
+        //std::cout << &vertex_xyz_data << std::endl;
+        //std::cout << " " << std::endl;
 
         surface_data->AddVertex(*vertex_xyz_data);
     }
 
-    void AddVertexXyz(string key, int x, int y, int z)
+    void AddVertexXyz(std::string key, int x, int y, int z)
     {
 
         VertexXyzData *vertex_xyz_data = new VertexXyzData(key);
@@ -89,27 +89,27 @@ public:
 
         m_vertex_data[key] = vertex_xyz_data;
 
-        //cout << "AddVertexXyz   vertex_xyz_data " << key << endl;
-        //cout << &vertex_xyz_data << endl;
-        //cout << " " << endl;
+        //std::cout << "AddVertexXyz   vertex_xyz_data " << key << std::endl;
+        //std::cout << &vertex_xyz_data << std::endl;
+        //std::cout << " " << std::endl;
 
-        //cout << vertex_key_pointer[key] << endl;
+        //std::cout << vertex_key_pointer[key] << std::endl;
     }
 
-    void DeleteVertexXyz(string key)
+    void DeleteVertexXyz(std::string key)
     {
         VertexXyzData *vertex_xyz_data = m_vertex_data[key];
         delete vertex_xyz_data;
         m_vertex_data.erase(key);
     }
 
-    vector<string> GetVertexXyzDataKey()
+    std::vector<std::string> GetVertexXyzDataKey()
     {
-        vector<string> vertex_xyz_data_key;
+        std::vector<std::string> vertex_xyz_data_key;
         auto begin = m_vertex_data.begin(), end = m_vertex_data.end();
         for (auto iter = begin; iter != end; iter++)
         {
-            string key = iter->first;
+            std::string key = iter->first;
             vertex_xyz_data_key.push_back(key);
         }
         return vertex_xyz_data_key;

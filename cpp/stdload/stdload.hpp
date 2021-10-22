@@ -8,7 +8,7 @@
 #include <math.h>
 #include <iostream>
 
-using namespace std;
+//using namespace std;
 #endif // C_HPP
 
 

@@ -20,11 +20,11 @@ private:
 public:
     LinearFunction()
     {
-        //cout << "LinearFunction コンストラクタ" << endl;
+        //std::cout << "LinearFunction コンストラクタ" << std::endl;
     }
     ~LinearFunction()
     {
-        //cout << "LinearFunction デストラクタ" << endl;
+        //std::cout << "LinearFunction デストラクタ" << std::endl;
     }
     void SetModeDiagonal(double send_a, double send_b, int send_x1, int send_x2) //mode0
     {
@@ -34,7 +34,7 @@ public:
         m0_x2 = send_x2;
         m_mode = 0;
 
-        //cout << "SetModeDiagonal " << m0_a << " " << m0_b << " " << m0_x1 << " " << m0_x2 << " " << m_mode << endl;
+        //std::cout << "SetModeDiagonal " << m0_a << " " << m0_b << " " << m0_x1 << " " << m0_x2 << " " << m_mode << std::endl;
     }
     void SetModeTan90(int send_x, int send_y1, int send_y2) //mode1
     {
@@ -43,7 +43,7 @@ public:
         m1_y2 = send_y2; //上限値
         m_mode = 1;
 
-        //cout << "SetModeTan90 " << m1_fx << " " << m1_y1 << " " << m1_y2 << " " << m_mode << endl;
+        //std::cout << "SetModeTan90 " << m1_fx << " " << m1_y1 << " " << m1_y2 << " " << m_mode << std::endl;
     }
     int GetMode()
     {
@@ -97,7 +97,7 @@ public:
 
             result = resultX;
 
-            //cout << "result x1x2 " << x1x2 << " x2x1 " << x2x1 << " x " << x << " y " << y << " x1 " << x1 << " x2 " << x2 << endl;
+            //std::cout << "result x1x2 " << x1x2 << " x2x1 " << x2x1 << " x " << x << " y " << y << " x1 " << x1 << " x2 " << x2 << std::endl;
         }
         if (m_mode == 1) //垂直な場合 tan90は解無しなのでそれの対策
         {

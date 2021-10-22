@@ -10,7 +10,7 @@ class PlaneCalculationControl
 private:
     SurfaceData *surface_data;
     ViewPxData *view_px_data;
-    vector<LinearFunction *> m_linear_function_data;
+    std::vector<LinearFunction *> m_linear_function_data;
 
     int x_width;
     int y_hight;
@@ -25,19 +25,18 @@ public:
 
         surface_data = &send_surface_data;
         view_px_data = &send_view_px_data;
-        //cout << "PlaneCalculationControl コンストラクタ" << endl;
+        //std::cout << "PlaneCalculationControl コンストラクタ" << std::endl;
     }
     ~PlaneCalculationControl()
     {
-        //cout << "PlaneCalculationControl デストラクタ" << endl;
+        //std::cout << "PlaneCalculationControl デストラクタ" << std::endl;
     }
     void SurfaceCalculation();
     void Slope();
     //void PointDraw(int x, int y, int line_color);
-    void OpenCvOutput();
+    //void OpenCvOutput();
     int GetTime();
 };
-
 
 #endif // C_HPP
 
