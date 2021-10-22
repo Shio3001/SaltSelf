@@ -37,5 +37,5 @@ void PlaneCalculationControl::OpenCvOutput()
         }
     }
 
-    cv::imwrite("output_mat.png", output_mat);
+    //cv::imwrite("output_mat.png", output_mat);
 }

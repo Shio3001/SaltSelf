@@ -43,9 +43,9 @@ public:
         return y_hight;
     }
 
-    int *GetDraw()
+    int GetDraw()
     {
-        return draw;
+        return *draw;
     }
 };
 

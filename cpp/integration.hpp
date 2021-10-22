@@ -22,8 +22,8 @@ public:
     {
         delete view_px_data;
     }
-    ViewPxData *GetViewPxData()
+    ViewPxData GetViewPxData()
     {
-        return view_px_data;
+        return *view_px_data;
     }
 };
