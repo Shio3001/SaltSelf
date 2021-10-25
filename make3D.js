@@ -1,10 +1,12 @@
+
+
 function get_time() {
     var date = new Date();
     var time = date.getTime();
     return time;
 }
 
-function view(draw) {
+function view(view_data) {
     var AP = get_time();
     const canvas = document.getElementById('test_canvas');
     const context = canvas.getContext('2d')
@@ -22,14 +24,16 @@ function view(draw) {
 
     var CP = get_time();
 
+
+
     // ピクセル単位で操作できる
     for (var y = 0; y < height; ++y) {
         for (var x = 0; x < width; ++x) {
             var base = (y * width + x) * 4;
             // なんかピクセルに書き込む
-            pixels[base + 0] = draw[base + 0];  // Red
-            pixels[base + 1] = draw[base + 1];  // Green
-            pixels[base + 2] = draw[base + 2];  // Blue
+            pixels[base + 0] = view_data.GetDrawRGB(x, y, 0);  // Red
+            pixels[base + 1] = view_data.GetDrawRGB(x, y, 1);  // Green
+            pixels[base + 2] = view_data.GetDrawRGB(x, y, 2);  // Blue
             pixels[base + 3] = 255;  // Alpha
         }
     }
@@ -56,7 +60,6 @@ function view(draw) {
 var Module = {
     onRuntimeInitialized: function () {
         var view_data = Module.ViewRun()
-        var draw = view_data.GetDraw()
-        view(draw)
+        view(view_data)
     }
 };

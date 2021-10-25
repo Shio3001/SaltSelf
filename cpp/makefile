@@ -28,7 +28,7 @@ cpp_main_ofile = forjs/
 target0_dir = PlaneCalculation
 target1_dir = ViewPxData
 
-target0_a = PointDraw
+#target0_a = PointDraw
 target0_b = Slope
 target0_c = SurfaceCalculation
 target0_d = GetTime
@@ -49,20 +49,23 @@ $(warning $(opencvL))
 
 emcc_build = /Users/$(user_name)/Programs/emsdk/upstream/emscripten/emcc
 
-js_a = $(forjs_temp_dir)/$(forjs_prefix)_$(target0_a).o
+#js_a = $(forjs_temp_dir)/$(forjs_prefix)_$(target0_a).o
 js_b = $(forjs_temp_dir)/$(forjs_prefix)_$(target0_b).o
 js_c = $(forjs_temp_dir)/$(forjs_prefix)_$(target0_c).o
 js_d = $(forjs_temp_dir)/$(forjs_prefix)_$(target0_d).o
 js_e = $(forjs_temp_dir)/$(forjs_prefix)_$(target0_e).o
 
-cpp_a = $(main_temp_dir)/$(target0_a).o
+#cpp_a = $(main_temp_dir)/$(target0_a).o
 cpp_b = $(main_temp_dir)/$(target0_b).o
 cpp_c = $(main_temp_dir)/$(target0_c).o
 cpp_d = $(main_temp_dir)/$(target0_d).o
 cpp_e = $(main_temp_dir)/$(target0_e).o
 
+#(64*1024*8)の倍数でないとダメ
+web_memory = -s INITIAL_MEMORY=20971520
+
 main: main.cpp
-	g++ -c $(target0_dir)/$(target0_a).cpp -o $(cpp_a) -std=c++14
+#g++ -c $(target0_dir)/$(target0_a).cpp -o $(cpp_a) -std=c++14
 	g++ -c $(target0_dir)/$(target0_b).cpp -o $(cpp_b) -std=c++14
 	g++ -c $(target0_dir)/$(target0_c).cpp -o $(cpp_c) -std=c++14
 	g++ -c $(target0_dir)/$(target0_d).cpp -o $(cpp_d) -std=c++14
@@ -76,18 +79,18 @@ main: main.cpp
 
 # ここからmain
 
-	g++ -o main.a main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d) $(cpp_e)  -std=c++14 $(opencvI) $(opencvL) 
-	g++ -o main main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d) $(cpp_e) -std=c++14 $(opencvI) $(opencvL) 
+	g++ -o main.a main.cpp $(cpp_b) $(cpp_c) $(cpp_d) $(cpp_e)  -std=c++14 $(opencvI) $(opencvL) 
+	g++ -o main main.cpp $(cpp_b) $(cpp_c) $(cpp_d) $(cpp_e) -std=c++14 $(opencvI) $(opencvL) 
 
 #ここからforjs
 
 
-	$(emcc_build) -c $(target0_dir)/$(target0_a).cpp -o $(js_a) -std=c++14
-	$(emcc_build) -c $(target0_dir)/$(target0_b).cpp -o $(js_b) -std=c++14
-	$(emcc_build) -c $(target0_dir)/$(target0_c).cpp -o $(js_c) -std=c++14
-	$(emcc_build) -c $(target0_dir)/$(target0_d).cpp -o $(js_d) -std=c++14
+#$(emcc_build) -c $(target0_dir)/$(target0_a).cpp -o $(js_a) -std=c++14
+	$(emcc_build) -c $(target0_dir)/$(target0_b).cpp $(web_memory) -o $(js_b) -std=c++14
+	$(emcc_build) -c $(target0_dir)/$(target0_c).cpp $(web_memory) -o $(js_c) -std=c++14
+	$(emcc_build) -c $(target0_dir)/$(target0_d).cpp $(web_memory) -o $(js_d) -std=c++14
 #$(emcc_build) -c $(target0_dir)/$(target0_e).cpp -o $(js_e) -std=c++14  $(opencvI) $(opencvL) 
-	$(emcc_build) --bind forjs.cpp $(js_a) $(js_b) $(js_c) $(js_d) -s WASM=1 -o forjs/wasm_forweb.js -std=c++14
+	$(emcc_build) --bind forjs.cpp $(js_b) $(js_c) $(js_d) $(web_memory) -s WASM=1 -o forjs/wasm_forweb.js -std=c++14
 
 # g++ -o main main.cpp -std=c++14 -c -I/Users/maruyama/opt/anaconda3/envs/py39/include/opencv4/
 

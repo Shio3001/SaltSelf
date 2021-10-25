@@ -15,30 +15,25 @@ void ViewPxData::OpenCvOutput()
     {
         for (int x = 0; x < x_width; x++)
         {
-            int ipx = x_width * y + x;
+            int ipx = (x_width * y + x) * 4;
 
             //std::cout << ipx << std::endl;
             //std::cout << draw_pointer[ipx] << std::endl;
 
-            //int cvy = y_hight - y;
+            double A = draw_pointer[ipx + 3];
 
-            for (int c = 0; c < channel; c++)
+            for (int c = 0; c < 3; c++)
             {
-                if (draw_pointer[ipx] == 255 || draw_pointer[ipx] == 100)
-                {
-                    output_mat.at<cv::Vec3b>(y, x)[0] = draw_pointer[ipx];
-                    output_mat.at<cv::Vec3b>(y, x)[1] = draw_pointer[ipx];
-                    output_mat.at<cv::Vec3b>(y, x)[2] = draw_pointer[ipx];
-                    continue;
-                }
+                int colour = draw_pointer[ipx + c] * (A / 255.0);
 
-                output_mat.at<cv::Vec3b>(y, x)[0] = draw_pointer[ipx] & (83 * 3);
-                output_mat.at<cv::Vec3b>(y, x)[1] = draw_pointer[ipx] & (83 * 2);
-                output_mat.at<cv::Vec3b>(y, x)[2] = draw_pointer[ipx] & (83 * 1);
+                std::cout << colour << std::endl;
+                output_mat.at<cv::Vec3b>(y, x)[c] = colour;
             }
+
+            //int cvy = y_hight - y;
         }
     }
-    
+
     fs::path p = fs::current_path();
     std::cout << p << std::endl;
     cv::imwrite("salt3Dtemp/output_mat.png", output_mat);
