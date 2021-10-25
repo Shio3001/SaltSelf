@@ -43,10 +43,18 @@ public:
         return y_hight;
     }
 
-    int GetDraw()
+    int GetDraw(int x, int y)
     {
-        return *draw;
+        int ipx = x_width * y + x;
+        return draw[ipx];
     }
+
+    int *GetDrawArray()
+    {
+        return draw;
+    }
+
+    void OpenCvOutput();
 };
 
 #endif // C_HPP

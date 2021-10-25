@@ -1,13 +1,15 @@
 #include <opencv2/opencv.hpp>
-#include "PlaneCalculation.hpp"
+#include "ViewPxData.hpp"
 
-void PlaneCalculationControl::OpenCvOutput()
+void ViewPxData::OpenCvOutput()
 {
+    std::cout << "opencv start" << std::endl;
+
     int channel = 3;
 
     cv::Mat output_mat(cv::Size(x_width, y_hight), CV_8UC3, cv::Scalar(0, 0, 0));
 
-    int *draw_pointer = view_px_data->GetDraw();
+    int *draw_pointer = GetDrawArray();
 
     for (int y = 0; y < y_hight; y++)
     {
@@ -36,6 +38,9 @@ void PlaneCalculationControl::OpenCvOutput()
             }
         }
     }
-
-    //cv::imwrite("output_mat.png", output_mat);
+    
+    fs::path p = fs::current_path();
+    std::cout << p << std::endl;
+    cv::imwrite("salt3Dtemp/output_mat.png", output_mat);
+    std::cout << "opencv end" << std::endl;
 }

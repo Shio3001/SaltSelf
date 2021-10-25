@@ -26,6 +26,7 @@ wasm_ofile = forjs/
 cpp_main_ofile = forjs/
 
 target0_dir = PlaneCalculation
+target1_dir = ViewPxData
 
 target0_a = PointDraw
 target0_b = Slope
@@ -65,6 +66,7 @@ main: main.cpp
 	g++ -c $(target0_dir)/$(target0_b).cpp -o $(cpp_b) -std=c++14
 	g++ -c $(target0_dir)/$(target0_c).cpp -o $(cpp_c) -std=c++14
 	g++ -c $(target0_dir)/$(target0_d).cpp -o $(cpp_d) -std=c++14
+	g++ -c $(target1_dir)/$(target0_e).cpp -o $(cpp_e) -std=c++14  $(opencvI) $(opencvL) 
 #g++ -c $(target0_dir)/$(target0_e).cpp -std=c++14 $(opencvI) $(opencvL) 
 
 
@@ -74,8 +76,8 @@ main: main.cpp
 
 # ここからmain
 
-	g++ -o main.a main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d)  -std=c++14 $(opencvI) $(opencvL) 
-	g++ -o main main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d) -std=c++14 $(opencvI) $(opencvL) 
+	g++ -o main.a main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d) $(cpp_e)  -std=c++14 $(opencvI) $(opencvL) 
+	g++ -o main main.cpp $(cpp_a) $(cpp_b) $(cpp_c) $(cpp_d) $(cpp_e) -std=c++14 $(opencvI) $(opencvL) 
 
 #ここからforjs
 

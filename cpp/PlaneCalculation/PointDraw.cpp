@@ -12,6 +12,8 @@
 
 //     if (x_width_section && y_width_section && ipx_section && ipx_0)
 //     {
-//         view_px_data.draw[ipx] = line_color;
+//         int *this_draw = view_px_data->draw + ipx;
+//         &this_draw = line_color;
+//         //view_px_data->*draw[ipx] = line_color;
 //     }
 // }

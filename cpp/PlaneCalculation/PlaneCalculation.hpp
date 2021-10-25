@@ -34,7 +34,7 @@ public:
     void SurfaceCalculation();
     void Slope();
     //void PointDraw(int x, int y, int line_color);
-    //void OpenCvOutput();
+    
     int GetTime();
 };
 
