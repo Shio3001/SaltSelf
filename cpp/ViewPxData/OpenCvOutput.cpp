@@ -22,13 +22,13 @@ void ViewPxData::OpenCvOutput()
 
             double A = draw_pointer[ipx + 3];
 
-            for (int c = 0; c < 3; c++)
-            {
-                int colour = draw_pointer[ipx + c] * (A / 255.0);
+            int R = draw_pointer[ipx + 0] * (A / 255.0); //透明度反映
+            int G = draw_pointer[ipx + 1] * (A / 255.0);
+            int B = draw_pointer[ipx + 2] * (A / 255.0);
 
-                std::cout << colour << std::endl;
-                output_mat.at<cv::Vec3b>(y, x)[c] = colour;
-            }
+            output_mat.at<cv::Vec3b>(y, x)[0] = B; //openCVはBGRのため順番を入れ替える必要があり
+            output_mat.at<cv::Vec3b>(y, x)[1] = G;
+            output_mat.at<cv::Vec3b>(y, x)[2] = R;
 
             //int cvy = y_hight - y;
         }

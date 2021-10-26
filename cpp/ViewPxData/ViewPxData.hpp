@@ -25,7 +25,7 @@ public:
         bool x_width_section = x < x_width;
         bool y_width_section = y < y_hight;
 
-        bool ipx_section = ipx < x_width * y_hight;
+        bool ipx_section = ipx < x_width * y_hight * 4;
         bool ipx_0 = ipx >= 0;
 
         if (x_width_section && y_width_section && ipx_section && ipx_0)
@@ -58,7 +58,8 @@ public:
     int GetDrawRGBA(int x, int y, int rgba)
     {
         int ipx = (x_width * y + x) * 4;
-        int return_color = draw[ipx + rgba] * draw[ipx + 3];
+        double A = draw[ipx + 3];
+        int return_color = draw[ipx + rgba] * (A / 255);
         return return_color;
     }
 

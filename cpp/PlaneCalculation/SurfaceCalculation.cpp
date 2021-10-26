@@ -29,7 +29,7 @@ void PlaneCalculationControl::SurfaceCalculation()
         {
             LinearFunction *now_linear_function = m_linear_function_data[fi_add];
             int returnY = now_linear_function->XtoY(x);
-            view_px_data->PointDraw(x, returnY, 200,200,200,255);
+            view_px_data->PointDraw(x, returnY, 200, 200, 200, 255);
         }
     }
 
@@ -150,7 +150,7 @@ void PlaneCalculationControl::SurfaceCalculation()
 
                 int result = range_query;
                 sum += result;
-                view_px_data->PointDraw(x, y, result / 3 * 83, result / 3 * 83 * 2, result / 3 * 83 * 3, 255);
+                view_px_data->PointDraw(x, y, 200, 10, 10, 255);
             }
             delete[] fx;
         }
