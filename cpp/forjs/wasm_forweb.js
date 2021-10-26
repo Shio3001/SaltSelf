@@ -5582,23 +5582,6 @@ var ASM_CONSTS = {
       });
     }
 
-  function __embind_register_function(name, argCount, rawArgTypesAddr, signature, rawInvoker, fn) {
-      var argTypes = heap32VectorToArray(argCount, rawArgTypesAddr);
-      name = readLatin1String(name);
-  
-      rawInvoker = embind__requireFunction(signature, rawInvoker);
-  
-      exposePublicSymbol(name, function() {
-          throwUnboundTypeError('Cannot call ' + name + ' due to unbound types', argTypes);
-      }, argCount - 1);
-  
-      whenDependentTypesAreResolved([], argTypes, function(argTypes) {
-          var invokerArgsArray = [argTypes[0] /* return value */, null /* no class 'this'*/].concat(argTypes.slice(1) /* actual params */);
-          replacePublicSymbol(name, craftInvokerFunction(name, invokerArgsArray, null /* no class 'this'*/, rawInvoker, fn), argCount - 1);
-          return [];
-      });
-    }
-
   function integerReadValueFromPointer(name, shift, signed) {
       // integers are quite common, so generate very specialized functions
       switch (shift) {
@@ -5863,6 +5846,26 @@ var ASM_CONSTS = {
               return undefined;
           },
       });
+    }
+
+
+  function __emval_incref(handle) {
+      if (handle > 4) {
+          emval_handle_array[handle].refcount += 1;
+      }
+    }
+
+  function requireRegisteredType(rawType, humanName) {
+      var impl = registeredTypes[rawType];
+      if (undefined === impl) {
+          throwBindingError(humanName + " has unknown type " + getTypeName(rawType));
+      }
+      return impl;
+    }
+  function __emval_take_value(type, argv) {
+      type = requireRegisteredType(type, '_emval_take_value');
+      var v = type['readValueFromPointer'](argv);
+      return __emval_register(v);
     }
 
   function _abort() {
@@ -6613,12 +6616,14 @@ var asmLibraryArg = {
   "_embind_register_class_function": __embind_register_class_function,
   "_embind_register_emval": __embind_register_emval,
   "_embind_register_float": __embind_register_float,
-  "_embind_register_function": __embind_register_function,
   "_embind_register_integer": __embind_register_integer,
   "_embind_register_memory_view": __embind_register_memory_view,
   "_embind_register_std_string": __embind_register_std_string,
   "_embind_register_std_wstring": __embind_register_std_wstring,
   "_embind_register_void": __embind_register_void,
+  "_emval_decref": __emval_decref,
+  "_emval_incref": __emval_incref,
+  "_emval_take_value": __emval_take_value,
   "abort": _abort,
   "clock_gettime": _clock_gettime,
   "emscripten_memcpy_big": _emscripten_memcpy_big,
@@ -6637,6 +6642,9 @@ var asm = createWasm();
 var ___wasm_call_ctors = Module["___wasm_call_ctors"] = createExportWrapper("__wasm_call_ctors");
 
 /** @type {function(...*):?} */
+var _malloc = Module["_malloc"] = createExportWrapper("malloc");
+
+/** @type {function(...*):?} */
 var ___getTypeName = Module["___getTypeName"] = createExportWrapper("__getTypeName");
 
 /** @type {function(...*):?} */
@@ -6647,9 +6655,6 @@ var ___errno_location = Module["___errno_location"] = createExportWrapper("__err
 
 /** @type {function(...*):?} */
 var _fflush = Module["_fflush"] = createExportWrapper("fflush");
-
-/** @type {function(...*):?} */
-var _malloc = Module["_malloc"] = createExportWrapper("malloc");
 
 /** @type {function(...*):?} */
 var stackSave = Module["stackSave"] = createExportWrapper("stackSave");

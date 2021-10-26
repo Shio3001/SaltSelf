@@ -12,20 +12,24 @@ class Integration
     int x_width = 1280;
     int y_hight = 720;
     ViewPxData *view_px_data = new ViewPxData(x_width, y_hight);
+    VertexControl *vertex_control = new VertexControl(view_px_data);
 
 public:
     Integration()
     {
         fs::create_directory("salt3Dtemp");
-        VertexControl *vertex_control = new VertexControl(view_px_data);
-        delete vertex_control;
     }
     ~Integration()
     {
         delete view_px_data;
+        delete vertex_control;
     }
     ViewPxData GetViewPxData()
     {
         return *view_px_data;
+    }
+    VertexControl GetVertexControl()
+    {
+        return *vertex_control;
     }
 };

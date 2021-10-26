@@ -1,15 +1,58 @@
 
 
 
-var canvas = document.getElementById('test_canvas');
+var canvas = document.getElementById('view_canvas');
 var context = canvas.getContext('2d');
 context.fillRect(0, 0, canvas.width, canvas.height);
 // キャンバス全体のピクセル情報を取得
 var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 var width = imageData.width, height = imageData.height;
 var pixels = imageData.data;  // ピクセル配列：RGBA4要素で1ピクセル
+var salt3D_for_js_interface;
+var vertex_control;
 
-function js_canvas_setup() {
+let vertex_select = document.getElementById('vertex_select');
+let surface_list_select = document.getElementById('surface_list_select');
+let surface_select = document.getElementById('surface_select');
+
+function vertex_addvalue() { //頂点データをC++データに追加する
+    let tag = document.getElementById('vertex_add_textbox_tag').value;
+    let x = document.getElementById('vertex_add_textbox_x').value;
+    let y = document.getElementById('vertex_add_textbox_y').value;
+    let z = document.getElementById('vertex_add_textbox_z').value;
+    console.log(tag)
+    console.log(x)
+    console.log(y)
+    console.log(z)
+
+    let intx = parseFloat(x);
+    let inty = parseFloat(y);
+    let intz = parseFloat(z);
+    vertex_control.AddVertexXyz(tag, intx, inty, intz)
+    vertex_list_for_table()
+}
+
+function vertex_list_for_table() {
+    let vertexs = vertex_control.GetVertexXyzDataKey()
+
+    console.log("追加開始", vertexs.size())
+    for (let i = 0; i < vertexs.size(); i++) {
+        let op = document.createElement("option");
+        op.value = i;  //value値
+        op.text = vertexs.get(i);   //テキスト値
+        document.getElementById("vertex_select").appendChild(op);
+    }
+}
+
+function surface_addvertex() {
+
+}
+
+function jstable_forcpp() {
+
+}
+
+function draw_button() {
 
 }
 
@@ -47,13 +90,14 @@ function view(view_data) {
 
     console.log("60fps参考数値 : " + 1 / 60)
     console.log("30fps参考数値 : " + 1 / 30)
-
 }
 
 //js_canvas_setup()
 var Module = {
     onRuntimeInitialized: function () {
-        var view_data = Module.ViewRun()
-        view(view_data)
+        salt3D_for_js_interface = new Module.ForJsInterface();
+        vertex_control = salt3D_for_js_interface.GetVertexControl();
+        var view_data = salt3D_for_js_interface.ViewRun();
+        view(view_data);
     }
 };
