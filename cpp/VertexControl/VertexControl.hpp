@@ -102,7 +102,17 @@ public:
         delete vertex_xyz_data;
         m_vertex_data.erase(key);
     }
-
+    std::vector<std::string> GetSurfaceDataKey()
+    {
+        std::vector<std::string> surface_data_key;
+        auto begin = m_surface_data.begin(), end = m_surface_data.end();
+        for (auto iter = begin; iter != end; iter++)
+        {
+            std::string key = iter->first;
+            surface_data_key.push_back(key);
+        }
+        return surface_data_key;
+    }
     std::vector<std::string> GetVertexXyzDataKey()
     {
         std::vector<std::string> vertex_xyz_data_key;

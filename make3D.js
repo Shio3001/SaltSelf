@@ -29,22 +29,56 @@ function vertex_addvalue() { //頂点データをC++データに追加する
     let inty = parseFloat(y);
     let intz = parseFloat(z);
     vertex_control.AddVertexXyz(tag, intx, inty, intz)
-    vertex_list_for_table()
+    vertex_for_table()
 }
 
-function vertex_list_for_table() {
-    let vertexs = vertex_control.GetVertexXyzDataKey()
+function surface_list_select_for_table() {
+    let surface_select_len = surface_list_select.length;
+    console.log("初期化数", surface_select_len)
 
-    console.log("追加開始", vertexs.size())
-    for (let i = 0; i < vertexs.size(); i++) {
+    if (surface_select_len > 0) {
+        for (let del = 0; del < surface_select_len; del++) {
+            surface_list_select.remove(0);
+        }
+    }
+
+    let surfaces = vertex_control.GetSurfaceDataKey()
+    console.log("追加開始", surfaces.size())
+    for (let vn = 0; vn < surfaces.size(); vn++) {
         let op = document.createElement("option");
-        op.value = i;  //value値
-        op.text = vertexs.get(i);   //テキスト値
-        document.getElementById("vertex_select").appendChild(op);
+        op.value = vn;  //value値
+        op.text = surfaces.get(vn);   //テキスト値
+        surface_list_select.appendChild(op);
+    }
+}
+
+function vertex_for_table() {
+
+    let vertex_select_len = vertex_select.length;
+    console.log("初期化数", vertex_select_len)
+
+    if (vertex_select_len > 0) {
+        for (let del = 0; del < vertex_select_len; del++) {
+            vertex_select.remove(0);
+        }
+    }
+
+    let vertexs = vertex_control.GetVertexXyzDataKey()
+    console.log("追加開始", vertexs.size())
+    for (let vn = 0; vn < vertexs.size(); vn++) {
+        let op = document.createElement("option");
+        op.value = vn;  //value値
+        op.text = vertexs.get(vn);   //テキスト値
+        vertex_select.appendChild(op);
     }
 }
 
 function surface_addvertex() {
+    var idx_vertex_select = vertex_select.selectedIndex;
+    var idx_surface_list_select = surface_list_select.selectedIndex;
+
+    console.log(idx_vertex_select)
+    console.log(idx_surface_list_select)
 
 }
 
@@ -99,5 +133,8 @@ var Module = {
         vertex_control = salt3D_for_js_interface.GetVertexControl();
         var view_data = salt3D_for_js_interface.ViewRun();
         view(view_data);
+
+        vertex_for_table()
+        surface_list_select_for_table()
     }
 };
