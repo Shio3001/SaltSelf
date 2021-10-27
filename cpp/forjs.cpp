@@ -5,7 +5,6 @@
 #include "VertexControl/VertexControl.hpp"
 #include <emscripten.h>
 #include <emscripten/bind.h>
-
 using namespace emscripten;
 
 class ForJsInterface
@@ -51,7 +50,9 @@ EMSCRIPTEN_BINDINGS(forjs)
         .function("SurfaceSpatialCalculation", &VertexControl::SurfaceSpatialCalculation)
         .function("AddSurface", &VertexControl::AddSurface)
         .function("AddVertexXyz", &VertexControl::AddVertexXyz)
+        .function("AddVertexForSurface", &VertexControl::AddVertexForSurface)
         .function("DeleteVertexXyz", &VertexControl::DeleteVertexXyz)
         .function("GetSurfaceDataKey", &VertexControl::GetSurfaceDataKey)
+        .function("GetXYZ", &VertexControl::GetXYZ)
         .function("GetVertexXyzDataKey", &VertexControl::GetVertexXyzDataKey);
 }

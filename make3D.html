@@ -15,8 +15,9 @@
     <canvas id="view_canvas" width="1280" height="720"></canvas><br />
 
 
+
     <p>頂点データ</p><br />
-    <select id="vertex_select" size="10">
+    <select id="vertex_select" onchange="select_vertex_for_tagxyz();" size="10">
     </select><br />
 
     <p>頂点を入力してください</p><br />
@@ -36,7 +37,7 @@
     </select><br />
 
     <input type="button" value="面リストに追加する" onclick="surface_addvertex();" /><br />
-
+    <input type="button" value="描画" onclick="view_run();" /><br />
 
     <p>個別面データ</p><br />
     <p id="now_surface_list_control">現在操作中:</p><br />

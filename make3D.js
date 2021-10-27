@@ -1,6 +1,4 @@
 
-
-
 var canvas = document.getElementById('view_canvas');
 var context = canvas.getContext('2d');
 context.fillRect(0, 0, canvas.width, canvas.height);
@@ -15,11 +13,56 @@ let vertex_select = document.getElementById('vertex_select');
 let surface_list_select = document.getElementById('surface_list_select');
 let surface_select = document.getElementById('surface_select');
 
+var vertex_add_textbox_tag = document.getElementById('vertex_add_textbox_tag');
+var vertex_add_textbox_x = document.getElementById('vertex_add_textbox_x');
+var vertex_add_textbox_y = document.getElementById('vertex_add_textbox_y');
+var vertex_add_textbox_z = document.getElementById('vertex_add_textbox_z');
+
+
+function select_vertex_for_tagxyz() {
+
+    var idx_vertex_select = vertex_select.selectedIndex;
+
+    console.log(idx_vertex_select)
+
+    if (idx_vertex_select < 0) {
+        console.log("選択なし")
+        return
+    }
+
+    let vertexs = vertex_control.GetVertexXyzDataKey()
+    let this_key_vertex_select = vertexs.get(idx_vertex_select);
+
+    let xyz = vertexs.GetXYZ(this_key_vertex_select);
+
+    vertex_add_textbox_tag.value = this_key_vertex_select;
+    vertex_add_textbox_x.value = xyz[0];
+    vertex_add_textbox_y.value = xyz[1];
+    vertex_add_textbox_z.value = xyz[2];
+
+}
+
+function view_run() {
+    var idx_surface_list_select = surface_list_select.selectedIndex;
+
+    if (idx_surface_list_select < 0) {
+        console.log("選択なし")
+        return
+    }
+    let surfaces = vertex_control.GetSurfaceDataKey()
+    let this_key_surface_list_select = surfaces.get(idx_surface_list_select);
+
+    vertex_control.SurfacePlaneCalculation(this_key_surface_list_select)
+    var view_data = salt3D_for_js_interface.ViewRun();
+    view(view_data);
+
+}
+
 function vertex_addvalue() { //頂点データをC++データに追加する
-    let tag = document.getElementById('vertex_add_textbox_tag').value;
-    let x = document.getElementById('vertex_add_textbox_x').value;
-    let y = document.getElementById('vertex_add_textbox_y').value;
-    let z = document.getElementById('vertex_add_textbox_z').value;
+    let tag = vertex_add_textbox_tag.value;
+    let x = vertex_add_textbox_x.value;
+    let y = vertex_add_textbox_y.value;
+    let z = vertex_add_textbox_z.value;
     console.log(tag)
     console.log(x)
     console.log(y)
@@ -31,6 +74,8 @@ function vertex_addvalue() { //頂点データをC++データに追加する
     vertex_control.AddVertexXyz(tag, intx, inty, intz)
     vertex_for_table()
 }
+
+
 
 function surface_list_select_for_table() {
     let surface_select_len = surface_list_select.length;
@@ -79,6 +124,24 @@ function surface_addvertex() {
 
     console.log(idx_vertex_select)
     console.log(idx_surface_list_select)
+
+    if (idx_vertex_select < 0 || idx_surface_list_select < 0) {
+        console.log("選択なし")
+        return
+    }
+
+    let vertexs = vertex_control.GetVertexXyzDataKey()
+    let this_key_vertex_select = vertexs.get(idx_vertex_select);
+
+    let surfaces = vertex_control.GetSurfaceDataKey()
+    let this_key_surface_list_select = surfaces.get(idx_surface_list_select);
+
+    console.log("面データ追加開始", vertexs.size(), surfaces.size())
+
+    console.log(this_key_surface_list_select)
+    console.log(this_key_vertex_select)
+
+    vertex_control.AddVertexForSurface(this_key_surface_list_select, this_key_vertex_select)
 
 }
 

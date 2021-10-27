@@ -19,17 +19,7 @@ public:
     {
         view_px_data = send_view_px_data;
         //ここからテスト
-        AddVertexXyz("A", 50, 50, 0);
-        AddVertexXyz("B", 800, 700, 0);
-        AddVertexXyz("C", 70, 600, 0);
-        AddVertexXyz("D", 20, 400, 0);
-
         AddSurface("S");
-        AddVertexForSurface("S", "A");
-        AddVertexForSurface("S", "B");
-        AddVertexForSurface("S", "C");
-        AddVertexForSurface("S", "D");
-
         SurfacePlaneCalculation("S");
     }
     ~VertexControl()
@@ -102,6 +92,21 @@ public:
         delete vertex_xyz_data;
         m_vertex_data.erase(key);
     }
+    std::vector<int> GetXYZ(std::string vertex_key)
+    {
+        std::vector<int> XYZ;
+        VertexXyzData *vertex_xyz_data = m_vertex_data[vertex_key];
+
+        int *get_xyz = vertex_xyz_data->Get_xyz();
+
+        for (int i = 0; i < 3; i++)
+        {
+            XYZ.push_back(get_xyz[i]);
+        }
+
+        return XYZ;
+    }
+
     std::vector<std::string> GetSurfaceDataKey()
     {
         std::vector<std::string> surface_data_key;
