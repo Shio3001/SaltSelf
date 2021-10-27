@@ -33,12 +33,16 @@ function select_vertex_for_tagxyz() {
     let vertexs = vertex_control.GetVertexXyzDataKey()
     let this_key_vertex_select = vertexs.get(idx_vertex_select);
 
-    let xyz = vertexs.GetXYZ(this_key_vertex_select);
+    console.log(this_key_vertex_select);
+
+    let xyz = vertex_control.GetXYZ(this_key_vertex_select);
+
+    console.log("xyz取得");
 
     vertex_add_textbox_tag.value = this_key_vertex_select;
-    vertex_add_textbox_x.value = xyz[0];
-    vertex_add_textbox_y.value = xyz[1];
-    vertex_add_textbox_z.value = xyz[2];
+    vertex_add_textbox_x.value = xyz.get(0);
+    vertex_add_textbox_y.value = xyz.get(1);
+    vertex_add_textbox_z.value = xyz.get(2);
 
 }
 

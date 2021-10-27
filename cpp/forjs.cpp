@@ -32,6 +32,7 @@ public:
 EMSCRIPTEN_BINDINGS(forjs)
 {
     register_vector<std::string>("vector<std::string>");
+    register_vector<int>("vector<int>");
 
     class_<ForJsInterface>("ForJsInterface")
         .constructor<>()
