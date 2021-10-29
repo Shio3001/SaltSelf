@@ -53,6 +53,7 @@ EMSCRIPTEN_BINDINGS(forjs)
         .function("AddVertexXyz", &VertexControl::AddVertexXyz)
         .function("AddVertexForSurface", &VertexControl::AddVertexForSurface)
         .function("DeleteVertexXyz", &VertexControl::DeleteVertexXyz)
+        .function("GetVertexXyzDataKeyFromSurface", &VertexControl::GetVertexXyzDataKeyFromSurface)
         .function("GetSurfaceDataKey", &VertexControl::GetSurfaceDataKey)
         .function("GetXYZ", &VertexControl::GetXYZ)
         .function("GetVertexXyzDataKey", &VertexControl::GetVertexXyzDataKey);

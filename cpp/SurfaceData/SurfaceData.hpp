@@ -62,14 +62,16 @@ public:
         int vertex_size = m_edge_data.size();
         return vertex_size;
     }
-    std::vector<int> GetVertexKey()
+    std::vector<std::string> GetVertexKey()
     {
-        std::vector<int> surface_data_key;
+        std::vector<std::string> surface_data_key;
         auto begin = m_edge_data.begin(), end = m_edge_data.end();
         for (auto iter = begin; iter != end; iter++)
         {
             int key = iter->first;
-            surface_data_key.push_back(key);
+
+            std::string vertex_key = m_edge_data[key]->VertexKey();
+            surface_data_key.push_back(vertex_key);
         }
         return surface_data_key;
     }

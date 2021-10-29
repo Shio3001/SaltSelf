@@ -107,9 +107,20 @@ public:
         return XYZ;
     }
 
+    std::vector<std::string> GetVertexXyzDataKeyFromSurface(std::string surface_key)
+    {
+        std::vector<std::string> surface_vertex_data_key;
+        SurfaceData *surface_data = m_surface_data[surface_key];
+
+        surface_vertex_data_key = surface_data->GetVertexKey();
+
+        return surface_vertex_data_key;
+    }
+
     std::vector<std::string> GetSurfaceDataKey()
     {
         std::vector<std::string> surface_data_key;
+
         auto begin = m_surface_data.begin(), end = m_surface_data.end();
         for (auto iter = begin; iter != end; iter++)
         {

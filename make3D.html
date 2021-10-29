@@ -39,9 +39,13 @@
     <input type="button" value="面リストに追加する" onclick="surface_addvertex();" /><br />
     <input type="button" value="描画" onclick="view_run();" /><br />
 
+    <p>面データの生成</p>
+    <input type="text" id="add_surface_textbox"></p><br />
+    <input type="button" value="面データを追加する" onclick="add_surface();" /><br />
+
     <p>個別面データ</p><br />
     <p id="now_surface_list_control">現在操作中:</p><br />
-    <select id="surface_select" size="10">
+    <select id="surface_select" size="10" onchange="surface_select_for_table();">
     </select><br />
 
     <script src=make3D.js></script>

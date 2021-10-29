@@ -6,6 +6,7 @@ class VertexXyzData
 private:
     int m_xyz[3] = {0, 0, 0};
     std::string m_vertex_xyz_data_key;
+    std::string vertex_name;
 
 public:
     VertexXyzData(std::string send_vertex_xyz_data_key)
