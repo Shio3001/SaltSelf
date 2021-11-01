@@ -22,8 +22,7 @@ public:
 
     VertexXyzData GetVertex(int vertex_number)
     {
-        VertexXyzData vertex;
-        vertex = m_edge_data[vertex_number];
+        VertexXyzData vertex = m_edge_data[vertex_number];
         return vertex;
     }
 
@@ -43,9 +42,9 @@ public:
 
         for (int i = 0; i < vertex_size; i++)
         {
-            VertexXyzData *vertex_xyz_data = m_edge_data[vertex_size];
+            VertexXyzData vertex_xyz_data = m_edge_data[vertex_size];
 
-            if (vertex_xyz_data->VertexKey() == vertex_key)
+            if (vertex_xyz_data.VertexKey() == vertex_key)
             {
                 m_edge_data.erase(vertex_size);
                 discoveries++;
@@ -70,7 +69,7 @@ public:
         {
             int key = iter->first;
 
-            std::string vertex_key = m_edge_data[key]->VertexKey();
+            std::string vertex_key = m_edge_data[key].VertexKey();
             surface_data_key.push_back(vertex_key);
         }
         return surface_data_key;

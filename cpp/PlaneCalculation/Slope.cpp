@@ -14,9 +14,9 @@ void PlaneCalculationControl::Slope()
         int now = vs;
         //std::cout << "now " << now << std::endl;
         //<条件式> ? <数値１> : <数値２>
-        VertexXyzData *vertex1 = surface_data->GetVertex(now);
+        VertexXyzData vertex1 = surface_data->GetVertex(now);
         //std::cout << "vertex1 class 取得済み" << std::endl;
-        int *xyz1 = vertex1->Get_xyz();
+        int *xyz1 = vertex1.Get_xyz();
         //std::cout << "vertex1 座標値 取得済み" << std::endl;
         int x1 = xyz1[0];
         int y1 = xyz1[1];
@@ -35,9 +35,9 @@ void PlaneCalculationControl::Slope()
         //std::cout << "next " << next << std::endl;
         //std::cout << "vertex_point_add " << vertex_point_add << std::endl;
 
-        VertexXyzData *vertex2 = surface_data->GetVertex(next);
+        VertexXyzData vertex2 = surface_data->GetVertex(next);
         //std::cout << "vertex2 class 取得済み" << std::endl;
-        int *xyz2 = vertex2->Get_xyz();
+        int *xyz2 = vertex2.Get_xyz();
 
         x2 = xyz2[0];
         y2 = xyz2[1];

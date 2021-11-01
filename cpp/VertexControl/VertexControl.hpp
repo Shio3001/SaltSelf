@@ -75,6 +75,7 @@ public:
     {
 
         VertexXyzData *vertex_xyz_data = new VertexXyzData(key);
+        vertex_xyz_data->SetVertexXyzDataKey();
         vertex_xyz_data->Xyz(x, y, z);
 
         m_vertex_data[key] = vertex_xyz_data;
