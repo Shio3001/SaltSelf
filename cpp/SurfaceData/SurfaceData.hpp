@@ -7,7 +7,7 @@ class SurfaceData
 {
 private:
     std::string m_surface_data_key;
-    std::map<int, VertexXyzData *> m_edge_data;
+    std::map<int, VertexXyzData> m_edge_data;
 
 public:
     SurfaceData(std::string send_surface_data_key)
@@ -20,21 +20,21 @@ public:
         //std::cout << "SurfaceData デストラクタ" << std::endl;
     }
 
-    VertexXyzData *GetVertex(int vertex_number)
+    VertexXyzData GetVertex(int vertex_number)
     {
-        VertexXyzData *vertex;
+        VertexXyzData vertex;
         vertex = m_edge_data[vertex_number];
         return vertex;
     }
 
-    void AddVertex(VertexXyzData &vertex)
+    void AddVertex(VertexXyzData vertex)
     {
 
         //std::cout << "SurfaceData    AddVertex" << std::endl;
         //std::cout << &vertex << std::endl;
         //std::cout << " " << std::endl;
         int vertex_size = GetVertexSize();
-        m_edge_data[vertex_size] = &vertex;
+        m_edge_data[vertex_size] = vertex;
     }
     void DeleteVertex(std::string vertex_key)
     {

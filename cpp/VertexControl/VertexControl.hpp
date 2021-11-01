@@ -68,7 +68,7 @@ public:
         //std::cout << &vertex_xyz_data << std::endl;
         //std::cout << " " << std::endl;
 
-        surface_data->AddVertex(*vertex_xyz_data);
+        surface_data->AddVertex(vertex_xyz_data);
     }
 
     void AddVertexXyz(std::string key, int x, int y, int z)
