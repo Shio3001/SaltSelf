@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta id="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>make3D</title>
 
 </head>
@@ -27,9 +27,7 @@
     <input type="button" value="確定" onclick="vertex_addvalue();" /><br />
 
     <p>面リストデータ</p><br />
-    <select id="surface_list_select" size="10">
-    </select><br />
-
+    <select id="surface_list_select" size="10" onchange="surface_select_for_surface_table();"></select><br />
     <input type="button" value="面リストに追加する" onclick="surface_addvertex();" /><br />
     <input type="button" value="描画" onclick="view_run();" /><br />
 
@@ -39,9 +37,14 @@
 
     <p>個別面データ</p><br />
     <p id="now_surface_list_control">現在操作中:</p><br />
-    <select id="surface_select" size="10" onchange="surface_select_for_table();">
+    <select id="surface_select" size="10">
     </select><br />
 
+    <script src=js/setup.js></script>
+    <script src=js/surface_list.js></script>
+    <script src=js/surface.js></script>
+    <script src=js/vertex.js></script>
+    <script src=js/view.js></script>
     <script src=make3D.js></script>
     <script src=cpp/forjs/wasm_forweb.js></script>
 
