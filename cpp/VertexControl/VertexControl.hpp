@@ -29,6 +29,15 @@ public:
     //ここら辺に出力への関数を記入する
     //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)
 
+    void ConsistencySurvey(std::string surface_key, std::string vertex_key, int vertex_number) //調査用
+    {
+        VertexXyzData *test_vertex_xyz_data = m_vertex_data[vertex_key];
+        SurfaceData *test_surface_data = m_surface_data[surface_key];
+        VertexXyzData *test_surface_has_vertex_xyz_data = test_surface_data->GetVertex(vertex_number);
+
+        //ここ書いてる
+    }
+
     void SurfacePlaneCalculation(std::string surface_key) //平面計算
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
