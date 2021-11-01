@@ -19,6 +19,15 @@ var vertex_add_textbox_y = document.getElementById('vertex_add_textbox_y');
 var vertex_add_textbox_z = document.getElementById('vertex_add_textbox_z');
 var add_surface_textbox = document.getElementById('add_surface_textbox');
 
+class VertexSelect {
+
+}
+class SurfaceListSelect {
+
+}
+class SurfaceListSelect {
+
+}
 function select_vertex_for_tagxyz() {
 
     var idx_vertex_select = vertex_select.selectedIndex;
