@@ -8,8 +8,8 @@ class SurfaceData
 private:
     std::string m_surface_data_key;
     //std::map<int, VertexXyzData *> m_edge_data;
-    std::map<std::string, VertexXyzData> m_edge_VertexXyzData_data;
-    std::map<int, std::string> m_edge_int_data;
+    std::map<std::string, VertexXyzData> m_edge_VertexXyzData_data; //タグから頂点データを探す
+    std::map<int, std::string> m_edge_int_data;                     //何番めにどの頂点データが入るか
 
 public:
     SurfaceData(std::string send_surface_data_key)
@@ -29,9 +29,18 @@ public:
         return vertex;
     }
 
+    void updateVertex(VertexXyzData vertex)
+    {
+        std::string vertex_key = vertex.VertexKey();
+        m_edge_VertexXyzData_data[vertex_key] = vertex;
+    }
+
     void AddVertex(VertexXyzData vertex)
     {
-        m_edge_VertexXyzData_data.push_back(vertex);
+        std::string vertex_key = vertex.VertexKey();
+        int new_number = GetVertexSize();
+        m_edge_int_data[new_number] = vertex_key;
+        m_edge_VertexXyzData_data[vertex_key] = vertex;
     }
 
     void DeleteVertex(std::string vertex_key)
