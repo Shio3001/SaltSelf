@@ -52,6 +52,11 @@ public:
         {
             int new_number = GetVertexSize();
             m_edge_int_data[new_number] = vertex_key;
+            std::cout << "存在なし" << std::endl;
+        }
+        else
+        {
+            std::cout << "更新扱い" << std::endl;
         }
         //ぼくあんぱんまん 勇気が欲しい
 

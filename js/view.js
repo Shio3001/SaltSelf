@@ -17,6 +17,7 @@ function view_run() {
 
 function view(view_data) {
 
+    var pixels = imageData.data;  // ピクセル配列：RGBA4要素で1ピクセル
     var HP = get_time();
 
     // ピクセル単位で操作できる

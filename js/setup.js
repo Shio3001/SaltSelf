@@ -2,11 +2,11 @@
 
 var canvas = document.getElementById('view_canvas');
 var context = canvas.getContext('2d');
+
 context.fillRect(0, 0, canvas.width, canvas.height);
-// キャンバス全体のピクセル情報を取得
 var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 var width = imageData.width, height = imageData.height;
-var pixels = imageData.data;  // ピクセル配列：RGBA4要素で1ピクセル
+
 var salt3D_for_js_interface;
 var vertex_control;
 
