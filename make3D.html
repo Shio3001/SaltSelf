@@ -40,11 +40,18 @@
     <select id="surface_select" size="10">
     </select><br />
 
+    <p>検証用</p><br />
+    <input type="text" id="survey_surface_key"></p><br />
+    <input type="text" id="survey_vertex_key"></p><br />
+    <input type="number" id="survey_vertex_number"></p><br />
+    <input type="button" value="検証" onclick="consistency_survey();" /><br />
+
     <script src=js/setup.js></script>
     <script src=js/surface_list.js></script>
     <script src=js/surface.js></script>
     <script src=js/vertex.js></script>
     <script src=js/view.js></script>
+    <script src=js/survey.js></script>
     <script src=make3D.js></script>
     <script src=cpp/forjs/wasm_forweb.js></script>
 
