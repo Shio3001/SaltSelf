@@ -114,12 +114,14 @@ public:
 
         if (flag)
         {
-            AddVertexXyz(key, x, y, z);
+            std::cout << "存在あり" << std::endl;
+            VertexXyzData *vertex_xyz_data = m_vertex_data[key];
+            vertex_xyz_data->Xyz(x, y, z);
         }
         else
         {
-            VertexXyzData *vertex_xyz_data = m_vertex_data[key];
-            vertex_xyz_data->Xyz(x, y, z);
+            AddVertexXyz(key, x, y, z);
+            std::cout << "存在なし" << std::endl;
         }
     }
 

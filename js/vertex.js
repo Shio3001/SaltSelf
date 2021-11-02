@@ -37,7 +37,7 @@ function vertex_addvalue() { //頂点データをC++データに追加する
     let intx = parseFloat(x);
     let inty = parseFloat(y);
     let intz = parseFloat(z);
-    vertex_control.AddVertexXyz(tag, intx, inty, intz)
+    vertex_control.AddVertexXyzConsiderationChange(tag, intx, inty, intz)
     select_control.remove_vertex_select()
     select_control.reflect_vertex_select()
 }
