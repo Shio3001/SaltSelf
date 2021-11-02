@@ -35,20 +35,20 @@ public:
         SurfaceData *test_surface_data = m_surface_data[surface_key];
         VertexXyzData *test_surface_has_vertex_xyz_data = test_surface_data->GetVertex(vertex_number);
 
-        cout << "X Y Z 検証 " << endl;
+        std::cout << "X Y Z 検証 " << std::endl;
 
         int *p_test_vertex_xyz_data = test_vertex_xyz_data->Get_xyz();
         int *p_test_surface_has_vertex_xyz_data = test_surface_has_vertex_xyz_data->Get_xyz();
 
-         cout << "固有" << endl;
-        cout << p_test_vertex_xyz_data[0] << endl;
-        cout << p_test_vertex_xyz_data[1] << endl;
-        cout << p_test_vertex_xyz_data[2] << endl;
-        cout << "共有" << endl;
-        cout << p_test_surface_has_vertex_xyz_data[0] << endl;
-        cout << p_test_surface_has_vertex_xyz_data[1] << endl;
-        cout << p_test_surface_has_vertex_xyz_data[2] << endl;
-        cout << "終了" << endl;
+        std::cout << "固有" << std::endl;
+        std::cout << p_test_vertex_xyz_data[0] << std::endl;
+        std::cout << p_test_vertex_xyz_data[1] << std::endl;
+        std::cout << p_test_vertex_xyz_data[2] << std::endl;
+        std::cout << "共有" << std::endl;
+        std::cout << p_test_surface_has_vertex_xyz_data[0] << std::endl;
+        std::cout << p_test_surface_has_vertex_xyz_data[1] << std::endl;
+        std::cout << p_test_surface_has_vertex_xyz_data[2] << std::endl;
+        std::cout << "終了" << std::endl;
 
         //ここ書いてる
     }

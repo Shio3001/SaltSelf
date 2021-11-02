@@ -47,6 +47,7 @@ EMSCRIPTEN_BINDINGS(forjs)
         .function("GetDrawRGBA", &ViewPxData::GetDrawRGBA);
     class_<VertexControl>("VertexControl")
         //.constructor<ViewPxData>()
+        .function("ConsistencySurvey", &VertexControl::ConsistencySurvey)
         .function("SurfacePlaneCalculation", &VertexControl::SurfacePlaneCalculation)
         .function("SurfaceSpatialCalculation", &VertexControl::SurfaceSpatialCalculation)
         .function("AddSurface", &VertexControl::AddSurface)
