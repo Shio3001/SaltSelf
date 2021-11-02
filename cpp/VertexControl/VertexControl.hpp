@@ -76,11 +76,6 @@ public:
     void AddSurface(std::string key)
     {
         SurfaceData *surface_data = new SurfaceData(key);
-
-        //std::cout << "AddSurface    surface_data" << std::endl;
-        //std::cout << &surface_data << std::endl;
-        //std::cout << " " << std::endl;
-
         m_surface_data[key] = surface_data;
     }
 
@@ -88,13 +83,6 @@ public:
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
         VertexXyzData *vertex_xyz_data = m_vertex_data[vertex_key];
-
-        //std::cout << "AddVertexForSurface    surface_data" << std::endl;
-        //std::cout << &surface_data << std::endl;
-        //std::cout << "AddVertexForSurface    vertex_xyz_data" << std::endl;
-        //std::cout << &vertex_xyz_data << std::endl;
-        //std::cout << " " << std::endl;
-
         surface_data->AddVertex(*vertex_xyz_data);
     }
 
