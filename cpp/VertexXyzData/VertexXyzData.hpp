@@ -9,14 +9,19 @@ private:
     std::string vertex_name;
 
 public:
-    VertexXyzData(std::string send_vertex_xyz_data_key)
+    VertexXyzData()
     {
-        m_vertex_xyz_data_key = send_vertex_xyz_data_key;
+
         //std::cout << "VertexXyzData コンストラクタ" << std::endl;
     }
     ~VertexXyzData()
     {
         //std::cout << "VertexXyzData デストラクタ" << std::endl;
+    }
+
+    void SetupKey(std::string send_vertex_xyz_data_key)
+    {
+        m_vertex_xyz_data_key = send_vertex_xyz_data_key;
     }
 
     std::string VertexKey()

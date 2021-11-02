@@ -91,7 +91,6 @@ public:
         std::vector<std::string> vertex_xyz_data_key = GetVertexXyzDataKey();
 
         bool flag = false;
-
         for (int i = 0; i < vertex_xyz_data_key.size(); i++)
         {
             if (vertex_xyz_data_key[i] == key)
@@ -116,7 +115,8 @@ public:
     void AddVertexXyz(std::string key, int x, int y, int z)
     {
 
-        VertexXyzData *vertex_xyz_data = new VertexXyzData(key);
+        VertexXyzData *vertex_xyz_data = new VertexXyzData();
+        vertex_xyz_data->SetupKey(key);
         vertex_xyz_data->Xyz(x, y, z);
         m_vertex_data[key] = vertex_xyz_data;
 
