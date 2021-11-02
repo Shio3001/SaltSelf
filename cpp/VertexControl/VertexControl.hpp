@@ -48,6 +48,9 @@ public:
         std::cout << p_test_surface_has_vertex_xyz_data[0] << std::endl;
         std::cout << p_test_surface_has_vertex_xyz_data[1] << std::endl;
         std::cout << p_test_surface_has_vertex_xyz_data[2] << std::endl;
+        std::cout << "ポインタ" << std::endl;
+        std::cout << &test_vertex_xyz_data << std::endl;
+        std::cout << &test_surface_has_vertex_xyz_data << std::endl;
         std::cout << "終了" << std::endl;
 
         //ここ書いてる
@@ -95,12 +98,36 @@ public:
         surface_data->AddVertex(*vertex_xyz_data);
     }
 
+    void AddVertexXyzConsiderationChange(std::string key, int x, int y, int z)
+    {
+        std::vector<std::string> vertex_xyz_data_key = GetVertexXyzDataKey();
+
+        bool flag = false;
+
+        for (int i = 0; i < vertex_xyz_data_key.size(); i++)
+        {
+            if (vertex_xyz_data_key[i] == key)
+            {
+                flag = true;
+            }
+        }
+
+        if (flag)
+        {
+            AddVertexXyz(key, x, y, z);
+        }
+        else
+        {
+            VertexXyzData *vertex_xyz_data = m_vertex_data[key];
+            vertex_xyz_data->Xyz(x, y, z);
+        }
+    }
+
     void AddVertexXyz(std::string key, int x, int y, int z)
     {
 
         VertexXyzData *vertex_xyz_data = new VertexXyzData(key);
         vertex_xyz_data->Xyz(x, y, z);
-
         m_vertex_data[key] = vertex_xyz_data;
 
         //std::cout << "AddVertexXyz   vertex_xyz_data " << key << std::endl;
