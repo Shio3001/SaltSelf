@@ -16,12 +16,20 @@ public:
     ForJsInterface()
     {
     }
+    void NewViewPxFromIntegration()
+    {
+        integration->NewViewPx();
+    }
+    void DeleteViewPxFromIntegration()
+    {
+        integration->DeleteViewPx();
+    }
+
     ViewPxData ViewRun()
     {
         ViewPxData get_view_px_data = integration->GetViewPxData();
         return get_view_px_data;
     }
-
     VertexControl GetVertexControl()
     {
         VertexControl get_vertex_control = integration->GetVertexControl();
@@ -36,6 +44,8 @@ EMSCRIPTEN_BINDINGS(forjs)
 
     class_<ForJsInterface>("ForJsInterface")
         .constructor<>()
+        .function("NewViewPxFromIntegration", &ForJsInterface::NewViewPxFromIntegration)
+        .function("DeleteViewPxFromIntegration", &ForJsInterface::DeleteViewPxFromIntegration)
         .function("ViewRun", &ForJsInterface::ViewRun)
         .function("GetVertexControl", &ForJsInterface::GetVertexControl);
     class_<ViewPxData>("ViewPxData")
@@ -59,5 +69,6 @@ EMSCRIPTEN_BINDINGS(forjs)
         .function("GetVertexXyzDataKeyFromSurface", &VertexControl::GetVertexXyzDataKeyFromSurface)
         .function("GetSurfaceDataKey", &VertexControl::GetSurfaceDataKey)
         .function("GetXYZ", &VertexControl::GetXYZ)
+        //.function("SetViewPxData", &VertexControl::SetViewPxData)
         .function("GetVertexXyzDataKey", &VertexControl::GetVertexXyzDataKey);
 }

@@ -19,6 +19,7 @@ public:
     {
         delete &draw;
     }
+
     void PointDraw(int x, int y, int color_r, int color_g, int color_b, int color_a)
     {
         int ipx = (x_width * y + x) * 4;

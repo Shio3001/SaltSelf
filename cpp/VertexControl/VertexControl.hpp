@@ -15,16 +15,17 @@ private:
     ViewPxData *view_px_data;
 
 public:
-    VertexControl(ViewPxData *send_view_px_data)
+    VertexControl()
     {
-        view_px_data = send_view_px_data;
-        //ここからテスト
-        AddSurface("S");
-        SurfacePlaneCalculation("S");
     }
     ~VertexControl()
     {
         //std::cout << "VertexControl デストラクタ" << std::endl;
+    }
+
+    void SetViewPxData(ViewPxData *send_view_px_data) // js定義禁止関数
+    {
+        view_px_data = send_view_px_data;
     }
     //ここら辺に出力への関数を記入する
     //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)

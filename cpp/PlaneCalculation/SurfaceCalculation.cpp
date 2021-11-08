@@ -147,14 +147,14 @@ void PlaneCalculationControl::SurfaceCalculation()
 
             if (mod2 == 0 && range_query != 0) //
             {
-
-                int result = range_query;
-                sum += result;
+                sum += 1;
                 view_px_data->PointDraw(x, y, 200, 10, 10, 255);
             }
             delete[] fx;
         }
     }
+    std::cout << "総面積 " << sum << std::endl;
+
     int sec_since_epoch2 = GetTime();
 
     //std::cout << sum << std::endl;
