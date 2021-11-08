@@ -16,8 +16,11 @@ var Module = {
     onRuntimeInitialized: function () {
         salt3D_for_js_interface = new Module.ForJsInterface();
         vertex_control = salt3D_for_js_interface.GetVertexControl();
-        var view_data = salt3D_for_js_interface.ViewRun();
+
+        vertex_control.NewViewPx(1280, 720);
+        var view_data = vertex_control.GetView();
         view(view_data);
+        vertex_control.DeleteViewPx();
 
         select_control.remove_vertex_select()
         select_control.reflect_vertex_select()

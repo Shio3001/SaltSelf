@@ -13,11 +13,14 @@ public:
     {
         x_width = send_x_width;
         y_hight = send_y_hight;
+        std::cout << "動的確保 " << x_width << " " << y_hight << std::endl;
         draw = new int[y_hight * x_width * 4];
+        std::cout << "確保済" << std::endl;
     }
     ~ViewPxData()
     {
-        delete &draw;
+        std::cout << "メモリ解放" << std::endl;
+        delete[] draw;
     }
 
     void PointDraw(int x, int y, int color_r, int color_g, int color_b, int color_a)

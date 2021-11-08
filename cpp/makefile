@@ -62,8 +62,8 @@ cpp_d = $(main_temp_dir)/$(target0_d).o
 cpp_e = $(main_temp_dir)/$(target0_e).o
 
 #(64*1024*8)の倍数でないとダメ
-web_memory = -s INITIAL_MEMORY=20971520
-
+#web_memory = -s INITIAL_MEMORY=20971520
+web_memory = -s INITIAL_MEMORY=36700160
 main: main.cpp
 #g++ -c $(target0_dir)/$(target0_a).cpp -o $(cpp_a) -std=c++14
 	g++ -c $(target0_dir)/$(target0_b).cpp -o $(cpp_b) -std=c++14

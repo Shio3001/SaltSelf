@@ -26,7 +26,6 @@ public:
     void NewViewPx(int x_width, int y_hight)
     {
         view_px_data = new ViewPxData(x_width, y_hight);
-        vertex_control->SetViewPxData(view_px_data);
     }
     void DeleteViewPx()
     {

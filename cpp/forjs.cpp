@@ -55,6 +55,5 @@ EMSCRIPTEN_BINDINGS(forjs)
         .function("GetVertexXyzDataKeyFromSurface", &VertexControl::GetVertexXyzDataKeyFromSurface)
         .function("GetSurfaceDataKey", &VertexControl::GetSurfaceDataKey)
         .function("GetXYZ", &VertexControl::GetXYZ)
-        //.function("SetViewPxData", &VertexControl::SetViewPxData)
         .function("GetVertexXyzDataKey", &VertexControl::GetVertexXyzDataKey);
 }
