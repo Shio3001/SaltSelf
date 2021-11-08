@@ -29,6 +29,7 @@ public:
     }
     void DeleteViewPx()
     {
+        std::cout << "DeleteViewPx" << std::endl;
         delete view_px_data;
     }
     ViewPxData GetView()

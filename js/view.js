@@ -18,19 +18,29 @@ function view_run() {
     vertex_control.DeleteViewPx()
 }
 
+var count = 0;
+
 function view(view_data) {
 
     var pixels = imageData.data;  // ピクセル配列：RGBA4要素で1ピクセル
     var HP = get_time();
+
+    var mod0 = (count % 3)
+    var mod1 = ((count + 1) % 3)
+    var mod2 = ((count + 2) % 3)
 
     // ピクセル単位で操作できる
     for (var y = 0; y < height; ++y) {
         for (var x = 0; x < width; ++x) {
             var base = (y * width + x) * 4;
             // なんかピクセルに書き込む
-            pixels[base + 0] = view_data.GetDrawRGBA(x, y, 0);  // Red
-            pixels[base + 1] = view_data.GetDrawRGBA(x, y, 1);  // Green
-            pixels[base + 2] = view_data.GetDrawRGBA(x, y, 2);  // Blue
+            //pixels[base + 0] = view_data.GetDrawRGBA(x, y, 0);  // Red
+            //pixels[base + 1] = view_data.GetDrawRGBA(x, y, 1);  // Green
+            //pixels[base + 2] = view_data.GetDrawRGBA(x, y, 2);  // Blue
+
+            pixels[base + mod0] = view_data.GetDrawRGBA(x, y, 0);  // Red
+            pixels[base + mod1] = 0  // Green
+            pixels[base + mod2] = 0  // Blue
             pixels[base + 3] = 255;  // Alpha
         }
     }
@@ -47,4 +57,7 @@ function view(view_data) {
 
     console.log("60fps参考数値 : " + 1 / 60)
     console.log("30fps参考数値 : " + 1 / 30)
+
+    count++;
 }
+

@@ -15,10 +15,17 @@ public:
         y_hight = send_y_hight;
         std::cout << "動的確保 " << x_width << " " << y_hight << std::endl;
         draw = new int[y_hight * x_width * 4];
+
+        for (int i = 0; i < y_hight * x_width * 4; i++)
+        {
+            draw[i] = 0;
+        }
+
         std::cout << "確保済" << std::endl;
     }
     ~ViewPxData()
     {
+
         std::cout << "メモリ解放" << std::endl;
         delete[] draw;
     }
