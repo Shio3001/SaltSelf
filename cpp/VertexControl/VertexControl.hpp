@@ -23,9 +23,18 @@ public:
         //std::cout << "VertexControl デストラクタ" << std::endl;
     }
 
-    void SetViewPxData(ViewPxData *send_view_px_data) // js定義禁止関数
+    void NewViewPx(int x_width, int y_hight)
     {
-        view_px_data = send_view_px_data;
+        view_px_data = new ViewPxData(x_width, y_hight);
+        vertex_control->SetViewPxData(view_px_data);
+    }
+    void DeleteViewPx()
+    {
+        delete view_px_data;
+    }
+    ViewPxData GetView()
+    {
+        return *view_px_data;
     }
     //ここら辺に出力への関数を記入する
     //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)

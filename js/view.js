@@ -1,5 +1,7 @@
 
 function view_run() {
+
+    vertex_control.NewViewPx()
     var idx_surface_list_select = select_control.get_index_surface_list_select();
 
     if (idx_surface_list_select < 0) {
@@ -13,6 +15,7 @@ function view_run() {
     vertex_control.SurfacePlaneCalculation(this_key_surface_list_select)
     var view_data = salt3D_for_js_interface.ViewRun();
     view(view_data);
+    vertex_control.DeleteViewPx()
 }
 
 function view(view_data) {

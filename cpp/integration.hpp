@@ -11,7 +11,6 @@ class Integration
 
     int x_width = 1280;
     int y_hight = 720;
-    ViewPxData *view_px_data;
     VertexControl *vertex_control = new VertexControl();
 
 public:
@@ -21,24 +20,9 @@ public:
     }
     ~Integration()
     {
-        delete view_px_data;
         delete vertex_control;
     }
 
-    void NewViewPx()
-    {
-        view_px_data = new ViewPxData(x_width, y_hight);
-        vertex_control->SetViewPxData(view_px_data);
-    }
-    void DeleteViewPx()
-    {
-        delete view_px_data;
-    }
-
-    ViewPxData GetViewPxData()
-    {
-        return *view_px_data;
-    }
     VertexControl GetVertexControl()
     {
         return *vertex_control;
