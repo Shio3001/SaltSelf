@@ -10,6 +10,9 @@ private:
     std::map<std::string, VertexXyzData *> m_vertex_data;
     std::map<std::string, SurfaceData *> m_surface_data;
 
+    int m_xyz_camera_position[3] = {0, 0, 0};
+    int m_xyz_camera_rotate[3] = {0, 0, 0};
+
     //std::map<std::string, EdgeData *> m_edge_data;
 
     ViewPxData *view_px_data;
@@ -32,9 +35,9 @@ public:
         std::cout << "DeleteViewPx" << std::endl;
         delete view_px_data;
     }
-    ViewPxData GetView()
+    ViewPxData *GetView()
     {
-        return *view_px_data;
+        return view_px_data;
     }
     //ここら辺に出力への関数を記入する
     //SurfaceData丸ごと渡せば良い(ポインタで繋いでるのおで)
@@ -66,14 +69,24 @@ public:
         //ここ書いてる
     }
 
+    void CameraCoordinates(int x, int y, int z)
+    {
+        m_xyz_camera_position[0] += x;
+        m_xyz_camera_position[1] += y;
+        m_xyz_camera_position[2] += z;
+    }
+    void CameraDirection(int x, int y, int z)
+    {
+    }
+
     void SurfacePlaneCalculation(std::string surface_key) //平面計算
     {
         SurfaceData *surface_data = m_surface_data[surface_key];
 
-        int x_width = view_px_data->Get_x_width();
-        int y_hight = view_px_data->Get_y_hight();
+        //int x_width = view_px_data->Get_x_width();
+        //int y_hight = view_px_data->Get_y_hight();
 
-        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(x_width, y_hight, *surface_data, *view_px_data);
+        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data, *view_px_data, *m_xyz_camera_position, *m_xyz_camera_rotate);
         plane_calculation_control->Slope();
         plane_calculation_control->SurfaceCalculation();
         delete plane_calculation_control;

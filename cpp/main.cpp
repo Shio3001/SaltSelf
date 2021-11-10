@@ -10,8 +10,8 @@ int main()
 {
     Integration *integration = new Integration;
     VertexControl get_vertex_control = integration->GetVertexControl();
-    ViewPxData view_px_data = get_vertex_control.GetView();
-    view_px_data.OpenCvOutput();
+    ViewPxData *view_px_data = get_vertex_control.GetView();
+    view_px_data->OpenCvOutput();
     //ViewPxData GetViewPxDataHaveVertexControl = vertex_control->GetViewPxDataHaveVertexControl();
 
     //cout << "終了" << endl;

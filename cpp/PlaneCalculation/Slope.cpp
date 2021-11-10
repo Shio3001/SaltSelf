@@ -24,9 +24,6 @@ void PlaneCalculationControl::Slope()
 
         //std::cout << " " << std::endl;
 
-        int x2 = 0;
-        int y2 = 0;
-
         int vertex_point_add = 1;
         int next;
 
@@ -39,11 +36,16 @@ void PlaneCalculationControl::Slope()
         //std::cout << "vertex2 class 取得済み" << std::endl;
         int *xyz2 = vertex2->Get_xyz();
 
-        x2 = xyz2[0];
-        y2 = xyz2[1];
+        int x2 = xyz2[0];
+        int y2 = xyz2[1];
 
         //std::cout << "vertex2 座標値 取得済み" << std::endl;
         //std::cout << "x2 y2 " << x2 << " " << y2 << std::endl;
+
+        x1 -= m_xyz_camera_position[0];
+        x2 -= m_xyz_camera_position[0];
+        y1 -= m_xyz_camera_position[1];
+        y2 -= m_xyz_camera_position[1];
 
         double x_distance = x2 - x1;
         double y_distance = y2 - y1;
