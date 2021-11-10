@@ -17,6 +17,8 @@ private:
 
     ViewPxData *view_px_data;
 
+    bool m_view_px_flag = false;
+
 public:
     VertexControl()
     {
@@ -29,11 +31,15 @@ public:
     void NewViewPx(int x_width, int y_hight)
     {
         view_px_data = new ViewPxData(x_width, y_hight);
+
+        m_view_px_flag = true;
     }
     void DeleteViewPx()
     {
         std::cout << "DeleteViewPx" << std::endl;
         delete view_px_data;
+
+        m_view_px_flag = false;
     }
     ViewPxData *GetView()
     {

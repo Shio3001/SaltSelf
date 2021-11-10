@@ -1,7 +1,7 @@
 
 
 function select_vertex_for_tagxyz() {
-    var idx_vertex_select = select_control.get_index_vertex_select();
+    let idx_vertex_select = select_control.get_index_vertex_select();
     console.log(idx_vertex_select)
 
     if (idx_vertex_select < 0) {

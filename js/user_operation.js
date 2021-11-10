@@ -14,9 +14,11 @@ function position(x, y, z) {
 
     let this_key_surface_list_select = surfaces.get(idx_surface_list_select);
 
+    vertex_control.NewViewPx(1280, 720)
     vertex_control.SurfacePlaneCalculation(this_key_surface_list_select)
-    var view_data = vertex_control.GetView();
+    let view_data = vertex_control.GetView();
     view(view_data);
+    vertex_control.DeleteViewPx()
 }
 
 function keydownfunc(event) {
@@ -41,6 +43,8 @@ addEventListener("keydown", keydownfunc);
 
 //     vertex_control.CameraCoordinates(0, 0, 10);
 //     vertex_control.SurfacePlaneCalculation(this_key_surface_list_select)
-//     var view_data = vertex_control.GetView();
+//     let view_data = vertex_control.GetView();
 //     view(view_data);
 // }
+
+//https://original-game.com/introduction-to-javascript-move-a-character-by-input/

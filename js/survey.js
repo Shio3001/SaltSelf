@@ -1,6 +1,6 @@
-var survey_surface_key = document.getElementById('survey_surface_key');
-var survey_vertex_key = document.getElementById('survey_vertex_key');
-var survey_vertex_number = document.getElementById('survey_vertex_number');
+let survey_surface_key = document.getElementById('survey_surface_key');
+let survey_vertex_key = document.getElementById('survey_vertex_key');
+let survey_vertex_number = document.getElementById('survey_vertex_number');
 
 function consistency_survey() {
     let surface_key = survey_surface_key.value

@@ -4,15 +4,15 @@ const select_control = new SelectControl(); //jsの表操作に関すること
 
 
 function get_time() {
-    var date = new Date();
-    var time = date.getTime();
+    let date = new Date();
+    let time = date.getTime();
     return time;
 }
 
 
 
 //js_canvas_setup()
-var Module = {
+let Module = {
     onRuntimeInitialized: function () {
         salt3D_for_js_interface = new Module.ForJsInterface();
         vertex_control = salt3D_for_js_interface.GetVertexControl();
@@ -22,7 +22,7 @@ var Module = {
         console.log("初回 end : NewViewPx")
 
         console.log("初回 sta : GetView")
-        var view_data = vertex_control.GetView();
+        let view_data = vertex_control.GetView();
         console.log("初回 end : GetView")
 
         view(view_data);

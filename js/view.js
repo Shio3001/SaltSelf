@@ -12,20 +12,20 @@ function view_run() {
     let this_key_surface_list_select = surfaces.get(idx_surface_list_select);
 
     vertex_control.SurfacePlaneCalculation(this_key_surface_list_select)
-    var view_data = vertex_control.GetView();
+    let view_data = vertex_control.GetView();
     view(view_data);
     vertex_control.DeleteViewPx()
 }
 
 function view(view_data) {
 
-    var pixels = imageData.data;  // ピクセル配列：RGBA4要素で1ピクセル
-    var HP = get_time();
+    let pixels = imageData.data;  // ピクセル配列：RGBA4要素で1ピクセル
+    let HP = get_time();
 
     // ピクセル単位で操作できる
-    for (var y = 0; y < height; ++y) {
-        for (var x = 0; x < width; ++x) {
-            var base = (y * width + x) * 4;
+    for (let y = 0; y < height; ++y) {
+        for (let x = 0; x < width; ++x) {
+            let base = (y * width + x) * 4;
             // なんかピクセルに書き込む
             pixels[base + 0] = view_data.GetDrawRGBA(x, y, 0);  // Red
             pixels[base + 1] = view_data.GetDrawRGBA(x, y, 1);  // Green
@@ -35,12 +35,12 @@ function view(view_data) {
         }
     }
 
-    var DP = get_time();
+    let DP = get_time();
 
     // 変更した内容をキャンバスに書き戻す
     context.putImageData(imageData, 0, 0);
 
-    var EP = get_time();
+    let EP = get_time();
 
     console.log((DP - HP) / 1000);
     console.log((EP - DP) / 1000);

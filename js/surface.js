@@ -2,7 +2,7 @@
 function surface_select_for_surface_table(surface_name = "") { //surface_selectで選んだ面をsurfaceに反映する
 
     if (!surface_name) {
-        var idx_surface_list_select = select_control.get_index_surface_list_select();
+        let idx_surface_list_select = select_control.get_index_surface_list_select();
         let surfaces = vertex_control.GetSurfaceDataKey()
         surface_name = surfaces.get(idx_surface_list_select);
     }
@@ -12,8 +12,8 @@ function surface_select_for_surface_table(surface_name = "") { //surface_select�
 
 
 function surface_addvertex() {
-    var idx_vertex_select = select_control.get_index_vertex_select();
-    var idx_surface_list_select = select_control.get_index_surface_list_select();
+    let idx_vertex_select = select_control.get_index_vertex_select();
+    let idx_surface_list_select = select_control.get_index_surface_list_select();
 
     console.log(idx_vertex_select)
     console.log(idx_surface_list_select)

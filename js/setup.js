@@ -1,24 +1,24 @@
 
 
-var canvas = document.getElementById('view_canvas');
-var context = canvas.getContext('2d');
+let canvas = document.getElementById('view_canvas');
+let context = canvas.getContext('2d');
 
 context.fillRect(0, 0, canvas.width, canvas.height);
-var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-var width = imageData.width, height = imageData.height;
+let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+let width = imageData.width, height = imageData.height;
 
-var salt3D_for_js_interface;
-var vertex_control;
+let salt3D_for_js_interface;
+let vertex_control;
 
 let vertex_select = document.getElementById('vertex_select');
 let surface_list_select = document.getElementById('surface_list_select');
 let surface_select = document.getElementById('surface_select');
 
-var vertex_add_textbox_tag = document.getElementById('vertex_add_textbox_tag');
-var vertex_add_textbox_x = document.getElementById('vertex_add_textbox_x');
-var vertex_add_textbox_y = document.getElementById('vertex_add_textbox_y');
-var vertex_add_textbox_z = document.getElementById('vertex_add_textbox_z');
-var add_surface_textbox = document.getElementById('add_surface_textbox');
+let vertex_add_textbox_tag = document.getElementById('vertex_add_textbox_tag');
+let vertex_add_textbox_x = document.getElementById('vertex_add_textbox_x');
+let vertex_add_textbox_y = document.getElementById('vertex_add_textbox_y');
+let vertex_add_textbox_z = document.getElementById('vertex_add_textbox_z');
+let add_surface_textbox = document.getElementById('add_surface_textbox');
 
 class SelectControl {
     remove_vertex_select() {
@@ -82,27 +82,27 @@ class SelectControl {
         }
     }
     get_length_vertex_select() {
-        var length_vertex_select = vertex_select.length;
+        let length_vertex_select = vertex_select.length;
         return length_vertex_select;
     }
     get_length_surface_list_select() {
-        var length_surface_list_select = surface_list_select.length;
+        let length_surface_list_select = surface_list_select.length;
         return length_surface_list_select;
     }
     get_length_surface_select() {
-        var length_surface_select = surface_select.length;
+        let length_surface_select = surface_select.length;
         return length_surface_select;
     }
     get_index_vertex_select() {
-        var idx_vertex_select = vertex_select.selectedIndex;
+        let idx_vertex_select = vertex_select.selectedIndex;
         return idx_vertex_select;
     }
     get_index_surface_list_select() {
-        var idx_surface_list_select = surface_list_select.selectedIndex;
+        let idx_surface_list_select = surface_list_select.selectedIndex;
         return idx_surface_list_select;
     }
     get_index_surface_select() {
-        var idx_surface_select = surface_select.selectedIndex;
+        let idx_surface_select = surface_select.selectedIndex;
         return idx_surface_select;
     }
 }
