@@ -15,13 +15,13 @@ private:
     int x_width;
     int y_hight;
 
-    int *m_xyz_camera_position;
-    int *m_xyz_camera_rotate;
+    int *m_xyz_camera_addition;
+    int *m_xyz_camera_multiplication;
 
 public:
     //ViewPxData *view_px_data = ViewPxData(x_width, y_hight);
 
-    PlaneCalculationControl(SurfaceData &send_surface_data, ViewPxData &send_view_px_data, int &send_xyz_camera_position, int &send_xyz_camera_rotate)
+    PlaneCalculationControl(SurfaceData &send_surface_data, ViewPxData &send_view_px_data, int &send_xyz_camera_addition, int &send_xyz_camera_multiplication)
     {
 
         surface_data = &send_surface_data;
@@ -30,8 +30,8 @@ public:
         x_width = view_px_data->Get_x_width();
         y_hight = view_px_data->Get_y_hight();
 
-        m_xyz_camera_position = &send_xyz_camera_position;
-        m_xyz_camera_rotate = &send_xyz_camera_rotate;
+        m_xyz_camera_addition = &send_xyz_camera_addition;
+        m_xyz_camera_multiplication = &send_xyz_camera_multiplication;
 
         //std::cout << "PlaneCalculationControl コンストラクタ" << std::endl;
     }

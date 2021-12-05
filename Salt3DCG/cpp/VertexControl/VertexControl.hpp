@@ -10,8 +10,8 @@ private:
     std::map<std::string, VertexXyzData *> m_vertex_data;
     std::map<std::string, SurfaceData *> m_surface_data;
 
-    int m_xyz_camera_position[3] = {0, 0, 0};
-    int m_xyz_camera_rotate[3] = {0, 0, 0};
+    int m_xyz_camera_addition[3] = {0, 0, 0};
+    int m_xyz_camera_multiplication[3] = {0, 0, 0};
 
     //std::map<std::string, EdgeData *> m_edge_data;
 
@@ -92,7 +92,7 @@ public:
         //int x_width = view_px_data->Get_x_width();
         //int y_hight = view_px_data->Get_y_hight();
 
-        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data, *view_px_data, *m_xyz_camera_position, *m_xyz_camera_rotate);
+        PlaneCalculationControl *plane_calculation_control = new PlaneCalculationControl(*surface_data, *view_px_data, *m_xyz_camera_addition, *m_xyz_camera_multiplication);
         plane_calculation_control->Slope();
         plane_calculation_control->SurfaceCalculation();
         delete plane_calculation_control;

@@ -7,12 +7,16 @@ function view_run() {
         return
     }
 
+    let AP = get_time();
+
     vertex_control.NewViewPx(1280, 720)
-
     let this_key_surface_list_select = surfaces.get(idx_surface_list_select);
-
     vertex_control.SurfacePlaneCalculation(this_key_surface_list_select)
     let view_data = vertex_control.GetView();
+    let BP = get_time();
+
+    console.log((BP - AP) / 1000);
+
     view(view_data);
     vertex_control.DeleteViewPx()
 }

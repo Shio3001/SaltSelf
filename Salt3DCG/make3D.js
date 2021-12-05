@@ -12,7 +12,7 @@ function get_time() {
 
 
 //js_canvas_setup()
-let Module = {
+var Module = {
     onRuntimeInitialized: function () {
         salt3D_for_js_interface = new Module.ForJsInterface();
         vertex_control = salt3D_for_js_interface.GetVertexControl();

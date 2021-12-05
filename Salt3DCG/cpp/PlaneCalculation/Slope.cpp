@@ -1,6 +1,8 @@
 #include "PlaneCalculation.hpp"
 void PlaneCalculationControl::Slope()
 {
+    std::cout << "頂点計算" << std::endl;
+
     int vertex_size = surface_data->GetVertexSize();
 
     if (vertex_size <= 1)
@@ -42,10 +44,10 @@ void PlaneCalculationControl::Slope()
         //std::cout << "vertex2 座標値 取得済み" << std::endl;
         //std::cout << "x2 y2 " << x2 << " " << y2 << std::endl;
 
-        x1 -= m_xyz_camera_position[0];
-        x2 -= m_xyz_camera_position[0];
-        y1 -= m_xyz_camera_position[1];
-        y2 -= m_xyz_camera_position[1];
+        x1 -= m_xyz_camera_addition[0];
+        x2 -= m_xyz_camera_addition[0];
+        y1 -= m_xyz_camera_addition[1];
+        y2 -= m_xyz_camera_addition[1];
 
         double x_distance = x2 - x1;
         double y_distance = y2 - y1;
@@ -75,4 +77,5 @@ void PlaneCalculationControl::Slope()
         //std::cout << " " << std::endl;
         //std::cout << " " << std::endl;
     }
+    std::cout << "頂点計算 終了" << std::endl;
 }
