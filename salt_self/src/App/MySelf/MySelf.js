@@ -29,6 +29,9 @@ class MySelf extends React.Component {
                     <details>
                         <summary><h1 className="my_self_h1">私について</h1></summary>
                         <div className="my_self_text">
+                            <Link to="/">Home</Link>
+                            <Link to="/Salt3DCG">Salt3DCG</Link>
+
                             <p className="my_self_text_p">2004年12月14日生まれ</p>
                             <p className="my_self_text_p">えいえんの5さい！！！(ほんとは{text})</p>
                             <p className="my_self_text_p">2021年JOI 一次予選400点で通った</p>
