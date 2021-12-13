@@ -2,16 +2,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
-
-var js_file_list = ["js/setup.js", "js/surface_list.js", "js/surface.js", "js/vertex.js", "js/view.js", "js/survey.js", "js/user_operation.js", "make3D.js", "cpp/forjs/wasm_forweb.js"]
-for (var i = 0; i < js_file_list.length; i++) {
-    const script = document.createElement("script");
-    script.src = js_file_list[i];
-    script.async = true;
-    document.body.appendChild(script);
-}
-
 const select_control = new SelectControl(); //jsの表操作に関すること
 
 function get_time() {

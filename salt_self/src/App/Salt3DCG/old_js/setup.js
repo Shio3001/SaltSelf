@@ -1,5 +1,4 @@
 
-
 let canvas = document.getElementById('view_canvas');
 let context = canvas.getContext('2d');
 
