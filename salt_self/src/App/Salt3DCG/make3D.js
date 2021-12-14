@@ -15,17 +15,35 @@ var Module = {
     }
 };
 
+export function add_surface() {
+
+}
 
 
-class Make3D extends React.Component {
+export class surface_control_individual extends React.Component {
+    render() {
+        return (
+            <div className="surface_control_individual">
+                <h1>ここに面の名前を記入</h1>
+            </div>
+        );
+    }
+}
+
+
+
+export class Make3D extends React.Component {
     render() {
         console.log("Make3D render")
         return (
             <div>
                 <canvas ref="view_canvas" width="1280" height="720"></canvas><br />
-                <input type="button" value="描画" onclick="{view_run};" /><br />
+                <input type="button" value="描画" /><br />
+
+                <div id="surface_control"></div>
+                <div id="vertex_control"></div>
+
             </div >
         );
     }
 }
-export default Make3D;

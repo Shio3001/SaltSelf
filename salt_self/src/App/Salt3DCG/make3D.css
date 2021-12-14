@@ -1,0 +1,17 @@
+.surface_control_individual {
+    background-color:#11aa11;
+    /* transform:rotate(-5deg); */
+
+    /* 上右下左 */
+    margin: 1px 1% 10px 1%; 
+    padding: 0px 1% 10px 1%;
+
+    font-weight: bold;
+    /* border: solid 5px #ffffff; */
+    color: #ffffff;
+
+    display: block;
+    width: 10%;
+    /* height: 100px; */
+
+}

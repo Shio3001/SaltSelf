@@ -4,7 +4,7 @@ import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 
 import MySelf from './App/MySelf/MySelf.js';
 import './App/MySelf/MySelf.css';
-import Make3D from './App/Salt3DCG/make3D.js';
+import * as Make3D_js from './App/Salt3DCG/make3D.js';
 
 class App extends React.Component {
     render() {
@@ -15,7 +15,7 @@ class App extends React.Component {
                     <Routes>
                         <>
                             <Route exact path='/' element={<MySelf />} />
-                            <Route exact path='/view' element={<Make3D />} />
+                            <Route exact path='/view' element={<Make3D_js.Make3D />} />
                         </>
                     </Routes>
                 </Router>
