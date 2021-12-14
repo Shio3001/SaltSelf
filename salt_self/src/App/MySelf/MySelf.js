@@ -1,6 +1,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 
 const date_data = new Date();
 const year = date_data.getFullYear();
@@ -22,15 +24,16 @@ function click() {
 
 class MySelf extends React.Component {
     render() {
+
+        console.log("MySelf render")
+
         return (
             <div>
-                <a href={"Salt3DCG/make3D.html"}>自作描画</a>
+                <a href={"/view"}>自作描画</a>
                 <div className="my_self">
                     <details>
                         <summary><h1 className="my_self_h1">私について</h1></summary>
                         <div className="my_self_text">
-                            <Link to="/">Home</Link>
-                            <Link to="/Salt3DCG">Salt3DCG</Link>
 
                             <p className="my_self_text_p">2004年12月14日生まれ</p>
                             <p className="my_self_text_p">えいえんの5さい！！！(ほんとは{text})</p>
@@ -42,7 +45,6 @@ class MySelf extends React.Component {
 
                 </div >
             </div>
-
         );
     }
 }

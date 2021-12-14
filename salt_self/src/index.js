@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import MySelf from './App/MySelf/MySelf';
-import './App/MySelf/MySelf.css';
+//コンポーネント読み込み
+import App from './App';
 
-import Make3D from './App/Salt3DCG/make3D';
-
+//(id="root"のところに)描画
 ReactDOM.render(
-    <MySelf />,
+    <App />,
     document.getElementById('root')
 );
-
