@@ -12,7 +12,12 @@ const day = date_data.getDate();
 
 var age = year - 2004 - 1
 
-if (month > 12 && day > 14) {
+console.log(age)
+console.log(month)
+console.log(day)
+
+
+if (month >= 12 && day >= 14) {
     age++;
 }
 const text = "16進数で" + (age).toString(16) + "才"

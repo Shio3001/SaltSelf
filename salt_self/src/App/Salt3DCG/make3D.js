@@ -27,30 +27,27 @@ export class SurfaceControlIndividual extends React.Component {
     }
 }
 
-const list_surface_control = [<SurfaceControlIndividual />, <SurfaceControlIndividual />, <SurfaceControlIndividual />]
 
 var count = 0
-
-function ui_add_surface_control() {
-    console.log("Make3D 追加")
-    list_surface_control.push(<SurfaceControlIndividual />)
+function ui_add_surface_control(Addlist_surface_control) {
+    console.log("Make3D 追加", count)
+    Addlist_surface_control(<SurfaceControlIndividual />)
     count++
 }
 
-
-
 export class Make3D extends React.Component {
+
     render() {
         console.log("Make3D render")
+        console.log(typeof (this.props.list_surface_control))
+        console.log(typeof (this.props.Addlist_surface_control))
 
         return (
             <div>
                 <canvas ref="view_canvas" width="1280" height="720"></canvas><br />
-                <input type="button" value="描画" onClick={ui_add_surface_control} /><br />
+                <input type="button" value="描画" onClick={ui_add_surface_control.bind(this, this.props.Addlist_surface_control)} /><br />
 
-                {/* {list_surface_control.map((fruit, i) => <li key={i}>{fruit}</li>)} */}
-
-                {list_surface_control.map((fruit, i) => <div key={i}>{fruit}</div>)}
+                {this.props.list_surface_control.map((fruit, i) => <div key={i}>{fruit}</div>)}
             </div >
         );
     }
