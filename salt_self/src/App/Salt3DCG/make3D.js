@@ -29,9 +29,18 @@ export class SurfaceControlIndividual extends React.Component {
 
 
 var count = 0
-function ui_add_surface_control(Addlist_surface_control) {
+function ui_add_surface_control(OverwriteListSurfaceControl, props) {
+
     console.log("Make3D 追加", count)
-    Addlist_surface_control(<SurfaceControlIndividual />)
+
+    console.log("ui_add_surface_control_state", typeof (props.state.list_surface_control))
+
+    let copy_list_surface_control = props.state.list_surface_control.slice();
+    copy_list_surface_control.push(<SurfaceControlIndividual />)
+    OverwriteListSurfaceControl(copy_list_surface_control)
+
+    console.log("ui_add_surface_control_state2", typeof (copy_list_surface_control))
+
     count++
 }
 
@@ -39,15 +48,16 @@ export class Make3D extends React.Component {
 
     render() {
         console.log("Make3D render")
-        console.log(typeof (this.props.list_surface_control))
-        console.log(typeof (this.props.Addlist_surface_control))
+        console.log(this.props.state.list_surface_control)
+        console.log("OverwriteListSurfaceControl", typeof (this.props.OverwriteListSurfaceControl))
+        console.log(typeof (this.props.state.list_surface_control))
+
 
         return (
             <div>
                 <canvas ref="view_canvas" width="1280" height="720"></canvas><br />
-                <input type="button" value="描画" onClick={ui_add_surface_control.bind(this, this.props.Addlist_surface_control)} /><br />
-
-                {this.props.list_surface_control.map((fruit, i) => <div key={i}>{fruit}</div>)}
+                <input type="button" value="描画" onClick={ui_add_surface_control.bind(this, this.props.OverwriteListSurfaceControl, this.props)} /><br />
+                {this.props.state.list_surface_control.map((fruit, i) => <div key={i}>{fruit}</div>)}
             </div >
         );
     }
