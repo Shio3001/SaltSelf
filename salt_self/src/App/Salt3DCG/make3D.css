@@ -1,17 +1,91 @@
-.surface_control_individual {
-    background-color:#11aa11;
-    /* transform:rotate(-5deg); */
+.div_SurfaceControlIndividual {
+  background-color: #ffffff;
+  /* box-shadow: -5px 0px 0px 0 rgb(20, 200, 20); */
 
-    /* 上右下左 */
-    margin: 1px 1% 10px 1%; 
-    padding: 0px 1% 10px 1%;
-
-    font-weight: bold;
-    /* border: solid 5px #ffffff; */
-    color: #ffffff;
-
-    display: block;
-    width: 10%;
-    /* height: 100px; */
-
+  border-left: solid 5px rgb(20, 200, 20);
 }
+
+.div_VertexControlIndividual {
+  background-color: #ffffff;
+  /* box-shadow: 5px 0px 0px 0 rgb(20, 20, 200); */
+  border-left: solid 5px rgb(20, 20, 200);
+}
+
+.div_SurfaceControlIndividual,
+.div_VertexControlIndividual {
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+  width: 300px;
+  float: left;
+  margin: 1px 1% 10px 1%;
+}
+
+.surface_control_area,
+.vertex_control_area {
+  overflow: hidden;
+  background-color: #eeeeee;
+  padding: 10px 0% 10px 0%;
+  margin: 10px 0% 10px 0%;
+}
+
+.div_SurfaceControlIndividual > h1,
+.div_VertexControlIndividual > h1 {
+  margin: 1px 1px 0px 1px;
+}
+
+.surface_add_area,
+.vertex_add_area,
+.view_control_area {
+  margin: 1px 50% 1px 1%;
+}
+
+.coordinate {
+  background-color: #ffffff00;
+  margin: 0px 0px 5px 0px;
+}
+
+.coordinate > p {
+  font-size: 20px;
+  margin: 0px 1px 0px 10%;
+  text-align: left;
+}
+
+.textbox {
+  width: 100%; /*親要素いっぱい広げる*/
+  padding: 10px 15px; /*ボックスを大きくする*/
+  font-size: 16px;
+  border-radius: 3px; /*ボックス角の丸み*/
+  border: 2px solid #ddd; /*枠線*/
+  box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+
+.h3_uuid {
+  font-size: 10%;
+  margin: 0px 0px 10px 0px;
+}
+
+.textbox_xyz {
+  padding: 5px 5px; /*ボックスを大きくする*/
+  margin: 0px 1% 0px 10%;
+  font-size: 16px;
+  border-radius: 0px; /*ボックス角の丸み*/
+  border: 0px solid #ddd; /*枠線*/
+  box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+  background-color: #ffffff;
+}
+
+.input_button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 0px;
+
+  background: #4676d7;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+/* https://coliss.com/articles/build-websites/operation/css/styling-the-good-old-button.html */
