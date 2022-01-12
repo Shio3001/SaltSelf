@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
 
-class VertexData {
+export class VertexData {
   constructor(send_new_vertex_name) {
     this.vertex_x = 0;
     this.vertex_y = 0;
@@ -32,24 +32,14 @@ class VertexData {
 export class VertexControlIndividual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      vertex_x: 0,
-      vertex_y: 0,
-      vertex_z: 0,
-      vertex_ID: "vertex" + UUID.generate(),
-      new_vertex_name: this.props.send_new_vertex_name,
-    };
+
 
     this.OnChangeNewX = this.OnChangeNewX.bind(this);
     this.OnChangeNewY = this.OnChangeNewY.bind(this);
     this.OnChangeNewZ = this.OnChangeNewZ.bind(this);
-    this.GetUUID = this.GetUUID.bind(this);
+    // this.GetUUID = this.GetUUID.bind(this);
 
     // console.log("new_vertex_name",this.state.new_vertex_name)
-  }
-
-  GetUUID() {
-    return this.state.vertex_ID;
   }
 
   OnChangeNewX(event) {
@@ -78,7 +68,7 @@ export class VertexControlIndividual extends React.Component {
       <div className="div_VertexControlIndividual">
         <h1>{this.props.send_new_vertex_name}</h1>
 
-        <h3 className="h3_uuid">{this.GetUUID()}</h3>
+        <h3 className="h3_uuid">{this.props.vertex_ID}</h3>
 
         <div className="coordinate">
           <p>

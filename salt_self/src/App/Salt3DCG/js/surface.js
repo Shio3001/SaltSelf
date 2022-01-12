@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
 
-class SurfaceData {
+export class SurfaceData {
   constructor(send_new_surface_name) {
     this.surface_ID = "surface" + UUID.generate();
     this.have_vertex = [];
@@ -36,12 +36,12 @@ export class VertexAtSurfaceControlIndividual extends React.Component {
           type="button"
           value="削除"
           className="surface_delete_button"
-          onClick={ui_add_surface_control.bind(
-            this,
-            this.OverwriteListSurfaceControl,
-            this.state.list_surface_control,
-            this.state.new_surface_name
-          )}
+        //   onClick={ui_add_surface_control.bind(
+        //     this,
+        //     this.OverwriteListSurfaceControl,
+        //     this.state.list_surface_control,
+        //     this.state.new_surface_name
+        //   )}
         />
       </div>
     );
@@ -51,21 +51,13 @@ export class VertexAtSurfaceControlIndividual extends React.Component {
 export class SurfaceControlIndividual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      surface_ID: "surface" + UUID.generate(),
-      have_vertex: [],
-    };
+  }
 
-    this.GetUUID = this.GetUUID.bind(this);
-  }
-  GetUUID() {
-    return this.state.surface_ID;
-  }
   render() {
     return (
       <div className="div_SurfaceControlIndividual">
         <h1>{this.props.send_new_surface_name}</h1>
-        <h3 className="h3_uuid">{this.GetUUID()}</h3>
+        <h3 className="h3_uuid">{this.props.surface_ID}</h3>
         {/* 
           <VertexAtSurfaceControlIndividual send_have_vertex_name={"text"} />
           <VertexAtSurfaceControlIndividual send_have_vertex_name={"みかん"} />
@@ -89,12 +81,12 @@ export class SurfaceControlIndividual extends React.Component {
             type="button"
             value="追加"
             className="surface_add_button"
-            onClick={ui_add_surface_control.bind(
-              this,
-              this.OverwriteListSurfaceControl,
-              this.state.list_surface_control,
-              this.state.new_surface_name
-            )}
+            // onClick={ui_add_surface_control.bind(
+            //   this,
+            //   this.OverwriteListSurfaceControl,
+            //   this.state.list_surface_control,
+            //   this.state.new_surface_name
+            // )}
           />
         </div>
       </div>

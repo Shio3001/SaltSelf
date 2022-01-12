@@ -32,10 +32,11 @@ function ui_add_surface_control(
 ) {
   let copy_list_surface_control = list_surface_control.slice();
 
-  copy_list_surface_control.push(
+  const new_surface_data = new surface_js.SurfaceData(send_new_surface_name)
     // <SurfaceControlIndividual send_new_surface_name={send_new_surface_name} ScanVertex={ScanVertex} />
 
-    new SurfaceData(send_new_surface_name)
+  copy_list_surface_control.push(
+    new_surface_data
   );
 
   OverwriteListSurfaceControl(copy_list_surface_control);
@@ -49,9 +50,10 @@ function ui_add_vertex_control(
 ) {
   let copy_list_vertex_control = list_vertex_control.slice();
 
-  copy_list_vertex_control.push(
+  const new_vertex_data = new vertex_js.VertexData(send_new_vertex_name)
     // <VertexControlIndividual send_new_vertex_name={send_new_vertex_name} />
-    new VertexData(send_new_vertex_name)
+  copy_list_vertex_control.push(
+    new_vertex_data
   );
 
   OverwriteListVertexControl(copy_list_vertex_control);
@@ -81,26 +83,34 @@ export class Make3D extends React.Component {
     this.OnChangeNewVertexName = this.OnChangeNewVertexName.bind(this);
     this.RunViewDraw = this.RunViewDraw.bind(this);
     this.ScanVertex = this.ScanVertex.bind(this);
+
+    this.MakeSurfaceComponent = this.MakeSurfaceComponent.bind(this);
+    this.MakeVertexComponent = this.MakeVertexComponent.bind(this);
   }
   MakeSurfaceComponent(){
-
+    let temp_component = []
+    this.state.list_surface_control.map((data,i) => (
+      temp_component.push(<surface_js.SurfaceControlIndividual surface_ID={data.surface_ID} ScanVertex={this.ScanVertex}/>)
+    ))
+    return temp_component;
+    // {this.state.list_vertex_control.map((fruit, i) => (
+    //   <div key={i}>{fruit}</div> //SurfaceControlIndividualを追加するmap (list_surface_controlに入っている)
+    // ))}
   }
   MakeVertexComponent(){
-
+    let temp_component = []
+    this.state.list_vertex_control.map((data,i) => (
+      temp_component.push(<vertex_js.VertexControlIndividual vertex_ID={data.vertex_ID}/>)
+    ))
+    return temp_component;
   }
 
   ScanVertex() {
     let options = []
-    for (var i = 0; i < this.state.list_vertex_control.length; i++) {
-      const vertex_component = this.state.list_vertex_control[i]
-      const vertex_component_states = vertex_component.GetUUID()
-      console.log("vertex_component_states",vertex_component_states)
 
-      console.log("vertex_component", typeof (vertex_component), vertex_component.state)
-      const value_label = { value: vertex_component.vertex_ID, label: vertex_component.new_vertex_name }
-      options.push(value_label)
-    }
-    console.log("options",options)
+    this.state.list_vertex_control.map((data,i) => (
+      options.push({value:data.vertex_ID,label:data.vertex_name})
+    ))
 
     return options
   }
@@ -187,7 +197,7 @@ export class Make3D extends React.Component {
         </div>
 
         <div className="surface_control_area">
-          {this.state.list_surface_control.map((fruit, i) => (
+          {this.MakeSurfaceComponent().map((fruit, i) => (
             <div key={i}>{fruit}</div> //SurfaceControlIndividualを追加するmap (list_surface_controlに入っている)
           ))}
         </div>
@@ -215,7 +225,7 @@ export class Make3D extends React.Component {
         </div>
 
         <div className="vertex_control_area">
-          {this.state.list_vertex_control.map((fruit, i) => (
+          {this.MakeVertexComponent().map((fruit, i) => (
             <div key={i}>{fruit}</div> //SurfaceControlIndividualを追加するmap (list_surface_controlに入っている)
           ))}
         </div>
