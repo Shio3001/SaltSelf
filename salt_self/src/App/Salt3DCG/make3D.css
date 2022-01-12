@@ -17,16 +17,23 @@
   color: #000000;
   text-align: center;
   width: 300px;
-  float: left;
-  margin: 1px 1% 10px 1%;
+  /* float: left; */
+  margin: 1px 1% 10px 10px;
+  padding: 2px 0px 8px 0px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .surface_control_area,
 .vertex_control_area {
   overflow: hidden;
   background-color: #eeeeee;
-  padding: 10px 0% 10px 0%;
+  padding: 10px 0% 0px 0%;
   margin: 10px 0% 10px 0%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .div_SurfaceControlIndividual > h1,
@@ -34,10 +41,8 @@
   margin: 1px 1px 0px 1px;
 }
 
-.surface_add_area,
-.vertex_add_area,
 .view_control_area {
-  margin: 1px 50% 1px 1%;
+  margin: 1px 0% 1px 0px;
 }
 
 .coordinate {
@@ -62,7 +67,7 @@
 
 .h3_uuid {
   font-size: 10%;
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 5px 0px;
 }
 
 .textbox_xyz {
@@ -86,6 +91,72 @@
   color: #fff;
   padding: 8px 16px;
   font-size: 16px;
+  width: 120px;
+
+  text-align: center;
+}
+
+.div_VertexAtSurfaceControlIndividual {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #ddeeff00; */
+
+  height: 30px;
+  margin: 0px 10px 5px 10px;
+  padding: 5px 10px 5px 10px;
+
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+}
+.div_VertexAtSurfaceControlIndividual > h3 {
+  /* display: inline-block; */
+  font-size: 18px;
+  margin: 0px 0px 0px 0px;
+}
+
+.surface_delete_button {
+  /* display: inline-block; */
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 0px;
+
+  background: #4676d7;
+  color: #fff;
+  padding: 1px 16px 1px 16px;
+  font-size: 16px;
+  margin: 0px 0px 0px 0px;
+}
+
+.surface_add_control {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0px 10px 0px 10px;
+}
+
+.surface_add_button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 0px;
+  background: rgba(200, 60, 60, 1);
+  color: #ffffff;
+  /* padding: 5px 0px 5px 16px; */
+  font-size: 15px;
+  margin: 0px 0px 0px 0px;
+
+  width: 20%;
+  height: 30px;
+  text-align: center;
+}
+
+.surface_add_select {
+  height: 30px;
+  width: 180px;
 }
 
 /* https://coliss.com/articles/build-websites/operation/css/styling-the-good-old-button.html */

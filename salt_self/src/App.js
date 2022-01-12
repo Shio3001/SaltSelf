@@ -4,6 +4,7 @@ import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 
 import MySelf from './App/MySelf/MySelf.js';
 import './App/MySelf/MySelf.css';
+import './app.css';
 import * as Make3D_js from './App/Salt3DCG/make3D.js';
 import './App/Salt3DCG/make3D.css';
 

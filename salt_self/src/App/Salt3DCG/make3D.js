@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import UUID from 'uuidjs';
- 
+import UUID from "uuidjs";
+import Select from 'react-select'
 var salt3D_for_js_interface;
 
 function get_time() {
@@ -45,17 +45,20 @@ export class VertexControlIndividual extends React.Component {
       vertex_x: 0,
       vertex_y: 0,
       vertex_z: 0,
-      vertex_ID : "vertex" + UUID.generate(),
+      vertex_ID: "vertex" + UUID.generate(),
+      new_vertex_name: this.props.send_new_vertex_name,
     };
 
     this.OnChangeNewX = this.OnChangeNewX.bind(this);
     this.OnChangeNewY = this.OnChangeNewY.bind(this);
     this.OnChangeNewZ = this.OnChangeNewZ.bind(this);
     this.GetUUID = this.GetUUID.bind(this);
+
+    // console.log("new_vertex_name",this.state.new_vertex_name)
   }
 
-  GetUUID(){
-    return this.state.vertex_ID
+  GetUUID() {
+    return this.state.vertex_ID;
   }
 
   OnChangeNewX(event) {
@@ -126,40 +129,97 @@ export class VertexControlIndividual extends React.Component {
   }
 }
 
-export class SurfaceControlIndividual extends React.Component {
+export class VertexAtSurfaceControlIndividual extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    return (
+      <div className="div_VertexAtSurfaceControlIndividual">
+        <h3>{this.props.send_have_vertex_name}</h3>
 
+        <input
+          type="button"
+          value="削除"
+          className="surface_delete_button"
+          onClick={ui_add_surface_control.bind(
+            this,
+            this.OverwriteListSurfaceControl,
+            this.state.list_surface_control,
+            this.state.new_surface_name
+          )}
+        />
+      </div>
+    );
+  }
+}
+
+export class SurfaceControlIndividual extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      surface_ID : "surface" + UUID.generate(),
+      surface_ID: "surface" + UUID.generate(),
+      have_vertex: [],
     };
 
     this.GetUUID = this.GetUUID.bind(this);
   }
-  GetUUID(){
-    return this.state.surface_ID
+  GetUUID() {
+    return this.state.surface_ID;
   }
   render() {
     return (
       <div className="div_SurfaceControlIndividual">
         <h1>{this.props.send_new_surface_name}</h1>
         <h3 className="h3_uuid">{this.GetUUID()}</h3>
+        {/* 
+        <VertexAtSurfaceControlIndividual send_have_vertex_name={"text"} />
+        <VertexAtSurfaceControlIndividual send_have_vertex_name={"みかん"} />
+        <VertexAtSurfaceControlIndividual send_have_vertex_name={"text"} /> */}
+
+        <div className="surface_add_control">
+          {/* <input
+              type="number"
+              className="surface_add_select"
+              value={this.state.vertex_x}
+              onChange={this.OnChangeNewX}
+            /> */}
+          <Select
+            className="surface_add_select"
+            onChange={this.OnChangeNewX}
+            size="1"
+            options={this.props.ScanVertex()}
+          />
+
+          <input
+            type="button"
+            value="追加"
+            className="surface_add_button"
+            onClick={ui_add_surface_control.bind(
+              this,
+              this.OverwriteListSurfaceControl,
+              this.state.list_surface_control,
+              this.state.new_surface_name
+            )}
+          />
+        </div>
       </div>
     );
   }
-
-  
 }
 
 function ui_add_surface_control(
   OverwriteListSurfaceControl,
   list_surface_control,
-  send_new_surface_name
+  send_list_vertex_control,
+  send_new_surface_name,
+  ScanVertex
 ) {
   let copy_list_surface_control = list_surface_control.slice();
 
   copy_list_surface_control.push(
-    <SurfaceControlIndividual send_new_surface_name={send_new_surface_name} />
+    <SurfaceControlIndividual send_new_surface_name={send_new_surface_name} ScanVertex={ScanVertex} />
   );
 
   OverwriteListSurfaceControl(copy_list_surface_control);
@@ -167,8 +227,6 @@ function ui_add_surface_control(
   this.setState({
     new_surface_name: "new surface",
   });
-
-
 }
 
 function ui_add_vertex_control(
@@ -208,7 +266,28 @@ export class Make3D extends React.Component {
     this.OnChangeNewSurfaceName = this.OnChangeNewSurfaceName.bind(this);
     this.OnChangeNewVertexName = this.OnChangeNewVertexName.bind(this);
     this.RunViewDraw = this.RunViewDraw.bind(this);
+    this.ScanVertex = this.ScanVertex.bind(this);
   }
+
+
+  ScanVertex() {
+    let options = []
+    for (var i = 0; i < this.state.list_vertex_control.length; i++) {
+      const vertex_component = this.state.list_vertex_control[i]
+
+      const vertex_component_states = vertex_component.GetUUID()
+
+      console.log("vertex_component_states",vertex_component_states)
+
+      console.log("vertex_component", typeof (vertex_component), vertex_component.state)
+      const value_label = { value: vertex_component.vertex_ID, label: vertex_component.new_vertex_name }
+      options.push(value_label)
+    }
+    console.log("options",options)
+
+    return options
+  }
+
 
   OverwriteListSurfaceControl(copy_list_surface_control) {
     this.setState({
@@ -242,7 +321,7 @@ export class Make3D extends React.Component {
     });
   }
 
-  RunViewDraw(event) {}
+  RunViewDraw(event) { }
 
   render() {
     console.log("Make3D render");
@@ -284,7 +363,9 @@ export class Make3D extends React.Component {
               this,
               this.OverwriteListSurfaceControl,
               this.state.list_surface_control,
-              this.state.new_surface_name
+              this.state.list_vertex_control,
+              this.state.new_surface_name,
+              this.ScanVertex,
             )}
           />
         </div>
