@@ -32,11 +32,16 @@ export class VertexData {
 export class VertexControlIndividual extends React.Component {
   constructor(props) {
     super(props);
-
-
+    
     this.OnChangeNewX = this.OnChangeNewX.bind(this);
     this.OnChangeNewY = this.OnChangeNewY.bind(this);
     this.OnChangeNewZ = this.OnChangeNewZ.bind(this);
+
+    this.state = {
+      // for_view_x : this.props.vertex_control.vertex_x,
+      // for_view_y : this.props.vertex_control.vertex_y,
+      // for_view_z : this.props.vertex_control.vertex_z,
+    }
     // this.GetUUID = this.GetUUID.bind(this);
 
     // console.log("new_vertex_name",this.state.new_vertex_name)
@@ -45,24 +50,28 @@ export class VertexControlIndividual extends React.Component {
   OnChangeNewX(event) {
     var text = event.target.value;
     console.log("text", text);
-    this.setState({
-      vertex_x: text,
-    });
+    const copy_vertex_control = Object.assign(this.props.vertex_control)
+    copy_vertex_control.vertex_x = text;
+    this.props.OverwriteIndividualVertexControl(copy_vertex_control)
   }
+
   OnChangeNewY(event) {
     var text = event.target.value;
     console.log("text", text);
-    this.setState({
-      vertex_y: text,
-    });
+
+    const copy_vertex_control = Object.assign(this.props.vertex_control)
+    copy_vertex_control.vertex_y = text;
+    this.props.OverwriteIndividualVertexControl(copy_vertex_control)
   }
+
   OnChangeNewZ(event) {
     var text = event.target.value;
     console.log("text", text);
-    this.setState({
-      vertex_z: text,
-    });
+    const copy_vertex_control = Object.assign(this.props.vertex_control)
+    copy_vertex_control.vertex_z = text;
+    this.props.OverwriteIndividualVertexControl(copy_vertex_control)
   }
+  
   render() {
     return (
       <div className="div_VertexControlIndividual">
@@ -76,7 +85,7 @@ export class VertexControlIndividual extends React.Component {
             <input
               type="number"
               className="textbox_xyz"
-              value={this.state.vertex_x}
+              value={this.props.vertex_control.vertex_x}
               onChange={this.OnChangeNewX}
             />
           </p>
@@ -88,7 +97,7 @@ export class VertexControlIndividual extends React.Component {
             <input
               type="number"
               className="textbox_xyz"
-              value={this.state.vertex_y}
+              value={this.props.vertex_control.vertex_y}
               onChange={this.OnChangeNewY}
             />
           </p>
@@ -100,7 +109,7 @@ export class VertexControlIndividual extends React.Component {
             <input
               type="number"
               className="textbox_xyz"
-              value={this.state.vertex_z}
+              value={this.props.vertex_control.vertex_z}
               onChange={this.OnChangeNewZ}
             />
           </p>

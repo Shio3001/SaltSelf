@@ -25,7 +25,7 @@
 
 .surface_control_area,
 .vertex_control_area {
-  overflow: hidden;
+  /* overflow: hidden; */
   background-color: #eeeeee;
   padding: 10px 0% 0px 0%;
   margin: 10px 0% 10px 0%;
@@ -34,6 +34,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+
+  overflow: visible;
 }
 
 .div_SurfaceControlIndividual > h1,
