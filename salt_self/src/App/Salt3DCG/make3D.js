@@ -21,6 +21,8 @@ var Module = {
   },
 };
 
+
+
 function ui_add_surface_control(
   OverwriteListSurfaceControl,
   list_surface_control,
@@ -60,6 +62,32 @@ function ui_add_vertex_control(
   });
 }
 
+class Camera{
+  constructor(){
+    this.x = 0
+    this.y = 0
+    this.z = 0
+  }
+  set_x_y(xval,yval){
+    this.x = xval
+    this.y = yval
+  }
+  set_x_y_z(xval,yval,zval){
+    this.x = xval
+    this.y = yval
+    this.z = zval
+  }
+  set_x(val){
+    this.x = val
+  }
+  set_y(val){
+    this.y = val
+  }
+  set_z(val){
+    this.z = val
+  }
+}
+
 export class Make3D extends React.Component {
   constructor(props) {
     super(props);
@@ -68,6 +96,7 @@ export class Make3D extends React.Component {
       list_vertex_control: {},
       new_surface_name: "new surface",
       new_vertex_name: "new vertex",
+      view_camera = new Camera(),
     };
 
     this.OverwriteListSurfaceControl =
