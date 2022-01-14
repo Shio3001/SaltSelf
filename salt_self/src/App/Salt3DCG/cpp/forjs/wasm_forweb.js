@@ -13,6 +13,9 @@
 // after the generated code, you will need to define   var Module = {};
 // before the code. Then that object will be used in the code, and you
 // can continue to use Module afterwards as well.
+
+console.log("import wasm - js");
+
 var Module = typeof Module !== 'undefined' ? Module : {};
 
 // --pre-jses are emitted after the Module integration code, so that they can
@@ -208,6 +211,8 @@ if (ENVIRONMENT_IS_SHELL) {
 } else
 
 // Note that this includes Node.js workers when relevant (pthreads is enabled).
+
+
 // Node.js workers are detected as a combination of ENVIRONMENT_IS_WORKER and
 // ENVIRONMENT_IS_NODE.
 if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {

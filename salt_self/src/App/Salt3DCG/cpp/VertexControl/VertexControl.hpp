@@ -77,9 +77,9 @@ public:
 
     void CameraCoordinates(int x, int y, int z)
     {
-        m_xyz_camera_position[0] += x;
-        m_xyz_camera_position[1] += y;
-        m_xyz_camera_position[2] += z;
+        m_xyz_camera_addition[0] += x;
+        m_xyz_camera_addition[1] += y;
+        m_xyz_camera_addition[2] += z;
     }
     void CameraDirection(int x, int y, int z)
     {

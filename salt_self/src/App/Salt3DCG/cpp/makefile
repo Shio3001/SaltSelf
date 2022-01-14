@@ -90,7 +90,7 @@ main: main.cpp
 	$(emcc_build) -c $(target0_dir)/$(target0_c).cpp $(web_memory) -o $(js_c) -std=c++14
 	$(emcc_build) -c $(target0_dir)/$(target0_d).cpp $(web_memory) -o $(js_d) -std=c++14
 #$(emcc_build) -c $(target0_dir)/$(target0_e).cpp -o $(js_e) -std=c++14  $(opencvI) $(opencvL) 
-	$(emcc_build) --bind forjs.cpp $(js_b) $(js_c) $(js_d) $(web_memory) -s WASM=1 -o forjs/wasm_forweb.js -std=c++14
+	$(emcc_build) --bind forjs.cpp $(js_b) $(js_c) $(js_d) $(web_memory) -s WASM=1 -o forjs/wasm_forweb.js -std=c++14 -s USE_ES6_IMPORT_META=0
 
 # g++ -o main main.cpp -std=c++14 -c -I/Users/maruyama/opt/anaconda3/envs/py39/include/opencv4/
 
