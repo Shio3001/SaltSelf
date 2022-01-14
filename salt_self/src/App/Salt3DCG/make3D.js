@@ -255,7 +255,7 @@ export class Make3D extends React.Component {
             type="button"
             value="描画"
             className="input_button"
-            onClick={this.RunViewDraw.bind(this)}
+            onClick={canvas_js.VertexInterpretation.bind(this)}
           />
         </div>
 
