@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
 
-import wasm_forweb from "../cpp/forjs/wasm_forweb.js"
+// import wasm_forweb from "../cpp/forjs/wasm_forweb.js"
 
 // const salt3D_for_js_interface = new wasm_forweb.ForJsInterface();
 // console.log("salt3D_for_js_interface",salt3D_for_js_interface)
