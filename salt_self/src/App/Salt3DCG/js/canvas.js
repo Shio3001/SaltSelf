@@ -60,16 +60,16 @@ export class CanvasComponent extends React.Component {
     this.state = {};
     // this.VertexInterpretation = this.VertexInterpretation.bind(this);
   }
-  componentDidMount() {
-    var canvas = document.getElementById("view_canvas");
-    var context = canvas.getContext("2d");
+  // componentDidMount() {
+  //   var canvas = document.getElementById("view_canvas");
+  //   var context = canvas.getContext("2d");
 
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    let width = imageData.width,
-      height = imageData.height;
-    console.log("width height", width, height);
-  }
+  //   context.fillRect(0, 0, canvas.width, canvas.height);
+  //   let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  //   let width = imageData.width,
+  //     height = imageData.height;
+  //   console.log("width height", width, height);
+  // }
 
 
   render() {
