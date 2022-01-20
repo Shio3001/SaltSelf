@@ -11,7 +11,6 @@ import "./App/Salt3DCG/make3D.css";
 // const myModule = await Module();
 
 class App extends React.Component {
-
   render() {
     console.log("App render");
 
