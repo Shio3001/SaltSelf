@@ -4,39 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
 
-// import wasm_forweb from "../cpp/forjs/wasm_forweb.js"
-
-// const salt3D_for_js_interface = new wasm_forweb.ForJsInterface();
-// console.log("salt3D_for_js_interface",salt3D_for_js_interface)
-
-// var importObject = { imports: { imported_func: arg => console.log(arg) } };
-// WebAssembly.instantiateStreaming(fetch('simple.wasm'), importObject)
-// .then(obj => obj.instance.exports.exported_func());
-
-// console.log("WebAssembly",WebAssembly)
-
-// var importObject = { salt3D_for_js_interface = new Module.ForJsInterface() };
-// WebAssembly.instantiateStreaming(fetch('cpp/forjs/wasm_forweb.wasm'), importObject)
-// .then(obj => obj.instance.exports.exported_func());
-
-// export var salt3D_for_js_interface;
-// var Module = {
-//   onRuntimeInitialized: function () {
-//     salt3D_for_js_interface = new Module.ForJsInterface();
-//     console.log("import salt3D_for_js_interface")
-//   },
-// };
-
-// WebAssembly.compileStreaming(fetch("cpp/forjs/wasm_forweb.wasm"))
-// .then(function(mod) {
-//   var imports = WebAssembly.Module.imports(mod);
-//   console.log(imports[0]);
-// });
-
-// import * as WasmControl from "../cpp/forjs/wasm_forweb.js";
-
-// // 
-// console.log("salt3D_for_js_interface",salt3D_for_js_interface)
+import createModule from "../cpp/forjs/wasm_forweb.mjs";
 
 export function VertexInterpretation() {
 
@@ -58,18 +26,27 @@ export class CanvasComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.salt3D_for_js_interface = null;
     // this.VertexInterpretation = this.VertexInterpretation.bind(this);
   }
-  // componentDidMount() {
-  //   var canvas = document.getElementById("view_canvas");
-  //   var context = canvas.getContext("2d");
+  componentDidMount() {
+    createModule().then((Module) => {
+        // need to use callback form (() => function) to ensure that `add` is set to the function
+        // if you use setX(myModule.cwrap(...)) then React will try to set newX = myModule.cwrap(currentX), which is wrong
+        this.salt3D_for_js_interface = new Module.ForJsInterface();
+        var vertex_control = this.salt3D_for_js_interface.GetVertexControl();
+        console.log("salt3D_for_js_interface",this.salt3D_for_js_interface,vertex_control,typeof(vertex_control))
+      });
 
-  //   context.fillRect(0, 0, canvas.width, canvas.height);
-  //   let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-  //   let width = imageData.width,
-  //     height = imageData.height;
-  //   console.log("width height", width, height);
-  // }
+    var canvas = document.getElementById("view_canvas");
+    var context = canvas.getContext("2d");
+
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    let width = imageData.width,
+      height = imageData.height;
+    console.log("width height", width, height);
+  }
 
 
   render() {
