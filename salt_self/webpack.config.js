@@ -12,6 +12,9 @@ const config = {
     publicPath: '/',
     filename: "main.js",
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   
   plugins: [
     // [new HtmlWebpackPlugin({template: path_require.resolve(__dirname, "/public/index.html")})]
