@@ -9,17 +9,17 @@ import createModule from "../cpp/forjs/wasm_forweb.mjs";
 export function VertexInterpretation() {
 
   console.log("描画検証開始")
-  // console.log("salt3D_for_js_interface",salt3D_for_js_interface)
-  // const list_surface_control_val = Object.values(this.props.list_surface_control)
-  // for (let sc = 0 ; sc < list_surface_control_val.length ; sc++){
-  //   const surface = list_surface_control_val[sc]
-  //   const have_vertex = surface.have_vertex
+  console.log("salt3D_for_js_interface",salt3D_for_js_interface)
+  const list_surface_control_val = Object.values(this.props.list_surface_control)
+  for (let sc = 0 ; sc < list_surface_control_val.length ; sc++){
+    const surface = list_surface_control_val[sc]
+    const have_vertex = surface.have_vertex
 
-  //   for (let hv = 0 ; hv < have_vertex.length ; hv++){
-  //     const vertex_id = have_vertex[hv]
-  //     const vertex = this.props.list_vertex_control[vertex_id];
-  //   }
-  // }
+    for (let hv = 0 ; hv < have_vertex.length ; hv++){
+      const vertex_id = have_vertex[hv]
+      const vertex = this.props.list_vertex_control[vertex_id];
+    }
+  }
 }
 
 export class CanvasComponent extends React.Component {

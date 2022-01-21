@@ -13,7 +13,7 @@ const config = {
     filename: "main.js",
   },
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: true, //これで複数ページ
   },
   
   plugins: [
@@ -34,11 +34,11 @@ const config = {
       { test: /\.css$/, use: ["style-loader", "css-loader"] },
       { test: /\.ts$/, use: "ts-loader" },
       // { test: /\.js$/, use: 'babel-loader' },
-      {
-        test: /\.wasm$/,
-        type: "javascript/auto",
-        loader: "file-loader",
-      },
+      // {
+      //   test: /\.wasm$/,
+      //   type: "javascript/auto",
+      //   loader: "file-loader",
+      // },
       { test: /\.js$/, use: "babel-loader" },
       {
         test: /\.html$/,
