@@ -45,7 +45,7 @@
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "deploy": "yarn webpack-build && gh-pages -d dist"
+    "deploy": "webpack --mode=production --node-env=production && gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
