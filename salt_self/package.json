@@ -13,6 +13,7 @@
     "exports-loader": "^3.1.0",
     "file-loader": "^6.2.0",
     "fs": "^0.0.1-security",
+    "gh-pages": "^3.2.3",
     "http-server": "^14.1.0",
     "path": "^0.12.7",
     "path-browserify": "^1.0.1",
@@ -37,14 +38,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-
-    "webpack-start":"webpack-dev-server",
+    "webpack-start": "webpack-dev-server",
     "webpack-build": "webpack --mode=production --node-env=production",
     "webpack-test": "react-scripts test",
     "webpack-eject": "react-scripts eject",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "deploy": "yarn webpack-build && gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
