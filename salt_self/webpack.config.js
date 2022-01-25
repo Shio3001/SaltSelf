@@ -10,7 +10,8 @@ const config = {
   entry: "./src/index.js",
   output: {
     path: path_require.resolve(__dirname, "dist"),
-    publicPath: './',
+    publicPath: process.env.PUBLIC_PATH || '/', //ここは ./ 出ないとダメ
+    // publicPath: "./",
     filename: "main.js",
   },
   devServer: {
@@ -28,6 +29,7 @@ const config = {
 
     new webpack.DefinePlugin({
       'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
+      'process.env.PUBLIC_PATH': JSON.stringify(process.env.PUBLIC_PATH),
     })
     
  
