@@ -30,12 +30,12 @@ class App extends React.Component {
 
       //r basename="https://shio3001.github.io/SaltSelf"
       <div className="App">
-        <BrowserRouter basename="https://shio3001.github.io/SaltSelf">
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<MySelf />} />
             <Route path="/view" element={<Make3D_js.Make3D />} />
           </Routes>
-          </BrowserRouter>
+        </BrowserRouter>
       </div>
     );
   }
