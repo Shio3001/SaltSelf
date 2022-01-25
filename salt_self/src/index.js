@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 
 //(id="root"のところに)描画
 ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
     <App />,
     </BrowserRouter>,
     document.getElementById('root')
