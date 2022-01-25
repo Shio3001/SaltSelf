@@ -5,16 +5,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 const isProduction = process.env.NODE_ENV == "production";
-
+console.log("isProduction",isProduction)
 console.log("process",process.env.PUBLIC_PATH)
 
+
+let temp_publicPath;
+if (isProduction){
+  temp_publicPath = "./" //ここは ./ 出ないとダメ
+}
+else{
+  temp_publicPath =  "/" //ここは ./ 出ないとダメ
+}
+
 const config = {
+
   entry: "./src/index.js",
   output: {
     path: path_require.resolve(__dirname, "dist"),
-    publicPath: process.env.PUBLIC_PATH, //ここは ./ 出ないとダメ
-    
-    // publicPath: "./",
+    publicPath:temp_publicPath,
     filename: "main.js",
   },
   devServer: {
@@ -30,10 +38,6 @@ const config = {
       filename: 'index.html',
     }),
 
-    new webpack.DefinePlugin({
-      'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
-      'process.env.PUBLIC_PATH': JSON.stringify(process.env.PUBLIC_PATH),
-    })
     
  
   ],
@@ -76,8 +80,9 @@ module.exports = () => {
   } else {
     config.mode = "development";
   }
-  config.mode = "development";
   // config.mode = "production";
+
+  
 
   return config;
 };
