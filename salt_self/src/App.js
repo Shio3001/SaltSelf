@@ -15,19 +15,18 @@ import "./App/Salt3DCG/make3D.css";
 class App extends React.Component {
   render() {
     console.log("App render");
-    console.log("PUBLIC",process.env)
-    console.log("PUBLIC_URL",process.env.PUBLIC_URL)
-
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        {/* <BrowserRouter> // basename=
           <Routes>
             <Route exact path="/" element={<MySelf />} />
             <Route exact path="/view" element={<Make3D_js.Make3D />} />
           </Routes>
-        </BrowserRouter>
+        </BrowserRouter> */}
+
+        <MySelf/>
       </div>
     );
   }

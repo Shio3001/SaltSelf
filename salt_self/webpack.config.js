@@ -25,9 +25,12 @@ const config = {
       template: './public/index.html',
       filename: 'index.html',
     }),
+
     new webpack.DefinePlugin({
-      process: {env: {}}
-  })
+      'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
+    })
+    
+ 
   ],
   module: {
     rules: [
