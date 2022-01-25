@@ -10,7 +10,7 @@ const config = {
   entry: "./src/index.js",
   output: {
     path: path_require.resolve(__dirname, "dist"),
-    publicPath: '/',
+    publicPath: './',
     filename: "main.js",
   },
   devServer: {
