@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM, { render } from "react-dom";
-import { Routes, BrowserRouter, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import MySelf from "./App/MySelf/MySelf.js";
 import "./App/MySelf/MySelf.css";
@@ -31,12 +31,10 @@ class App extends React.Component {
 
       //r basename="https://shio3001.github.io/SaltSelf"
       <div className="App">
-        <BrowserRoute>
           <Routes>
-            <Route exact path="/" element={<MySelf />} />
-            <Route exact path="/SaltSelf/view" element={<Make3D_js.Make3D />} />
+            <Route path="/" element={<MySelf />} />
+            <Route path="/view" element={<Make3D_js.Make3D />} />
           </Routes>
-        </BrowserRoute>
       </div>
     );
   }
