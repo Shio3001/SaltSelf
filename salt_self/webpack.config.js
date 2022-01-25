@@ -6,11 +6,14 @@ const webpack = require('webpack');
 
 const isProduction = process.env.NODE_ENV == "production";
 
+console.log("process",process.env.PUBLIC_PATH)
+
 const config = {
   entry: "./src/index.js",
   output: {
     path: path_require.resolve(__dirname, "dist"),
-    publicPath: process.env.PUBLIC_PATH || '/', //ここは ./ 出ないとダメ
+    publicPath: process.env.PUBLIC_PATH, //ここは ./ 出ないとダメ
+    
     // publicPath: "./",
     filename: "main.js",
   },
