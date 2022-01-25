@@ -22,13 +22,9 @@ console.log("App render");
 
 class App extends React.Component {
   render() {
-    // console.log(process.env.PUBLIC_URL)
-    // console.log(process.env.PUBLIC_PATH)
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
-
-      //r basename="https://shio3001.github.io/SaltSelf"
       <div className="App">
         <BrowserRouter>
           <Routes>
