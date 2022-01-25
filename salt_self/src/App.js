@@ -15,8 +15,8 @@ import "./App/Salt3DCG/make3D.css";
 class App extends React.Component {
   render() {
     console.log("App render");
-    // console.log(process.env.PUBLIC_URL)
-    // console.log(process.env.PUBLIC_PATH)
+    console.log(process.env.PUBLIC_URL)
+    console.log(process.env.PUBLIC_PATH)
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
