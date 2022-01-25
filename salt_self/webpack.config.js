@@ -2,6 +2,7 @@
 
 const path_require = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -24,6 +25,9 @@ const config = {
       template: './public/index.html',
       filename: 'index.html',
     }),
+    new webpack.DefinePlugin({
+      process: {env: {}}
+  })
   ],
   module: {
     rules: [

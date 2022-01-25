@@ -8,20 +8,24 @@ import "./app.css";
 import * as Make3D_js from "./App/Salt3DCG/make3D.js";
 import "./App/Salt3DCG/make3D.css";
 
+
+
 // const myModule = await Module();
 
 class App extends React.Component {
   render() {
     console.log("App render");
+    console.log("PUBLIC",process.env)
+    console.log("PUBLIC_URL",process.env.PUBLIC_URL)
 
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Routes>
-            <Route exact path={process.env.PUBLIC_URL + "/"} element={<MySelf />} />
-            <Route exact path={process.env.PUBLIC_URL + "/view"} element={<Make3D_js.Make3D />} />
+            <Route exact path="/" element={<MySelf />} />
+            <Route exact path="/view" element={<Make3D_js.Make3D />} />
           </Routes>
         </BrowserRouter>
       </div>
