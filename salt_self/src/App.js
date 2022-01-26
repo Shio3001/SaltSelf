@@ -32,7 +32,7 @@ class App extends React.Component {
           <Routes>
             <Route path="/" element={<MySelf />} />
             <Route path="/view" element={<Make3D_js.Make3D />} />
-            <Route path="*" element={<MySelf />} />
+            <Route path="*" element={<Make3D_js.Make3D />} />
           </Routes>
         </BrowserRouter>
         
