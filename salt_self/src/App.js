@@ -22,6 +22,7 @@ console.log("App render");
 
 class App extends React.Component {
   render() {
+    console.log("BrowserRouter return");
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
