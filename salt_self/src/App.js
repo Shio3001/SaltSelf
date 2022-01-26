@@ -30,11 +30,12 @@ class App extends React.Component {
         {/* <MySelf /> */}
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<MySelf />} />
-            <Route path="/view" element={<Make3D_js.Make3D />} />
+            <Route path="https://shio3001.github.io/SaltSelf/" element={<MySelf />} />
+            <Route path="https://shio3001.github.io/SaltSelf/view" element={<Make3D_js.Make3D />} />
             <Route path="*" element={<MySelf />} />
           </Routes>
         </BrowserRouter>
+        
         {/* <Make3D_js.Make3D /> */}
       </div>
     );
