@@ -22,7 +22,7 @@ console.log("App render");
 
 class App extends React.Component {
   render() {
-    console.log("BrowserRouter return");
+    console.log("BrowserRouter return 2");
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
@@ -31,7 +31,7 @@ class App extends React.Component {
         <BrowserRouter>
           <Routes>
             <Route path="https://shio3001.github.io/SaltSelf/" element={<MySelf />} />
-            <Route path="https://shio3001.github.io/SaltSelf/view" element={<Make3D_js.Make3D />} />
+            <Route path="https://shio3001.github.io/view" element={<Make3D_js.Make3D />} />
             <Route path="*" element={<MySelf />} />
           </Routes>
         </BrowserRouter>
