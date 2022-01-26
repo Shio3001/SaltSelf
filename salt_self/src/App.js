@@ -27,7 +27,7 @@ class App extends React.Component {
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
-        <BrowserRouter  basename={nowbasename}>
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<MySelf />} />
             <Route path="/view" element={<Make3D_js.Make3D />} />
