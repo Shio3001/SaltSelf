@@ -38,7 +38,9 @@ const config = {
       filename: 'index.html',
     }),
 
-    
+    new webpack.DefinePlugin({
+      'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
+    }),
  
   ],
   module: {
