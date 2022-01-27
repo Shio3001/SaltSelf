@@ -23,7 +23,7 @@ console.log("App render");
 
 class App extends React.Component {
   render() {
-    console.log("BrowserRouter return 7");
+    console.log("BrowserRouter return 8");
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
@@ -31,8 +31,8 @@ class App extends React.Component {
         {/* <MySelf /> */}
         <BrowserRouter basename={nowbasename}>
           <Routes>
-            <Route exact path="/" element={<MySelf />} />
-            <Route path="/view" element={<Make3D_js.Make3D />} />
+            <Route exact path="/" nowbasename={nowbasename} element={<MySelf />} />
+            <Route path="/view" nowbasename={nowbasename} element={<Make3D_js.Make3D />} />
             <Route path="*" element={<Test.TestComponent />} />
           </Routes>
         </BrowserRouter>
