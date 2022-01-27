@@ -15,7 +15,7 @@ if (process.env.NODE_ENV == "production") {
   nowbasename = "/SaltSelf";
   console.log("production");
 } else {
-  nowbasename = "/";
+  nowbasename = "";
   console.log("not production");
 }
 console.log("nowbasename", nowbasename);
@@ -23,7 +23,7 @@ console.log("App render");
 
 class App extends React.Component {
   render() {
-    console.log("BrowserRouter return 8");
+    console.log("BrowserRouter return 9");
     return (
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
