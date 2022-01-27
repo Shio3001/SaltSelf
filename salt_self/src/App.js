@@ -12,10 +12,10 @@ import "./App/Salt3DCG/make3D.css";
 // const myModule = await Module();
 let nowbasename;
 if (process.env.NODE_ENV == "production") {
-  nowbasename = "https://shio3001.github.io/SaltSelf";
+  nowbasename = "/SaltSelf";
   console.log("production");
 } else {
-  nowbasename = "";
+  nowbasename = "/";
   console.log("not production");
 }
 console.log("nowbasename", nowbasename);
@@ -29,7 +29,7 @@ class App extends React.Component {
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
         {/* <MySelf /> */}
-        <BrowserRouter basename="/SaltSelf/">
+        <BrowserRouter basename={nowbasename}>
           <Routes>
             <Route exact path="/" element={<MySelf />} />
             <Route path="./view" element={<Make3D_js.Make3D />} />
