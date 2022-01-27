@@ -29,6 +29,7 @@ class MySelf extends React.Component {
   }
   render() {
     console.log("MySelf render");
+    console.log("nowbasename",this.props.nowbasename)
 
     return (
       <div>
