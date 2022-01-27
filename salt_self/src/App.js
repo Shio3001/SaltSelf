@@ -6,6 +6,7 @@ import MySelf from "./App/MySelf/MySelf.js";
 import "./App/MySelf/MySelf.css";
 import "./app.css";
 import * as Make3D_js from "./App/Salt3DCG/make3D.js";
+import * as Test from "./App/test.js";
 import "./App/Salt3DCG/make3D.css";
 
 // const myModule = await Module();
@@ -28,11 +29,11 @@ class App extends React.Component {
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
         {/* <MySelf /> */}
-        <BrowserRouter basename="SaltSelf">
+        <BrowserRouter basename="/SaltSelf/">
           <Routes>
             <Route path="/" element={<MySelf />} />
             <Route path="/view" element={<Make3D_js.Make3D />} />
-            <Route path="*" element={<Make3D_js.Make3D />} />
+            <Route path="*" element={<Test.TestComponent />} />
           </Routes>
         </BrowserRouter>
         
