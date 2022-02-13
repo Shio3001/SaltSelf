@@ -34,6 +34,7 @@ class MySelf extends React.Component {
     return (
       <div>
         <a href={this.props.nowbasename + "/view"}>自作描画</a>
+        <a href={this.props.nowbasename + "/entyping"}>英単語タイピング</a>
         <div className="my_self">
           <details>
             <summary>

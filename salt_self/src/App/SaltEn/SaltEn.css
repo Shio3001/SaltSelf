@@ -1,0 +1,30 @@
+.div_TextComponentEn {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-starts;
+  align-items: center;
+}
+
+.div_CharComponent > p {
+  font-size: 100px;
+}
+
+.div_TextComponentEn {
+  height: 100px;
+}
+
+.div_CharComponent > .UnansweredColor {
+  color: rgb(100, 100, 100);
+}
+
+.div_CharComponent > .NowColor {
+  color: rgb(200, 200, 0);
+}
+
+.div_CharComponent > .MissColor {
+  color: rgb(200, 100, 100);
+}
+
+.div_CharComponent > .CorrectColor {
+  color: rgb(100, 200, 100);
+}

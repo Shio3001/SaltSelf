@@ -6,8 +6,10 @@ import MySelf from "./App/MySelf/MySelf.js";
 import "./App/MySelf/MySelf.css";
 import "./app.css";
 import * as Make3D_js from "./App/Salt3DCG/make3D.js";
+import * as SaltEn_js from "./App/SaltEn/SaltEn";
 import * as Test from "./App/test.js";
 import "./App/Salt3DCG/make3D.css";
+import "./App/SaltEn/SaltEn.css";
 
 // const myModule = await Module();
 let nowbasename;
@@ -33,6 +35,7 @@ class App extends React.Component {
           <Routes>
             <Route exact path="/"  element={<MySelf nowbasename={nowbasename} />} />
             <Route path="/view" element={<Make3D_js.Make3D nowbasename={nowbasename}/>} />
+            <Route path="/entyping" element={<SaltEn_js.EnWordComponent nowbasename={nowbasename}/>} />
             <Route path="*" element={<Test.TestComponent />} />
           </Routes>
         </BrowserRouter>
