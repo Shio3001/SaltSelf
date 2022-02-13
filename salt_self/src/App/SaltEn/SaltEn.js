@@ -4,20 +4,29 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
 
-const WORDS = require("./word.json")["test"];
-const WORDSColor = ["UnansweredColor", "NowColor", "CorrectColor","MissColor"];
+const WORDS = require("./word.json");
+const WORDSColor = [
+  "UnansweredColor",
+  "NowColor",
+  "CorrectColor",
+  "MissColor",
+  "UnansweredColor_Miss",
+];
+
+// Promiseを使う方法
 
 class CharClass {
   constructor(text, number) {
     console.log("text", text);
     console.log("number", number);
-    this.text = text;
+    this.text = text.replace(/ /g, "");
     this.number = number;
     this.correct = 0;
     // 0:未回答
     // 1:現在
     // 2:正解
     // 3:不正解
+    // 4:未回答での不正解
   }
 
   GetColor() {
@@ -34,12 +43,24 @@ class CharComponent extends React.Component {
   componentDidMount() {}
 
   render() {
+    let div_className;
+
+    if (!this.props.chartext.text) {
+      div_className = "div_CharCpace";
+    } else {
+      div_className = "div_NotCpace";
+    }
+
+    console.log("div_className",this.props.chartext,div_className)
+
     console.log("props chartext", this.props.chartext);
     return (
-      <div className="div_CharComponent">
-        <p className={this.props.chartext.GetColor()}>
-          {this.props.chartext.text}
-        </p>
+      <div className={div_className}>
+        <div className="div_CharComponent">
+          <p className={this.props.chartext.GetColor()}>
+            {this.props.chartext.text}
+          </p>
+        </div>
       </div>
     );
   }
@@ -63,15 +84,24 @@ export class GameComponent extends React.Component {
 
   typenumber_plus(event) {
     console.log("押されました", event.key, this.state.typenumber);
-
-    const comparison =
-      this.state.now_typing_word_en[this.state.typenumber].text;
     let now_typenumber = this.state.typenumber;
+
+    let comparison = this.state.now_typing_word_en[now_typenumber].text.toLowerCase();
+      
+    if (!comparison){
+      now_typenumber ++;
+      console.log("comparisonが空白のため飛ばす")
+      comparison = this.state.now_typing_word_en[now_typenumber].text.toLowerCase();
+    }
+    
     const copy_now_typing_word_en = Object.assign(
       this.state.now_typing_word_en
     );
 
+
+
     console.log("comparison", comparison);
+    console.log("event.key", event.key);
 
     if (event.key == comparison) {
       console.log("Correct");
@@ -86,6 +116,15 @@ export class GameComponent extends React.Component {
       copy_now_typing_word_en[now_typenumber].correct = 1;
     } else {
       copy_now_typing_word_en[now_typenumber].correct = 3;
+
+      for (
+        let i = now_typenumber + 1;
+        i < copy_now_typing_word_en.length;
+        i++
+      ) {
+        copy_now_typing_word_en[i].correct = 4;
+      }
+
       console.log("Miss");
     }
 
@@ -107,8 +146,13 @@ export class GameComponent extends React.Component {
 
   ReadNewWord() {
     console.log("ReadNewWord-WORDS", WORDS);
-    const words_keys = Object.keys(WORDS);
-    const words_values = Object.values(WORDS);
+    const All_values_words = Object.values(WORDS);
+    const word_classification_number = Math.trunc(
+      Math.random() * All_values_words.length
+    );
+    const ClassificationWORDS = All_values_words[word_classification_number];
+    const words_keys = Object.keys(ClassificationWORDS);
+    const words_values = Object.values(ClassificationWORDS);
     const word_number = Math.trunc(Math.random() * words_keys.length);
     const word_ja = words_keys[word_number];
     const word_en = words_values[word_number];

@@ -5,8 +5,15 @@
   align-items: center;
 }
 
-.div_CharComponent > p {
+.div_CharComponent {
   font-size: 100px;
+}
+
+.div_NotCpace {
+}
+
+.div_CharCpace {
+  width: 50px;
 }
 
 .div_TextComponentEn {
@@ -14,11 +21,15 @@
 }
 
 .div_CharComponent > .UnansweredColor {
+  color: rgba(100, 100, 100, 0);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.div_CharComponent > .UnansweredColor_Miss {
   color: rgb(100, 100, 100);
 }
-
 .div_CharComponent > .NowColor {
-  color: rgb(200, 200, 0);
+  color: rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 255, 200);
 }
 
 .div_CharComponent > .MissColor {

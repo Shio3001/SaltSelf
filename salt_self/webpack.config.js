@@ -41,10 +41,12 @@ const config = {
     new webpack.DefinePlugin({
       'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
     }),
+
  
   ],
   module: {
     rules: [
+
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
@@ -71,6 +73,7 @@ const config = {
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
+
   },
 
   //https://utamaro.hatenablog.jp/entry/2019/11/24/174339 これやっても治らない
