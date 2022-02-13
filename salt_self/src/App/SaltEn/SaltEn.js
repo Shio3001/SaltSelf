@@ -205,7 +205,7 @@ export class EnWordComponent extends React.Component {
         <p>ver0.1α</p>
         <GameComponent />
         <h2>単語準拠</h2>
-        <p>(´･ω･`)</p>
+        <p>中学英単語をひとつひとつわかりやすく</p>
       </div>
     );
   }
