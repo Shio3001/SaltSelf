@@ -128,5 +128,25 @@
         "あれが見えますか":"Can you see that",
         "わかりました":"i see",
         "私は図書館で彼に会いました":"I saw him at the library"
+    },
+
+    "high_school_en":{
+        "私は教師であり作家でもある":"I am a teacher and writer",
+        "彼は貧しいが幸せだ":"He is poor but pappy",
+        "私が彼を信頼している、というのは彼は私の親友だからだ":"I trust him for he is my true friend",
+        "雨が止んだら外に出かけよう":"We will go put when the rain stops",
+        "助けが必要なら、私に電話してください":"If you need any help,please give me a call",
+        "この本は面白いし役に立つ":"This book is both interesting and useful",
+        "ここだけの話、この方針は良くない":"Between you and me, this policy is not good",
+        "私は中国出身ではなくて、日本出身だ(butを使った相関接続詞)":"I am not from China , but from japan",
+        "私は中国出身ではなくて、日本出身だ(butの省略)":"I am from japan,not from China",
+        "私の妻だけではなく娘も笑っていた(Not only ~ but also":"Not only my wife but also my daughter was laughing",
+        "私の妻だけではなく娘も笑っていた(as well as)":"My daughter as well as my wife was laughing",
+        "あなたか私のどちらかが彼女の面倒を見なければならない":"Either you or I have to take vare of her",
+        "彼も彼の妻もまだ到着していない":"Neither he not his wige has arrived",
+        "早く起きなさい、そうすれば学校に間に合うだろう":"Get up early,and you'll be on time for school",
+        "早く起きなさい、さもなければパーティに送れるだろう":"Get up early,or you'll be late for the party",
+        "私たちはいま出発しなければならない、さもなければ電車に乗り遅れるだろう":"We must leave now,or we'll miss the train",
+        "私たちは植物学、すなわち植物の研究に興味がある":"I am interested in botany,or the study of plants"
     }
 }
