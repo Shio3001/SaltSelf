@@ -1,9 +1,12 @@
 [submodule "salt_self/src/App/-f"]
 	path = salt_self/src/App/-f
 	url = https://github.com/Shio3001/SaltEn.git
-[submodule "salt_self/src/App/SaltEn"]
-	path = salt_self/src/App/SaltEn
-	url = https://github.com/Shio3001/SaltEn.git
+[submodule "salt_self/src/App/--recursive"]
+	path = salt_self/src/App/--recursive
+	url = https://github.com/Shio3001/Salt3DCG.git
 [submodule "salt_self/src/App/Salt3DCG"]
 	path = salt_self/src/App/Salt3DCG
 	url = https://github.com/Shio3001/Salt3DCG.git
+[submodule "salt_self/src/App/SaltEn"]
+	path = salt_self/src/App/SaltEn
+	url = https://github.com/Shio3001/SaltEn.git
