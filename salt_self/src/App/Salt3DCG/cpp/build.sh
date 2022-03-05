@@ -1,2 +1,0 @@
-rm main
-make
