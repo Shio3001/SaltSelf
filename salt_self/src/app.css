@@ -1,8 +1,57 @@
+:root {
+  --header-height-max: 100px;
+  --header-height-min: 20px;
+}
+
 body {
   background-color: #ffffff;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+.mainView {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 10px 0px 10px;
+  width: 100%;
+  position: absolute;
+  top: 100px;
+}
+
+header {
+  width: 100%;
+  height: var(--header-height-max);
+  background-color: #00ff7f;
+  margin: 0px 0px 0px 0px;
+
+  position: fixed;
+  top: 0;
+  left: 0px;
+  z-index: 99;
+
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+@keyframes open_header {
+  0% {
+    height: var(--header-height-min);
+  }
+  100% {
+    height: var(--header-height-max);
+  }
+}
+@keyframes close_header {
+  0% {
+    height: var(--header-height-max);
+  }
+  100% {
+    height: var(--header-height-min);
+  }
 }
 
 footer {
-}
-header {
+  width: 100%;
+  height: 100px;
+  background-color: #007fff;
+  margin: 0px 0px 10px 0px;
 }

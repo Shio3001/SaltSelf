@@ -44,6 +44,7 @@ summary {
 
 details[open] div {
   animation: accordion 0.4s linear;
+
   overflow: hidden;
 }
 
