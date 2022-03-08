@@ -30,6 +30,8 @@ class App extends React.Component {
       // <Route exact path="/" element={<MySelf />} />
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
+
+        <footer>むじょはー</footer>
         {/* <MySelf /> */}
         <BrowserRouter basename={nowbasename}>
           <Routes>
@@ -39,6 +41,8 @@ class App extends React.Component {
             <Route path="*" element={<Test.TestComponent />} />
           </Routes>
         </BrowserRouter>
+
+        <header>りんご</header>
         
         {/* <Make3D_js.Make3D /> */}
       </div>
