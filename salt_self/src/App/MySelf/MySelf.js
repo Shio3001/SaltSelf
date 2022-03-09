@@ -23,6 +23,18 @@ function click() {
   document.getElementById("my_self_h1").style.animationName = "open_title_text";
 }
 
+class MySelfLink extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div className="my_self_link">
+        <p>{this.props.link_text}</p>
+      </div>
+    );
+  }
+}
 class MySelf extends React.Component {
   constructor(props) {
     super(props);
@@ -36,20 +48,7 @@ class MySelf extends React.Component {
         <a href={this.props.nowbasename + "/view"}>自作描画</a>
         <a href={this.props.nowbasename + "/entyping"}>英単語タイピング</a>
         <div className="my_self">
-          <details>
-            <summary>
-              <h1 className="my_self_h1">私について</h1>
-            </summary>
-            <div className="my_self_text">
-              <p className="my_self_text_p">2004年12月14日生まれ</p>
-              <p className="my_self_text_p">
-                えいえんの5さい！！！(ほんとは{text})
-              </p>
-              <p className="my_self_text_p">2021年JOI 一次予選400点で通った</p>
-              <p className="my_self_text_p">C++ Python</p>
-              <p className="my_self_text_p">基本情報技術者試験勉強中!</p>
-            </div>
-          </details>
+          
         </div>
       </div>
     );

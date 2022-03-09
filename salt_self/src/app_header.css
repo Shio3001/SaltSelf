@@ -1,7 +1,7 @@
 header {
   width: 100%;
-  height: var(--header-height-max);
-  background-color: #00ff7f;
+  height: var(--header-height);
+  background-color: #555555;
   margin: 0px 0px 0px 0px;
 
   position: fixed;
@@ -11,15 +11,15 @@ header {
 
   margin: 0px;
   padding: 0px;
-
+  /* 
   animation-fill-mode: forwards;
-  animation-duration: 1s;
+  animation-duration: 1s; */
 
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-end;
 }
-
+/* 
 @keyframes open_header {
   0% {
     height: var(--header-height-min);
@@ -35,4 +35,4 @@ header {
   100% {
     height: var(--header-height-min);
   }
-}
+} */

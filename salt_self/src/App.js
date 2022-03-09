@@ -6,7 +6,9 @@ import MySelf from "./App/MySelf/MySelf.js";
 import "./App/MySelf/MySelf.css";
 import "./app.css";
 import "./app_header.css";
+import "./app_header_logo.css";
 import "./app_header_child.css";
+import "./app_footer.css";
 import * as Make3D_js from "./App/Salt3DCG/make3D.js";
 import * as SaltEn_js from "./App/SaltEn/SaltEn";
 import * as Test from "./App/test.js";
@@ -31,42 +33,49 @@ function scroll() {
   var scroll_y = window.scrollY;
   console.log(scroll_y);
 
-  if (scroll_y > 100) {
-    //小さくする
-    if (header_flag == true) {
-      console.log("小さくする");
-      document.getElementById("header_element").style.animationName =
-        "close_header";
+  const min = 30;
+  const max = 120;
+  const section = max - min
+  const section_min = scroll_y - min
 
-      document.getElementById("logo_pic").style.animationName =
-        "close_header_logo_pic";
+  console.log(section_min,section)
 
-      header_flag = false;
-    }
-  } else {
-    //大きくする
-    if (header_flag == false) {
-      console.log("大きくする");
-      document.getElementById("header_element").style.animationName =
-        "open_header";
+  let percent;
 
-      document.getElementById("logo_pic").style.animationName =
-        "open_header_logo_pic";
-      header_flag = true;
-    }
+  if (min < scroll_y && scroll_y < max) {
+    percent = section_min / section
+    console.log("percent",percent)
   }
+  else if(min > scroll_y){
+    percent = 0
+  }
+  else if(max < scroll_y){
+    percent = 1
+  }
+
+  document.getElementById("root").style.setProperty('--header-height', 50 + (1 - percent) * 50 + "px");
+  document.getElementById("root").style.setProperty('--header-height-logo', (50 + (1 - percent) * 50) * 80 / 100 + "px");
+  document.getElementById("root").style.setProperty('--header-element-pic-opacity', (1 - percent) * 0.5);
+
 }
 
 class HeaderLogo extends React.Component {
   constructor(props) {
     super(props);
+    this.ClickHomepage = this.ClickHomepage.bind(this);
   }
+
+  ClickHomepage() {
+    console.log("クリックされました");
+    window.location.href = this.props.link;
+  }
+
   render() {
     return (
       <div onClick={this.ClickHomepage} className="logo_main">
-        <div className="logo_pic" id="logo_pic"></div>
+        <div className={"logo_pic" + " " + this.props.image_css} id="logo_pic"></div>
         <div className="logo_text">
-          <p className="logo_main_p">しおのさいと</p>
+          <p className="logo_main_p">{this.props.button_title}</p>
         </div>
       </div>
     );
@@ -76,12 +85,7 @@ class HeaderLogo extends React.Component {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.ClickHomepage = this.ClickHomepage.bind(this);
-  }
-
-  ClickHomepage() {
-    console.log("クリックされました");
-    window.location.href = nowbasename + "/";
+    
   }
 
   componentDidMount() {
@@ -100,10 +104,16 @@ class App extends React.Component {
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
         <header id="header_element">
-          <HeaderLogo/>
+          <HeaderLogo link={nowbasename + "/"} button_title={"メイン"} image_css="logo_pic_koharu" />
+          <HeaderLogo link={"https://twitter.com/Shio_Py"} button_title={"ついったー"} image_css="logo_pic_koharu" />
+          <HeaderLogo link={"https://github.com/Shio3001"} button_title={"github"} image_css="logo_pic_koharu" />
+          <HeaderLogo link={"https://qiita.com/Shio_3001"} button_title={"Qiita"} image_css="logo_pic_koharu" />
+          {/* <HeaderLogo link={nowbasename + "/"} button_title={"twitter"} image_css="logo_pic_shio" />
+          <HeaderLogo link={nowbasename + "/"} button_title={"github"} image_css="logo_pic_yamahi" /> */}
         </header>
 
         <div className="mainView">
+          <div className="browseView">
           <BrowserRouter basename={nowbasename}>
             <Routes>
               <Route
@@ -124,7 +134,11 @@ class App extends React.Component {
               <Route path="*" element={<Test.TestComponent />} />
             </Routes>
           </BrowserRouter>
-          <footer>なんか表示されないんだけど</footer>
+          </div>
+
+          <footer>
+            <p>制作 しおのあそびば(しお)</p>
+          </footer>
         </div>
 
         {/* <Make3D_js.Make3D /> */}

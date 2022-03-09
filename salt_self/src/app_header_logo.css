@@ -1,0 +1,21 @@
+.logo_pic_koharu {
+  background-image: url(./koharu.png);
+  /* 画像のURLを指定       */
+  background-size: cover;
+  /* 画像のサイズを指定    */
+  background-position: 50% 25%;
+}
+.logo_pic_shio {
+  background-image: url(./shio.jpeg);
+  /* 画像のURLを指定       */
+  background-size: cover;
+  /* 画像のサイズを指定    */
+  background-position: 50% 25%;
+}
+.logo_pic_yamahi {
+  background-image: url(./yamahi.png);
+  /* 画像のURLを指定       */
+  background-size: cover;
+  /* 画像のサイズを指定    */
+  background-position: 50% 25%;
+}
