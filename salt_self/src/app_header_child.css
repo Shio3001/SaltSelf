@@ -1,0 +1,60 @@
+.logo_main {
+  width: var(--header-element-width); /* 横幅のサイズを指定    */
+  height: 100%; /*縦幅のサイズを指定    */
+  background-color: #ffffff;
+  /* z-index: 101; */
+}
+
+.logo_text {
+  width: var(--header-element-width); /* 幅指定 */
+  height: 100%; /* 高さ指定 */
+  margin: 0px;
+  position: absolute;
+  text-align: center;
+}
+
+.logo_main_p {
+  margin: 0;
+  position: absolute;
+  width: var(--header-element-width); /* 幅指定 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.logo_pic {
+  position: absolute;
+  background-image: url(./koharu.png);
+  /* 画像のURLを指定       */
+  background-size: cover;
+  /* 画像のサイズを指定    */
+  background-position: 50% 25%;
+
+  width: var(--header-element-width); /* 横幅のサイズを指定    */
+  height: 100%; /* 縦幅のサイズを指定    */
+  /* top: 0px; */
+  opacity: 1;
+  margin: 0px;
+
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+@keyframes open_header_logo_pic {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes close_header_logo_pic {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

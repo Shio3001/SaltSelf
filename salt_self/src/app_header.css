@@ -1,0 +1,38 @@
+header {
+  width: 100%;
+  height: var(--header-height-max);
+  background-color: #00ff7f;
+  margin: 0px 0px 0px 0px;
+
+  position: fixed;
+  top: 0;
+  left: 0px;
+  z-index: 100;
+
+  margin: 0px;
+  padding: 0px;
+
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@keyframes open_header {
+  0% {
+    height: var(--header-height-min);
+  }
+  100% {
+    height: var(--header-height-max);
+  }
+}
+@keyframes close_header {
+  0% {
+    height: var(--header-height-max);
+  }
+  100% {
+    height: var(--header-height-min);
+  }
+}
