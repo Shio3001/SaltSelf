@@ -105,7 +105,7 @@ class App extends React.Component {
       <div className="App">
         <header id="header_element">
           <HeaderLogo link={nowbasename + "/"} button_title={"メイン"} image_css="logo_pic_koharu" />
-          <HeaderLogo link={"https://twitter.com/Shio_Py"} button_title={"ついったー"} image_css="logo_pic_koharu" />
+          <HeaderLogo link={"https://twitter.com/ShioPyComputer"} button_title={"ついったー"} image_css="logo_pic_koharu" />
           <HeaderLogo link={"https://github.com/Shio3001"} button_title={"github"} image_css="logo_pic_koharu" />
           <HeaderLogo link={"https://qiita.com/Shio_3001"} button_title={"Qiita"} image_css="logo_pic_koharu" />
           {/* <HeaderLogo link={nowbasename + "/"} button_title={"twitter"} image_css="logo_pic_shio" />

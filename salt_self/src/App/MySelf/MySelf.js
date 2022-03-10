@@ -26,10 +26,16 @@ function click() {
 class MySelfLink extends React.Component {
   constructor(props) {
     super(props);
+    this.Click = this.Click.bind(this)
   }
+
+  Click(){
+    window.location.href = this.props.link_address;
+  }
+
   render() {
     return (
-      <div className="my_self_link">
+      <div onClick={this.Click} className={"my_self_link " + this.props.link_color} id="my_self_link_id">
         <p>{this.props.link_text}</p>
       </div>
     );
@@ -45,11 +51,12 @@ class MySelf extends React.Component {
 
     return (
       <div>
-        <a href={this.props.nowbasename + "/view"}>自作描画</a>
-        <a href={this.props.nowbasename + "/entyping"}>英単語タイピング</a>
-        <div className="my_self">
-          
-        </div>
+        <p>このサイト内にある作品</p>
+        <MySelfLink link_address={this.props.nowbasename + "/view"} link_text={"自作描画"} link_color="my_self_link_green" />
+        <MySelfLink link_address={this.props.nowbasename + "/entyping"} link_text={"英単語タイピング"} link_color="my_self_link_blue" />
+        {/* <a href={this.props.nowbasename + "/view"}>自作描画</a>
+        <a href={this.props.nowbasename + "/entyping"}>英単語タイピング</a> */}
+        <p>解説</p>
       </div>
     );
   }
