@@ -51,12 +51,22 @@ class MySelf extends React.Component {
 
     return (
       <div>
+
+        <p>自己紹介</p>
+
         <p>このサイト内にある作品</p>
-        <MySelfLink link_address={this.props.nowbasename + "/view"} link_text={"自作描画"} link_color="my_self_link_green" />
+        <MySelfLink link_address={this.props.nowbasename + "/view"} link_text={"自作描画"} link_color="my_self_link_blue" />
         <MySelfLink link_address={this.props.nowbasename + "/entyping"} link_text={"英単語タイピング"} link_color="my_self_link_blue" />
         {/* <a href={this.props.nowbasename + "/view"}>自作描画</a>
         <a href={this.props.nowbasename + "/entyping"}>英単語タイピング</a> */}
         <p>解説</p>
+
+        <MySelfLink link_address={this.props.nowbasename + "/movieedit"} link_text={"自作動画編集ソフト"} link_color="my_self_link_green" />
+
+        <p>趣味</p>
+
+        <MySelfLink link_address={this.props.nowbasename + "/art"} link_text={"おえかき"} link_color="my_self_link_yellow" />
+
       </div>
     );
   }

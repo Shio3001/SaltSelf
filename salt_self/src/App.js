@@ -4,6 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MySelf from "./App/MySelf/MySelf.js";
 import "./App/MySelf/MySelf.css";
+
+import * as MovieEdit from "./App/MovieEdit/MovieEdit.js";
+import "./App/MovieEdit/MovieEdit.css";
+
 import "./app.css";
 import "./app_header.css";
 import "./app_header_logo.css";
@@ -107,7 +111,7 @@ class App extends React.Component {
           <HeaderLogo link={nowbasename + "/"} button_title={"メイン"} image_css="logo_pic_koharu" />
           <HeaderLogo link={"https://twitter.com/ShioPyComputer"} button_title={"ついったー"} image_css="logo_pic_koharu" />
           <HeaderLogo link={"https://github.com/Shio3001"} button_title={"github"} image_css="logo_pic_koharu" />
-          <HeaderLogo link={"https://qiita.com/Shio_3001"} button_title={"Qiita"} image_css="logo_pic_koharu" />
+          <HeaderLogo link={"https://qiita.com/Shio_Py"} button_title={"Qiita"} image_css="logo_pic_koharu" />
           {/* <HeaderLogo link={nowbasename + "/"} button_title={"twitter"} image_css="logo_pic_shio" />
           <HeaderLogo link={nowbasename + "/"} button_title={"github"} image_css="logo_pic_yamahi" /> */}
         </header>
@@ -131,6 +135,9 @@ class App extends React.Component {
                   <SaltEn_js.EnWordComponent nowbasename={nowbasename} />
                 }
               />
+
+              <Route path="/movieedit" element={<MovieEdit.MovieEditCommentary/>}/>
+
               <Route path="*" element={<Test.TestComponent />} />
             </Routes>
           </BrowserRouter>
@@ -138,6 +145,7 @@ class App extends React.Component {
 
           <footer>
             <p>制作 しおのあそびば(しお)</p>
+            <p>React.js Emscriptenを使用しています SPAサイトです</p>
           </footer>
         </div>
 

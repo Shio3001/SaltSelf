@@ -7,7 +7,7 @@ export class TestComponent extends React.Component {
     render() {
         return (
             <div>
-                <p>test</p>
+                <p>404</p>
             </div>
         );
     }

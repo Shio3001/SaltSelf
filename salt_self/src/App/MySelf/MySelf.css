@@ -4,6 +4,15 @@
 .my_self_link_blue {
   border-left: solid 5px rgb(0, 20, 200);
 }
+
+.my_self_link_yellow {
+  border-left: solid 5px rgb(200, 200, 0);
+}
+
+.my_self_link_red {
+  border-left: solid 5px rgb(200, 20, 0);
+}
+
 .my_self_link {
   width: 200px;
   height: 50px;
@@ -14,6 +23,8 @@
   margin-top: 10px;
 
   position: relative;
+
+  cursor: var(--cursor_button);
 }
 
 .my_self_link > p {
