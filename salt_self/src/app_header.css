@@ -1,27 +1,37 @@
 header {
   min-width: 100%;
-  height: var(--header-height);
   background-color: #555555;
-  margin: 0px 0px 0px 0px;
 
   position: fixed;
 
+  margin: 0px;
+  padding: 0px;
+
+  z-index: 100;
   top: 0;
   left: 0px;
-  z-index: 100;
+}
+
+.div_header_width {
+  width: 100vw;
+  overflow: scroll;
+}
+
+.div_header {
+  height: var(--header-height);
 
   margin: 0px;
   padding: 0px;
-  /* 
-  animation-fill-mode: forwards;
-  animation-duration: 1s; */
+  position: relative;
+
+  min-width: 100vw;
+  width: fit-content;
 
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
-  overflow: scroll;
 }
+
 /* 
 @keyframes open_header {
   0% {

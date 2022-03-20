@@ -19,8 +19,9 @@ import * as Test from "./App/test.js";
 import "./App/Salt3DCG/make3D.css";
 import "./App/SaltEn/SaltEn.css";
 
-import * as SeatMemo from "./App/SeatMemo/seat_memo.js"
-import "./App/SeatMemo/seat_memo.css"
+import * as SeatMemo from "./App/SeatMemo/seat_memo.js";
+import "./App/SeatMemo/seat_memo.css";
+import "./App/SeatMemo/speaker.css";
 
 // const myModule = await Module();
 let nowbasename;
@@ -42,28 +43,34 @@ function scroll() {
 
   const min = 30;
   const max = 120;
-  const section = max - min
-  const section_min = scroll_y - min
+  const section = max - min;
+  const section_min = scroll_y - min;
 
-  console.log(section_min,section)
+  console.log(section_min, section);
 
   let percent;
 
   if (min < scroll_y && scroll_y < max) {
-    percent = section_min / section
-    console.log("percent",percent)
-  }
-  else if(min > scroll_y){
-    percent = 0
-  }
-  else if(max < scroll_y){
-    percent = 1
+    percent = section_min / section;
+    console.log("percent", percent);
+  } else if (min > scroll_y) {
+    percent = 0;
+  } else if (max < scroll_y) {
+    percent = 1;
   }
 
-  document.getElementById("root").style.setProperty('--header-height', 50 + (1 - percent) * 50 + "px");
-  document.getElementById("root").style.setProperty('--header-height-logo', (50 + (1 - percent) * 50) * 80 / 100 + "px");
-  document.getElementById("root").style.setProperty('--header-element-pic-opacity', (1 - percent) * 0.5);
-
+  document
+    .getElementById("root")
+    .style.setProperty("--header-height", 50 + (1 - percent) * 50 + "px");
+  document
+    .getElementById("root")
+    .style.setProperty(
+      "--header-height-logo",
+      ((50 + (1 - percent) * 50) * 80) / 100 + "px"
+    );
+  document
+    .getElementById("root")
+    .style.setProperty("--header-element-pic-opacity", (1 - percent) * 0.5);
 }
 
 class HeaderLogo extends React.Component {
@@ -80,7 +87,10 @@ class HeaderLogo extends React.Component {
   render() {
     return (
       <div onClick={this.ClickHomepage} className="logo_main">
-        <div className={"logo_pic" + " " + this.props.image_css} id="logo_pic"></div>
+        <div
+          className={"logo_pic" + " " + this.props.image_css}
+          id="logo_pic"
+        ></div>
         <div className="logo_text">
           <p className="logo_main_p">{this.props.button_title}</p>
         </div>
@@ -92,7 +102,6 @@ class HeaderLogo extends React.Component {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    
   }
 
   componentDidMount() {
@@ -111,11 +120,30 @@ class App extends React.Component {
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
         <header id="header_element">
-          
-          <HeaderLogo link={nowbasename + "/"} button_title={"メイン"} image_css="logo_pic_koharu" />
-          <HeaderLogo link={"https://twitter.com/ShioPyComputer"} button_title={"ついったー"} image_css="logo_pic_koharu" />
-          <HeaderLogo link={"https://github.com/Shio3001"} button_title={"github"} image_css="logo_pic_koharu" />
-          <HeaderLogo link={"https://qiita.com/Shio_Py"} button_title={"Qiita"} image_css="logo_pic_koharu" />
+          <div className="div_header_width">
+            <div className="div_header">
+              <HeaderLogo
+                link={nowbasename + "/"}
+                button_title={"メイン"}
+                image_css="logo_pic_koharu"
+              />
+              <HeaderLogo
+                link={"https://twitter.com/ShioPyComputer"}
+                button_title={"ついったー"}
+                image_css="logo_pic_koharu"
+              />
+              <HeaderLogo
+                link={"https://github.com/Shio3001"}
+                button_title={"github"}
+                image_css="logo_pic_koharu"
+              />
+              <HeaderLogo
+                link={"https://qiita.com/Shio_Py"}
+                button_title={"Qiita"}
+                image_css="logo_pic_koharu"
+              />
+            </div>
+          </div>
 
           {/* <HeaderLogo link={nowbasename + "/"} button_title={"twitter"} image_css="logo_pic_shio" />
           <HeaderLogo link={nowbasename + "/"} button_title={"github"} image_css="logo_pic_yamahi" /> */}
@@ -123,32 +151,37 @@ class App extends React.Component {
 
         <div className="mainView">
           <div className="browseView">
-          <BrowserRouter basename={nowbasename}>
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={<MySelf nowbasename={nowbasename} />}
-              />
-              <Route
-                path="/view"
-                element={<Make3D_js.Make3D nowbasename={nowbasename} />}
-              />
-              <Route
-                path="/entyping"
-                element={
-                  <SaltEn_js.EnWordComponent nowbasename={nowbasename} />
-                }
-              />
-              <Route
-                path="/seat"
-                element={<SeatMemo.SeatMemoComponent nowbasename={nowbasename} />}
-              />
-              <Route path="/movieedit" element={<MovieEdit.MovieEditCommentary/>}/>
+            <BrowserRouter basename={nowbasename}>
+              <Routes>
+                <Route
+                  exact
+                  path="/"
+                  element={<MySelf nowbasename={nowbasename} />}
+                />
+                <Route
+                  path="/view"
+                  element={<Make3D_js.Make3D nowbasename={nowbasename} />}
+                />
+                <Route
+                  path="/entyping"
+                  element={
+                    <SaltEn_js.EnWordComponent nowbasename={nowbasename} />
+                  }
+                />
+                <Route
+                  path="/seat"
+                  element={
+                    <SeatMemo.SeatMemoComponent nowbasename={nowbasename} />
+                  }
+                />
+                <Route
+                  path="/movieedit"
+                  element={<MovieEdit.MovieEditCommentary />}
+                />
 
-              <Route path="*" element={<Test.TestComponent />} />
-            </Routes>
-          </BrowserRouter>
+                <Route path="*" element={<Test.TestComponent />} />
+              </Routes>
+            </BrowserRouter>
           </div>
 
           <footer>

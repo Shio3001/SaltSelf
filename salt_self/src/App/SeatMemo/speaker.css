@@ -1,0 +1,9 @@
+.not_speaker_seat {
+  background-color: rgb(255, 255, 255);
+  color: #000;
+}
+
+.speaker_seat {
+  background-color: rgb(10, 100, 255);
+  color: rgb(255, 255, 255);
+}

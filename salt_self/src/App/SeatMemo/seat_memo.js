@@ -4,12 +4,19 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+const seat_status_css = ["not_speaker_seat", "speaker_seat"];
 
 class SingleSeat {
-  constructor(line_number, column_name) {
+  constructor(
+    line_number,
+    column_name,
+    line_control_number,
+    column_control_number
+  ) {
     this.line_number = line_number;
     this.column_name = column_name;
-
+    this.line_control_number = line_control_number;
+    this.column_control_number = column_control_number;
     this.seat_status = 0;
 
     //0 : スピーカー席ではない
@@ -17,11 +24,13 @@ class SingleSeat {
   }
 }
 
-function SingleSeatMake(line_lengh, column_name) {
+function SingleSeatMake(column_control_number, line_lengh, column_name) {
   const column_seat = [];
 
-  for (let l = 1; l <=  line_lengh; l++) {
-    column_seat.push(new SingleSeat(l, column_name));
+  for (let l = 1; l <= line_lengh; l++) {
+    column_seat.push(
+      new SingleSeat(l, column_name, l - 1, column_control_number)
+    );
   }
 
   return column_seat;
@@ -30,15 +39,15 @@ function SingleSeatMake(line_lengh, column_name) {
 function LineColumnsSeatMake(line_lengh, column_lengh) {
   const all_seat = [];
 
-  console.log("column_lengh",column_lengh)
+  console.log("column_lengh", column_lengh);
 
   if (Number(column_lengh) == 1) {
-    all_seat.push(SingleSeatMake(line_lengh, "列目"));
-    console.log("column_lengh = 1")
+    all_seat.push(SingleSeatMake(0, line_lengh, "列目"));
+    console.log("column_lengh = 1");
   } else {
     for (let c = 0; c < column_lengh; c++) {
       const column_name = alphabet[c];
-      all_seat.push(SingleSeatMake(line_lengh, column_name));
+      all_seat.push(SingleSeatMake(c, line_lengh, column_name));
     }
   }
   return all_seat;
@@ -50,8 +59,24 @@ class SingleSeatComponent extends React.Component {
     this.state = {};
   }
   render() {
+    const seat_status_css_number =
+      seat_status_css[this.props.single_seat.seat_status];
+    console.log("seat_status_css_number", seat_status_css_number);
+
+    const onClickSingleSeatStatus = () => {
+      this.props.SeatStatusChange(
+        this.props.single_seat.line_control_number,
+        this.props.single_seat.column_control_number,
+        (this.props.single_seat.seat_status + 1) % seat_status_css.length
+      );
+      console.log("onClickSingleSeatStatus");
+    };
+
     return (
-      <div className="div_SingleSeatComponent">
+      <div
+        className={"div_SingleSeatComponent " + seat_status_css_number}
+        onClick={onClickSingleSeatStatus}
+      >
         <p>
           {this.props.single_seat.line_number}
           {this.props.single_seat.column_name}
@@ -71,10 +96,12 @@ class ColumnsSeatComponent extends React.Component {
 
   }
   render() {
-
     const component_convert = () => {
       const temp_component = this.props.one_row.map((fruit, i) => (
-        <SingleSeatComponent single_seat={fruit} />
+        <SingleSeatComponent
+          single_seat={fruit}
+          SeatStatusChange={this.props.SeatStatusChange}
+        />
       ));
       // <ColumnsSeatComponent/>
       return temp_component;
@@ -99,13 +126,57 @@ export class SeatMemoComponent extends React.Component {
     this.state = {
       seat_lines: 20,
       seat_columns: 4,
-      all_seat_component: [],
+      all_seat: [],
+      // all_seat_component: [],
     };
 
+    this.SeatStatusChange = this.SeatStatusChange.bind(this);
     this.OnChangeLines = this.OnChangeLines.bind(this);
     this.OnChangeColumns = this.OnChangeColumns.bind(this);
     this.OnClickMakeSeat = this.OnClickMakeSeat.bind(this);
+
+    this.SeatSentence = () => {
+      let temp_text = ""
+      temp_text += "あ"
+      temp_text += <br />
+      temp_text += "あ"
+      return <p>{temp_text}</p>
+    };
+
+    this.AllSeatComponentMake = () => {
+      const temp_component = this.state.all_seat.map((fruit, i) => (
+        <ColumnsSeatComponent
+          one_row={fruit}
+          SeatStatusChange={this.SeatStatusChange}
+        />
+      ));
+      // <ColumnsSeatComponent/>
+      return temp_component;
+
+      // this.setState({
+      //   all_seat_component: component_convert(),
+      // });
+    };
   }
+
+  SeatStatusChange(line_control_number, column_control_number, status) {
+    console.log(
+      "line_control_number, column_control_number",
+      line_control_number,
+      column_control_number
+    );
+
+    const copy_all_seat = Object.assign(this.state.all_seat);
+    copy_all_seat[column_control_number][line_control_number].seat_status =
+      status;
+
+    this.setState({
+      all_seat: copy_all_seat,
+    });
+
+    // this.AllSeatComponentMake();
+  }
+
   OnChangeLines(event) {
     const number = event.target.value;
     this.setState({
@@ -127,22 +198,14 @@ export class SeatMemoComponent extends React.Component {
 
   OnClickMakeSeat() {
     console.log("座席を生成します");
-    const all_seat = LineColumnsSeatMake(
-      this.state.seat_lines,
-      this.state.seat_columns
-    );
-
-    const component_convert = () => {
-      const temp_component = all_seat.map((fruit, i) => (
-        <ColumnsSeatComponent one_row={fruit} />
-      ));
-      // <ColumnsSeatComponent/>
-      return temp_component;
-    };
-
     this.setState({
-      all_seat_component: component_convert(),
+      all_seat: LineColumnsSeatMake(
+        this.state.seat_lines,
+        this.state.seat_columns
+      ),
     });
+
+    // this.AllSeatComponentMake();
   }
 
   render() {
@@ -192,10 +255,12 @@ export class SeatMemoComponent extends React.Component {
           </p>
         </div>
         <div className="div_SeatMemoComponentSeatArea">
-          {this.state.all_seat_component.map((fruit, i) => (
+          {this.AllSeatComponentMake().map((fruit, i) => (
             <div className="div_SeatMemoComponentSeatAreaMap">{fruit}</div> //SurfaceControlIndividualを追加するmap (list_surface_controlに入っている)
           ))}
         </div>
+
+        <p>{this.SeatSentence()}</p>
       </div>
     );
   }
