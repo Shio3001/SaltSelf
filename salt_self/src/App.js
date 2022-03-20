@@ -19,6 +19,9 @@ import * as Test from "./App/test.js";
 import "./App/Salt3DCG/make3D.css";
 import "./App/SaltEn/SaltEn.css";
 
+import * as SeatMemo from "./App/SeatMemo/seat_memo.js"
+import "./App/SeatMemo/seat_memo.css"
+
 // const myModule = await Module();
 let nowbasename;
 if (process.env.NODE_ENV == "production") {
@@ -108,10 +111,12 @@ class App extends React.Component {
       // <Route exact path="/view" element={<Make3D_js.Make3D />} />
       <div className="App">
         <header id="header_element">
+          
           <HeaderLogo link={nowbasename + "/"} button_title={"メイン"} image_css="logo_pic_koharu" />
           <HeaderLogo link={"https://twitter.com/ShioPyComputer"} button_title={"ついったー"} image_css="logo_pic_koharu" />
           <HeaderLogo link={"https://github.com/Shio3001"} button_title={"github"} image_css="logo_pic_koharu" />
           <HeaderLogo link={"https://qiita.com/Shio_Py"} button_title={"Qiita"} image_css="logo_pic_koharu" />
+
           {/* <HeaderLogo link={nowbasename + "/"} button_title={"twitter"} image_css="logo_pic_shio" />
           <HeaderLogo link={nowbasename + "/"} button_title={"github"} image_css="logo_pic_yamahi" /> */}
         </header>
@@ -135,7 +140,10 @@ class App extends React.Component {
                   <SaltEn_js.EnWordComponent nowbasename={nowbasename} />
                 }
               />
-
+              <Route
+                path="/seat"
+                element={<SeatMemo.SeatMemoComponent nowbasename={nowbasename} />}
+              />
               <Route path="/movieedit" element={<MovieEdit.MovieEditCommentary/>}/>
 
               <Route path="*" element={<Test.TestComponent />} />

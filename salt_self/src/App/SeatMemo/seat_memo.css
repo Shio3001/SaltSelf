@@ -1,0 +1,85 @@
+.div_SeatMemoComponentOptionArea {
+}
+
+.div_SeatMemoComponentSeatAreaMap {
+}
+
+.div_SeatMemoComponentSeatArea {
+  background-color: rgb(220, 220, 220);
+  min-height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 10px;
+
+  overflow: scroll;
+}
+
+.div_ColumnsSeatComponentMap + .div_ColumnsSeatComponentMap {
+  margin-top: 5px;
+}
+
+.div_SingleSeatComponent {
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  position: relative;
+
+  margin-left: 5px;
+  border-radius: 5px; /*ボックス角の丸み*/
+}
+
+.div_SingleSeatComponent > p {
+  position: absolute;
+
+  top: 50%; /*親要素を起点に上から50%*/
+  left: 50%; /*親要素を起点に左から50%*/
+  transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  margin: 0px;
+}
+
+.div_ColumnsSeatComponent {
+}
+
+.textbox_SeatMemo {
+  border: 2px solid rgb(0, 0, 0); /*枠線*/
+}
+
+.textbox_SeatMemo:focus {
+  border: 2px solid rgb(50, 100, 150); /*枠線*/
+}
+
+.textbox_SeatMemo,
+.textbox_SeatMemo:focus {
+  box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+  background-color: #fff;
+  padding: 5px 5px; /*ボックスを大きくする*/
+  margin: 0px 0px 0px 0px;
+  font-size: 16px;
+  border-radius: 10px; /*ボックス角の丸み*/
+}
+
+.input_SeatMemo_init,
+.input_SeatMemo_init:hover {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 16px;
+  /* width: 120px; */
+  text-align: center;
+}
+.input_SeatMemo_init {
+  background: rgb(40, 140, 200);
+}
+.input_SeatMemo_init:hover {
+  background: rgb(80, 80, 80);
+}

@@ -1,5 +1,5 @@
 header {
-  width: 100%;
+  min-width: 100%;
   height: var(--header-height);
   background-color: #555555;
   margin: 0px 0px 0px 0px;
@@ -19,6 +19,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  overflow: scroll;
 }
 /* 
 @keyframes open_header {

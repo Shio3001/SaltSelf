@@ -64,8 +64,10 @@ class MySelf extends React.Component {
         <MySelfLink link_address={this.props.nowbasename + "/movieedit"} link_text={"自作動画編集ソフト"} link_color="my_self_link_green" />
 
         <p>趣味</p>
-
         <MySelfLink link_address={this.props.nowbasename + "/art"} link_text={"おえかき"} link_color="my_self_link_yellow" />
+{/*         
+        <p>界隈用</p>
+        <MySelfLink link_address={this.props.nowbasename + "/seat"} link_text={"座席記録"} link_color="my_self_link_gray" /> */}
 
       </div>
     );

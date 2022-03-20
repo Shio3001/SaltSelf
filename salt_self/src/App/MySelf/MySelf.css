@@ -13,6 +13,9 @@
   border-left: solid 5px rgb(200, 20, 0);
 }
 
+.my_self_link_gray {
+  border-left: solid 5px rgb(20, 20, 20);
+}
 .my_self_link {
   width: 200px;
   height: 50px;
