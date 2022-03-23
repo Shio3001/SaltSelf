@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
+import { stat } from "fs";
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const seat_status_css = ["not_speaker_seat", "speaker_seat"];
 
@@ -92,9 +93,7 @@ class ColumnsSeatComponent extends React.Component {
       // column_seat_component: [],
     };
   }
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
   render() {
     const component_convert = () => {
       const temp_component = this.props.one_row.map((fruit, i) => (
@@ -136,11 +135,34 @@ export class SeatMemoComponent extends React.Component {
     this.OnClickMakeSeat = this.OnClickMakeSeat.bind(this);
 
     this.SeatSentence = () => {
-      let temp_text = ""
-      temp_text += "あ"
-      temp_text += <br />
-      temp_text += "あ"
-      return <p>{temp_text}</p>
+      const temp_allseat_array = [];
+
+      for (let ai = 0; ai < this.state.all_seat.length; ai++) {
+        const column_seat = this.state.all_seat[ai];
+
+        const temp_column_array = [];
+
+        for (let ci = 0; ci < column_seat.length; ci++) {
+          const single_seat = column_seat[ci];
+          const this_seat_status = single_seat.seat_status
+
+          if (this_seat_status == 0){
+            temp_column_array.push(
+              " "
+            );
+          }
+
+          else if (this_seat_status == 1) {
+            temp_column_array.push(
+              single_seat.line_number + single_seat.column_name
+            );
+          }
+        }
+
+        temp_allseat_array.push(temp_column_array);
+      }
+
+      return temp_allseat_array;
     };
 
     this.AllSeatComponentMake = () => {
@@ -260,7 +282,17 @@ export class SeatMemoComponent extends React.Component {
           ))}
         </div>
 
-        <p>{this.SeatSentence()}</p>
+        <div className="div_SeatSentence">
+          {this.SeatSentence().map((column_array, i) => (
+            <div className="div_SeatMemoComponentSeatColumn">
+              {column_array.map((seat, j) => (
+                <div className="div_SeatMemoComponentSeatSingle">
+                  <p>{seat}</p>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
