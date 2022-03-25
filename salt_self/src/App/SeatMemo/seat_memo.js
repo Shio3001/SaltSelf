@@ -326,7 +326,7 @@ export class SeatMemoComponent extends React.Component {
           ))}
         </div>
 
-        <p>画像出力されます</p>
+        <p>プレビュー</p>
 
         <div className="div_SeatSentence">
           <canvas_js.SeatCanvasComponent
@@ -339,6 +339,7 @@ export class SeatMemoComponent extends React.Component {
             district_Lower={this.state.district_Lower}
           />
         </div>
+        
       </div>
     );
   }

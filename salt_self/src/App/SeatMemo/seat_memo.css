@@ -89,6 +89,9 @@
   /* width: 120px; */
   text-align: center;
 
+  margin-top: 10px;
+  margin-bottom: 10px;
+
   cursor: var(--cursor_button);
 }
 .input_SeatMemo_init {
