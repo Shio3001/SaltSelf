@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import UUID from "uuidjs";
 import Select from "react-select";
-import { stat } from "fs";
+
+import * as canvas_js from "./seat_canvas.js";
+
 const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const seat_status_css = ["not_speaker_seat", "speaker_seat"];
 
@@ -126,6 +128,10 @@ export class SeatMemoComponent extends React.Component {
       seat_lines: 20,
       seat_columns: 4,
       all_seat: [],
+      train_title: "205系",
+      train_memo: "寝台特急「はごろも」1024号車",
+      district_Upper: "東羽衣",
+      district_Lower: "鳳",
       // all_seat_component: [],
     };
 
@@ -134,36 +140,7 @@ export class SeatMemoComponent extends React.Component {
     this.OnChangeColumns = this.OnChangeColumns.bind(this);
     this.OnClickMakeSeat = this.OnClickMakeSeat.bind(this);
 
-    this.SeatSentence = () => {
-      const temp_allseat_array = [];
-
-      for (let ai = 0; ai < this.state.all_seat.length; ai++) {
-        const column_seat = this.state.all_seat[ai];
-
-        const temp_column_array = [];
-
-        for (let ci = 0; ci < column_seat.length; ci++) {
-          const single_seat = column_seat[ci];
-          const this_seat_status = single_seat.seat_status
-
-          if (this_seat_status == 0){
-            temp_column_array.push(
-              " "
-            );
-          }
-
-          else if (this_seat_status == 1) {
-            temp_column_array.push(
-              single_seat.line_number + single_seat.column_name
-            );
-          }
-        }
-
-        temp_allseat_array.push(temp_column_array);
-      }
-
-      return temp_allseat_array;
-    };
+    this.SeatSentence = () => {};
 
     this.AllSeatComponentMake = () => {
       const temp_component = this.state.all_seat.map((fruit, i) => (
@@ -178,6 +155,31 @@ export class SeatMemoComponent extends React.Component {
       // this.setState({
       //   all_seat_component: component_convert(),
       // });
+    };
+
+    this.OnChangeTrainTitle = (event) => {
+      const number = event.target.value;
+      this.setState({
+        train_title: number,
+      });
+    };
+    this.OnChangeTrainMemo = (event) => {
+      const number = event.target.value;
+      this.setState({
+        train_memo: number,
+      });
+    };
+    this.OnChangeDistrictUpper = (event) => {
+      const number = event.target.value;
+      this.setState({
+        district_Upper: number,
+      });
+    };
+    this.OnChangeDistrictLower = (event) => {
+      const number = event.target.value;
+      this.setState({
+        district_Lower: number,
+      });
     };
   }
 
@@ -234,6 +236,26 @@ export class SeatMemoComponent extends React.Component {
     return (
       <div className="div_SeatMemoComponent">
         <div className="div_SeatMemoComponentOptionArea">
+        <p>車両形式</p>
+          <p>
+            <input
+              type="text"
+              className="textbox_SeatMemo textbox_SeatMemo_wide"
+              value={this.state.train_title}
+              onChange={this.OnChangeTrainTitle}
+            />
+          </p>
+
+          <p>メモ</p>
+          <p>
+            <input
+              type="text"
+              className="textbox_SeatMemo textbox_SeatMemo_wide"
+              value={this.state.train_memo}
+              onChange={this.OnChangeTrainMemo}
+            />
+          </p>
+
           <p>1両あたりの座席列数を入力(列数)</p>
           <p>
             <input
@@ -251,6 +273,26 @@ export class SeatMemoComponent extends React.Component {
               className="textbox_SeatMemo"
               value={this.state.seat_columns}
               onChange={this.OnChangeColumns}
+            />
+          </p>
+
+          <p>上部方面入力(座席番号が若い方)</p>
+          <p>
+            <input
+              type="text"
+              className="textbox_SeatMemo"
+              value={this.state.district_Upper}
+              onChange={this.OnChangeDistrictUpper}
+            />
+          </p>
+
+          <p>下部方面入力(座席番号が大きい方)</p>
+          <p>
+            <input
+              type="text"
+              className="textbox_SeatMemo"
+              value={this.state.district_Lower}
+              onChange={this.OnChangeDistrictLower}
             />
           </p>
 
@@ -272,8 +314,10 @@ export class SeatMemoComponent extends React.Component {
             <br />
             通路上スピーカーの場合は行数を1にしてください。
             <br />
-            <br />
+            
             生成後、スピーカー席がある場所をタップしてください。
+            <br />
+            画面下部に画像が表示されますので、スピーカーチェック後に保存してください
           </p>
         </div>
         <div className="div_SeatMemoComponentSeatArea">
@@ -282,16 +326,18 @@ export class SeatMemoComponent extends React.Component {
           ))}
         </div>
 
+        <p>画像出力されます</p>
+
         <div className="div_SeatSentence">
-          {this.SeatSentence().map((column_array, i) => (
-            <div className="div_SeatMemoComponentSeatColumn">
-              {column_array.map((seat, j) => (
-                <div className="div_SeatMemoComponentSeatSingle">
-                  <p>{seat}</p>
-                </div>
-              ))}
-            </div>
-          ))}
+          <canvas_js.SeatCanvasComponent
+            all_seat={this.state.all_seat}
+            train_title ={this.state.train_title}
+            train_memo ={this.state.train_memo}
+            seat_lenght_x={this.state.seat_columns}
+            seat_lenght_y={this.state.seat_lines}
+            district_Upper={this.state.district_Upper}
+            district_Lower={this.state.district_Lower}
+          />
         </div>
       </div>
     );

@@ -9,5 +9,6 @@
 }
 
 .div_SeatSentence {
-  display: flex;
+  width: 100%;
+  overflow: scroll;
 }

@@ -12,6 +12,8 @@
   align-items: center;
   justify-content: flex-start;
 
+  margin-bottom: 10px;
+
   padding: 10px;
 
   overflow: scroll;
@@ -46,6 +48,13 @@
 }
 
 .div_ColumnsSeatComponent {
+}
+
+.textbox_SeatMemo {
+  width: 150px;
+}
+.textbox_SeatMemo_wide {
+  width: 600px;
 }
 
 .textbox_SeatMemo {
